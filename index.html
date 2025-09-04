@@ -44,6 +44,14 @@
             font-size: 36px;
             margin: 0 auto 15px;
             border: 3px solid rgba(255,255,255,0.3);
+            overflow: hidden;
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .greeting {
@@ -1907,6 +1915,38 @@
             }
         }
         
+        async function loadUserAvatar() {
+            try {
+                const user = tg.initDataUnsafe?.user;
+                if (!user) return;
+                
+                // Получаем фото профиля через Telegram Bot API
+                const response = await fetch(`http://localhost:5000/api/user-avatar?user_id=${user.id}`, {
+                    method: 'GET'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.avatar_url) {
+                        const avatarEl = document.getElementById('avatar');
+                        avatarEl.innerHTML = `<img src="${data.avatar_url}" alt="Avatar">`;
+                    }
+                } else {
+                    // Если не удалось загрузить аватарку, показываем инициалы
+                    const avatarEl = document.getElementById('avatar');
+                    const initials = (user.first_name?.charAt(0) || '') + (user.last_name?.charAt(0) || '');
+                    avatarEl.textContent = initials || '👤';
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки аватарки:', error);
+                // В случае ошибки показываем инициалы или эмодзи
+                const user = tg.initDataUnsafe?.user;
+                const avatarEl = document.getElementById('avatar');
+                const initials = (user?.first_name?.charAt(0) || '') + (user?.last_name?.charAt(0) || '');
+                avatarEl.textContent = initials || '👤';
+            }
+        }
+        
         async function loadUserData() {
             try {
                 // Возвращаем API вызов для получения данных пользователя
@@ -1931,6 +1971,9 @@
                 
                 // Обновляем интерфейс
                 document.getElementById('greeting').textContent = `Привет, ${data.user.first_name}`;
+                
+                // Загружаем аватарку пользователя
+                loadUserAvatar();
                 
                 // Для демо-режима показываем базовую информацию
                 const workStatusEl = document.getElementById('work-status');
