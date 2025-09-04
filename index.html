@@ -1918,25 +1918,45 @@
         async function loadUserAvatar() {
             try {
                 const user = tg.initDataUnsafe?.user;
-                if (!user) return;
+                console.log('Загрузка аватарки для пользователя:', user);
+                console.log('Полные данные tg.initDataUnsafe:', tg.initDataUnsafe);
+                console.log('tg.initData:', tg.initData);
                 
-                // Получаем фото профиля через Telegram Bot API
-                const response = await fetch(`http://localhost:5000/api/user-avatar?user_id=${user.id}`, {
-                    method: 'GET'
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.avatar_url) {
-                        const avatarEl = document.getElementById('avatar');
-                        avatarEl.innerHTML = `<img src="${data.avatar_url}" alt="Avatar">`;
-                    }
-                } else {
-                    // Если не удалось загрузить аватарку, показываем инициалы
-                    const avatarEl = document.getElementById('avatar');
-                    const initials = (user.first_name?.charAt(0) || '') + (user.last_name?.charAt(0) || '');
-                    avatarEl.textContent = initials || '👤';
+                if (!user) {
+                    console.log('Нет данных пользователя');
+                    return;
                 }
+                
+                const avatarEl = document.getElementById('avatar');
+                
+                // Проверяем, есть ли photo_url в данных пользователя от Telegram
+                if (user.photo_url) {
+                    console.log('Найдена аватарка в данных Telegram:', user.photo_url);
+                    avatarEl.innerHTML = `<img src="${user.photo_url}" alt="Avatar">`;
+                    return;
+                }
+                
+                // Если нет photo_url, пытаемся получить через tg.initDataUnsafe
+                const initData = tg.initDataUnsafe;
+                if (initData && initData.user && initData.user.photo_url) {
+                    console.log('Найдена аватарка в initDataUnsafe:', initData.user.photo_url);
+                    avatarEl.innerHTML = `<img src="${initData.user.photo_url}" alt="Avatar">`;
+                    return;
+                }
+                
+                // Если аватарки нет, показываем красивые инициалы
+                const initials = (user.first_name?.charAt(0) || '') + (user.last_name?.charAt(0) || '');
+                if (initials) {
+                    console.log('Показываем инициалы:', initials);
+                    avatarEl.textContent = initials;
+                    avatarEl.style.fontSize = '32px';
+                    avatarEl.style.fontWeight = 'bold';
+                    avatarEl.style.color = 'white';
+                } else {
+                    console.log('Показываем эмодзи по умолчанию');
+                    avatarEl.textContent = '👤';
+                }
+                
             } catch (error) {
                 console.error('Ошибка загрузки аватарки:', error);
                 // В случае ошибки показываем инициалы или эмодзи
@@ -1972,7 +1992,7 @@
                 // Обновляем интерфейс
                 document.getElementById('greeting').textContent = `Привет, ${data.user.first_name}`;
                 
-                // Загружаем аватарку пользователя
+                // Загружаем аватарку пользователя (или показываем инициалы)
                 loadUserAvatar();
                 
                 // Для демо-режима показываем базовую информацию
