@@ -1065,7 +1065,7 @@
         
         async function loadEmployeesList() {
             try {
-                const response = await fetch(`http://localhost:5000/api/admin/employees?initData=${encodeURIComponent(tg.initData)}`, {
+                const response = await fetch(`http://192.168.0.248:5000/api/admin/employees?initData=${encodeURIComponent(tg.initData)}`, {
                     method: 'GET'
                 });
 
@@ -1944,7 +1944,30 @@
                     return;
                 }
                 
-                // Если аватарки нет, показываем красивые инициалы
+                // Пытаемся загрузить через Flask API
+                console.log('Пытаемся загрузить аватарку через API...');
+                try {
+                    const apiResponse = await fetch(`http://192.168.0.248:5000/api/user-avatar?user_id=${user.id}`, {
+                        method: 'GET'
+                    });
+                    
+                    console.log('Ответ API аватарки:', apiResponse.status);
+                    
+                    if (apiResponse.ok) {
+                        const apiData = await apiResponse.json();
+                        console.log('Данные аватарки от API:', apiData);
+                        
+                        if (apiData.avatar_url) {
+                            console.log('Устанавливаем аватарку от API:', apiData.avatar_url);
+                            avatarEl.innerHTML = `<img src="${apiData.avatar_url}" alt="Avatar">`;
+                            return;
+                        }
+                    }
+                } catch (apiError) {
+                    console.log('Ошибка API аватарки:', apiError);
+                }
+                
+                // Если API не сработал, показываем красивые инициалы
                 const initials = (user.first_name?.charAt(0) || '') + (user.last_name?.charAt(0) || '');
                 if (initials) {
                     console.log('Показываем инициалы:', initials);
@@ -1970,7 +1993,7 @@
         async function loadUserData() {
             try {
                 // Возвращаем API вызов для получения данных пользователя
-                const response = await fetch('http://localhost:5000/api/user-info', {
+                const response = await fetch('http://192.168.0.248:5000/api/user-info', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2132,7 +2155,7 @@
         async function showSosModal() {
             try {
                 // Загружаем опции SOS
-                const response = await fetch('http://localhost:5000/api/sos', {
+                const response = await fetch('http://192.168.0.248:5000/api/sos', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2289,7 +2312,7 @@
                     return;
                 }
                 
-                const response = await fetch('http://localhost:5000/api/sos', {
+                const response = await fetch('http://192.168.0.248:5000/api/sos', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2817,7 +2840,7 @@
         
         async function loadMyIssues() {
             try {
-                const response = await fetch(`http://localhost:5000/api/my-issues?initData=${encodeURIComponent(tg.initData)}`, {
+                const response = await fetch(`http://192.168.0.248:5000/api/my-issues?initData=${encodeURIComponent(tg.initData)}`, {
                     method: 'GET'
                 });
 
