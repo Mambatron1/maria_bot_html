@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Maria Bot</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -1906,35 +1909,44 @@
         
         async function loadUserData() {
             try {
-                const response = await fetch('/api/user-info', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        initData: tg.initData
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Ошибка загрузки данных');
+                // Получаем данные пользователя из Telegram WebApp
+                const user = tg.initDataUnsafe?.user;
+                
+                if (!user) {
+                    throw new Error('Данные пользователя недоступны');
                 }
-
-                const data = await response.json();
+                
+                // Создаем объект данных пользователя
+                const data = {
+                    user: {
+                        first_name: user.first_name || 'Пользователь',
+                        last_name: user.last_name || '',
+                        phone_number: user.phone_number || 'Не указан',
+                        is_admin: false, // По умолчанию не админ
+                        is_registered: false // По умолчанию не зарегистрирован
+                    }
+                };
                 
                 // Сохраняем данные пользователя глобально
                 currentUserData = data;
                 
                 // Обновляем интерфейс
                 document.getElementById('greeting').textContent = `Привет, ${data.user.first_name}`;
-                document.getElementById('work-status').textContent = data.status.work_mode;
-                document.getElementById('vacation-info').textContent = 
-                    `с ${data.vacation.start_date} по ${data.vacation.end_date}`;
-                document.getElementById('daily-fact').textContent = data.daily_fact;
+                
+                // Для демо-режима показываем базовую информацию
+                const workStatusEl = document.getElementById('work-status');
+                if (workStatusEl) workStatusEl.textContent = 'Удаленная работа';
+                
+                const vacationInfoEl = document.getElementById('vacation-info');
+                if (vacationInfoEl) vacationInfoEl.textContent = 'Отпуск не запланирован';
+                
+                const dailyFactEl = document.getElementById('daily-fact');
+                if (dailyFactEl) dailyFactEl.textContent = 'Добро пожаловать в Maria Bot!';
                 
                 // Показываем админское меню, если пользователь администратор
                 if (data.user.is_admin) {
-                    document.getElementById('admin-menu-section').style.display = 'block';
+                    const adminMenuEl = document.getElementById('admin-menu-section');
+                    if (adminMenuEl) adminMenuEl.style.display = 'block';
                 }
                 
                 // Показываем приложение
