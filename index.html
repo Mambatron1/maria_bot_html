@@ -1065,7 +1065,7 @@
         
         async function loadEmployeesList() {
             try {
-                const response = await fetch(`http://192.168.0.248:5000/api/admin/employees?initData=${encodeURIComponent(tg.initData)}`, {
+                const response = await fetch(`http://localhost:5000/api/admin/employees?initData=${encodeURIComponent(tg.initData)}`, {
                     method: 'GET'
                 });
 
@@ -1947,7 +1947,7 @@
                 // Пытаемся загрузить через Flask API
                 console.log('Пытаемся загрузить аватарку через API...');
                 try {
-                    const apiResponse = await fetch(`http://192.168.0.248:5000/api/user-avatar?user_id=${user.id}`, {
+                    const apiResponse = await fetch(`http://localhost:5000/api/user-avatar?user_id=${user.id}`, {
                         method: 'GET'
                     });
                     
@@ -1984,7 +1984,7 @@
         async function loadUserData() {
             try {
                 // Возвращаем API вызов для получения данных пользователя
-                const response = await fetch('http://192.168.0.248:5000/api/user-info', {
+                const response = await fetch('http://localhost:5000/api/user-info', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2146,7 +2146,7 @@
         async function showSosModal() {
             try {
                 // Загружаем опции SOS
-                const response = await fetch('http://192.168.0.248:5000/api/sos', {
+                const response = await fetch('http://localhost:5000/api/sos', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2303,7 +2303,7 @@
                     return;
                 }
                 
-                const response = await fetch('http://192.168.0.248:5000/api/sos', {
+                const response = await fetch('http://localhost:5000/api/sos', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2831,7 +2831,7 @@
         
         async function loadMyIssues() {
             try {
-                const response = await fetch(`http://192.168.0.248:5000/api/my-issues?initData=${encodeURIComponent(tg.initData)}`, {
+                const response = await fetch(`http://localhost:5000/api/my-issues?initData=${encodeURIComponent(tg.initData)}`, {
                     method: 'GET'
                 });
 
