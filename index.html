@@ -206,7 +206,7 @@
 
         <div id="app" style="display: none;">
             <div class="header">
-                <div class="avatar" id="avatar">👤</div>
+                <div class="avatar" id="avatar"></div>
                 <div class="greeting" id="greeting">Привет, Иван</div>
             </div>
 
@@ -1967,26 +1967,17 @@
                     console.log('Ошибка API аватарки:', apiError);
                 }
                 
-                // Если API не сработал, показываем красивые инициалы
-                const initials = (user.first_name?.charAt(0) || '') + (user.last_name?.charAt(0) || '');
-                if (initials) {
-                    console.log('Показываем инициалы:', initials);
-                    avatarEl.textContent = initials;
-                    avatarEl.style.fontSize = '32px';
-                    avatarEl.style.fontWeight = 'bold';
-                    avatarEl.style.color = 'white';
-                } else {
-                    console.log('Показываем эмодзи по умолчанию');
-                    avatarEl.textContent = '👤';
-                }
+                // Если API не сработал, оставляем пустой круг с градиентом
+                console.log('Аватарка не найдена, оставляем пустой круг');
+                avatarEl.innerHTML = '';
+                avatarEl.textContent = '';
                 
             } catch (error) {
                 console.error('Ошибка загрузки аватарки:', error);
-                // В случае ошибки показываем инициалы или эмодзи
-                const user = tg.initDataUnsafe?.user;
+                // В случае ошибки оставляем пустой круг
                 const avatarEl = document.getElementById('avatar');
-                const initials = (user?.first_name?.charAt(0) || '') + (user?.last_name?.charAt(0) || '');
-                avatarEl.textContent = initials || '👤';
+                avatarEl.innerHTML = '';
+                avatarEl.textContent = '';
             }
         }
         
