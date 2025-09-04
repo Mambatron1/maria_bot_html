@@ -9,94 +9,188 @@
     <title>Maria Bot</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
+        /* TelegramUI Design System Variables */
+        :root {
+            /* Telegram Colors */
+            --tg-theme-bg-color: var(--tg-color-bg, #ffffff);
+            --tg-theme-text-color: var(--tg-color-text, #000000);
+            --tg-theme-hint-color: var(--tg-color-hint, #999999);
+            --tg-theme-link-color: var(--tg-color-link, #2481cc);
+            --tg-theme-button-color: var(--tg-color-button, #2481cc);
+            --tg-theme-button-text-color: var(--tg-color-button-text, #ffffff);
+            --tg-theme-secondary-bg-color: var(--tg-color-secondary-bg, #f1f1f1);
+            
+            /* TelegramUI Design Tokens */
+            --tgui-color-bg: var(--tg-theme-bg-color);
+            --tgui-color-text: var(--tg-theme-text-color);
+            --tgui-color-hint: var(--tg-theme-hint-color);
+            --tgui-color-link: var(--tg-theme-link-color);
+            --tgui-color-button: var(--tg-theme-button-color);
+            --tgui-color-button-text: var(--tg-theme-button-text-color);
+            --tgui-color-secondary-bg: var(--tg-theme-secondary-bg-color);
+            
+            /* Additional TelegramUI Colors */
+            --tgui-color-surface: rgba(0, 0, 0, 0.04);
+            --tgui-color-surface-hover: rgba(0, 0, 0, 0.08);
+            --tgui-color-destructive: #ff3b30;
+            --tgui-color-accent: var(--tg-theme-button-color);
+            --tgui-color-success: #34c759;
+            --tgui-color-warning: #ff9500;
+            
+            /* Typography */
+            --tgui-font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --tgui-font-size-xs: 12px;
+            --tgui-font-size-sm: 14px;
+            --tgui-font-size-md: 16px;
+            --tgui-font-size-lg: 18px;
+            --tgui-font-size-xl: 20px;
+            --tgui-font-size-2xl: 24px;
+            --tgui-font-size-3xl: 28px;
+            
+            /* Spacing */
+            --tgui-spacing-xs: 4px;
+            --tgui-spacing-sm: 8px;
+            --tgui-spacing-md: 12px;
+            --tgui-spacing-lg: 16px;
+            --tgui-spacing-xl: 20px;
+            --tgui-spacing-2xl: 24px;
+            --tgui-spacing-3xl: 32px;
+            
+            /* Border Radius */
+            --tgui-radius-sm: 8px;
+            --tgui-radius-md: 12px;
+            --tgui-radius-lg: 16px;
+            --tgui-radius-xl: 20px;
+            --tgui-radius-full: 50%;
+            
+            /* Shadows */
+            --tgui-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --tgui-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --tgui-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
- 
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: var(--tgui-font-family);
+            background-color: var(--tgui-color-bg);
+            color: var(--tgui-color-text);
             min-height: 100vh;
-            color: #ffffff;
-            padding: 20px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
    
+        /* TelegramUI Container */
         .container {
-            max-width: 400px;
-            margin: 0 auto;
+            max-width: 100%;
+            margin: 0;
+            padding: var(--tgui-spacing-lg);
+            background-color: var(--tgui-color-bg);
         }
 
+        /* TelegramUI Header */
         .header {
-            text-align: center;
-            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            padding: var(--tgui-spacing-lg) 0;
+            margin-bottom: var(--tgui-spacing-xl);
+            border-bottom: 1px solid var(--tgui-color-surface);
         }
 
         .avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            width: 56px;
+            height: 56px;
+            border-radius: var(--tgui-radius-full);
+            background: var(--tgui-color-accent);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 36px;
-            margin: 0 auto 15px;
-            border: 3px solid rgba(255,255,255,0.3);
+            font-size: var(--tgui-font-size-xl);
+            margin-right: var(--tgui-spacing-md);
             overflow: hidden;
+            flex-shrink: 0;
+            position: relative;
         }
         
         .avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 50%;
+            border-radius: var(--tgui-radius-full);
+        }
+
+        .user-info {
+            flex: 1;
+            min-width: 0;
         }
 
         .greeting {
-            font-size: 28px;
+            font-size: var(--tgui-font-size-lg);
             font-weight: 600;
-            margin-bottom: 5px;
+            color: var(--tgui-color-text);
+            margin-bottom: var(--tgui-spacing-xs);
+            line-height: 1.2;
         }
 
         .user-name {
-            font-size: 18px;
-            opacity: 0.8;
+            font-size: var(--tgui-font-size-sm);
+            color: var(--tgui-color-hint);
+            line-height: 1.2;
         }
 
+        /* TelegramUI Cards */
         .info-cards {
-            margin-bottom: 30px;
+            margin-bottom: var(--tgui-spacing-2xl);
         }
 
         .info-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: var(--tgui-color-secondary-bg);
+            border-radius: var(--tgui-radius-md);
+            padding: var(--tgui-spacing-lg);
+            margin-bottom: var(--tgui-spacing-md);
+            border: none;
+            box-shadow: var(--tgui-shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .info-card:hover {
+            background-color: var(--tgui-color-surface-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--tgui-shadow-md);
         }
 
         .card-header {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: var(--tgui-spacing-sm);
         }
 
         .card-icon {
-            font-size: 24px;
-            margin-right: 12px;
+            font-size: var(--tgui-font-size-xl);
+            margin-right: var(--tgui-spacing-md);
+            color: var(--tgui-color-accent);
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .card-title {
-            font-size: 16px;
+            font-size: var(--tgui-font-size-md);
             font-weight: 600;
+            color: var(--tgui-color-text);
+            line-height: 1.2;
         }
 
         .card-content {
-            font-size: 14px;
-            opacity: 0.9;
+            font-size: var(--tgui-font-size-sm);
+            color: var(--tgui-color-hint);
             line-height: 1.4;
         }
 
@@ -109,63 +203,241 @@
             margin-right: 8px;
         }
 
+        /* TelegramUI Action Buttons */
         .action-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: var(--tgui-spacing-sm);
+            margin-bottom: var(--tgui-spacing-xl);
         }
 
         .action-button {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
+            background-color: var(--tgui-color-secondary-bg);
             border: none;
-            border-radius: 16px;
-            padding: 20px 15px;
-            color: white;
-            font-size: 14px;
+            border-radius: var(--tgui-radius-md);
+            padding: var(--tgui-spacing-lg);
+            color: var(--tgui-color-text);
+            font-family: var(--tgui-font-family);
             font-weight: 500;
+            font-size: var(--tgui-font-size-sm);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 72px;
+            position: relative;
+            overflow: hidden;
         }
 
         .action-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
+            background-color: var(--tgui-color-surface-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--tgui-shadow-md);
+        }
+
+        .action-button:active {
+            transform: translateY(0);
+            box-shadow: var(--tgui-shadow-sm);
         }
 
         .action-button .icon {
-            font-size: 24px;
+            font-size: var(--tgui-font-size-xl);
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: var(--tgui-spacing-xs);
+            opacity: 0.8;
         }
 
-        .sos-button {
-            background: linear-gradient(45deg, #ff4757, #ff3742);
-            border: none;
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
+        /* Primary Button Variant */
+        .action-button.primary {
+            background-color: var(--tgui-color-button);
+            color: var(--tgui-color-button-text);
+        }
+
+        .action-button.primary:hover {
+            background-color: var(--tgui-color-button);
+            opacity: 0.9;
+        }
+
+        /* Destructive Button Variant */
+        .action-button.destructive {
+            background-color: var(--tgui-color-destructive);
             color: white;
-            font-size: 18px;
-            font-weight: bold;
+        }
+
+        .action-button.destructive:hover {
+            background-color: var(--tgui-color-destructive);
+            opacity: 0.9;
+        }
+
+        /* TelegramUI SOS Button */
+        .sos-button {
+            background-color: var(--tgui-color-destructive);
+            border: none;
+            border-radius: var(--tgui-radius-full);
+            width: 64px;
+            height: 64px;
+            color: white;
+            font-size: var(--tgui-font-size-md);
+            font-weight: 600;
             cursor: pointer;
             margin: 0 auto;
-            display: block;
-            box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
-            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--tgui-shadow-lg);
+            transition: all 0.2s ease;
         }
 
         .sos-button:hover {
             transform: scale(1.05);
-            box-shadow: 0 12px 35px rgba(255, 71, 87, 0.6);
+            box-shadow: 0 12px 24px rgba(255, 59, 48, 0.4);
         }
 
+        .sos-button:active {
+            transform: scale(0.95);
+        }
+
+        /* TelegramUI Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes slideOut {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% { transform: translate3d(0, 0, 0); }
+            40%, 43% { transform: translate3d(0, -8px, 0); }
+            70% { transform: translate3d(0, -4px, 0); }
+            90% { transform: translate3d(0, -2px, 0); }
+        }
+
+        /* Animation Classes */
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .animate-slide-out {
+            animation: slideOut 0.3s ease-in;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .animate-bounce {
+            animation: bounce 1s;
+        }
+
+        /* Loading States */
         .loading {
             text-align: center;
-            padding: 50px;
+            padding: var(--tgui-spacing-3xl);
+            color: var(--tgui-color-hint);
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--tgui-color-surface);
+            border-radius: 50%;
+            border-top-color: var(--tgui-color-accent);
+            animation: spin 1s linear infinite;
+            margin-left: var(--tgui-spacing-sm);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* TelegramUI Responsive Design */
+        @media (max-width: 480px) {
+            .container {
+                padding: var(--tgui-spacing-sm);
+            }
+
+            .header {
+                padding: var(--tgui-spacing-sm) 0;
+                margin-bottom: var(--tgui-spacing-lg);
+            }
+
+            .avatar {
+                width: 48px;
+                height: 48px;
+            }
+
+            .greeting {
+                font-size: var(--tgui-font-size-md);
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+                gap: var(--tgui-spacing-sm);
+            }
+
+            .action-button {
+                min-height: 56px;
+                padding: var(--tgui-spacing-md);
+            }
+
+            .info-card {
+                padding: var(--tgui-spacing-md);
+                margin-bottom: var(--tgui-spacing-sm);
+            }
+        }
+
+        /* Dark Theme Support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --tgui-color-bg: #1c1c1e;
+                --tgui-color-text: #ffffff;
+                --tgui-color-hint: #8e8e93;
+                --tgui-color-secondary-bg: #2c2c2e;
+                --tgui-color-surface: rgba(255, 255, 255, 0.1);
+                --tgui-color-surface-hover: rgba(255, 255, 255, 0.15);
+            }
+        }
+
+        /* High Contrast Support */
+        @media (prefers-contrast: high) {
+            .action-button {
+                border: 2px solid var(--tgui-color-text);
+            }
+
+            .info-card {
+                border: 1px solid var(--tgui-color-surface);
+            }
+        }
+
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
 
         .spinner {
@@ -207,7 +479,10 @@
         <div id="app" style="display: none;">
             <div class="header">
                 <div class="avatar" id="avatar"></div>
-                <div class="greeting" id="greeting">Привет, Иван</div>
+                <div class="user-info">
+                    <div class="greeting" id="greeting">Привет, Иван</div>
+                    <div class="user-name" id="user-name">Загрузка...</div>
+                </div>
             </div>
 
             <div class="info-cards">
@@ -2005,6 +2280,7 @@
                 
                 // Обновляем интерфейс
                 document.getElementById('greeting').textContent = `Привет, ${data.user.first_name}`;
+                document.getElementById('user-name').textContent = data.user.last_name || 'Пользователь';
                 
                 // Загружаем аватарку пользователя (или показываем инициалы)
                 loadUserAvatar();
@@ -3654,13 +3930,29 @@
             // Останавливаем автообновление диалога
             stopDialogAutoRefresh();
             
-            document.getElementById('work-mode-modal').style.display = 'none';
-            document.getElementById('absence-modal').style.display = 'none';
-            document.getElementById('sos-modal').style.display = 'none';
-            document.getElementById('sos-menu-modal').style.display = 'none';
-            document.getElementById('sick-leave-modal').style.display = 'none';
-            document.getElementById('issue-chat-modal').style.display = 'none';
-            document.getElementById('admin-menu-modal').style.display = 'none';
+            // Добавляем анимацию исчезновения для модальных окон
+            const modals = [
+                'work-mode-modal', 'absence-modal', 'sos-modal', 'sos-menu-modal',
+                'sick-leave-modal', 'issue-chat-modal', 'admin-menu-modal'
+            ];
+            
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (modal && modal.style.display !== 'none') {
+                    modal.classList.add('animate-slide-out');
+                    setTimeout(() => {
+                        modal.style.display = 'none';
+                        modal.classList.remove('animate-slide-out');
+                    }, 300);
+                } else if (modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Показываем главное приложение с анимацией
+            const app = document.getElementById('app');
+            app.style.display = 'block';
+            app.classList.add('animate-fade-in');
             document.getElementById('employees-management-modal').style.display = 'none';
             document.getElementById('issues-management-modal').style.display = 'none';
             document.getElementById('broadcast-modal').style.display = 'none';
