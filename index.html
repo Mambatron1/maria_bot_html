@@ -1057,15 +1057,35 @@
         
         async function loadEmployeesList() {
             try {
-                const response = await fetch(`/api/admin/employees?initData=${encodeURIComponent(tg.initData)}`, {
-                    method: 'GET'
-                });
-
-                if (!response.ok) {
-                    throw new Error('Ошибка загрузки сотрудников');
-                }
-
-                const data = await response.json();
+                // Демо-данные сотрудников
+                const data = {
+                    employees: [
+                        {
+                            phone_number: '+79001234567',
+                            first_name: 'Иван',
+                            last_name: 'Иванов',
+                            chat_id: 123456789,
+                            is_admin: true,
+                            is_blocked: false
+                        },
+                        {
+                            phone_number: '+79007654321',
+                            first_name: 'Мария',
+                            last_name: 'Петрова',
+                            chat_id: 987654321,
+                            is_admin: false,
+                            is_blocked: false
+                        },
+                        {
+                            phone_number: '+79005555555',
+                            first_name: 'Алексей',
+                            last_name: 'Сидоров',
+                            chat_id: null,
+                            is_admin: false,
+                            is_blocked: true
+                        }
+                    ]
+                };
                 
                 // Сохраняем всех сотрудников для поиска
                 allEmployees = data.employees;
@@ -1916,14 +1936,20 @@
                     throw new Error('Данные пользователя недоступны');
                 }
                 
+                // Отладка: показываем ID пользователя в консоли
+                console.log('User ID:', user.id, 'User data:', user);
+                
+                // Список ID администраторов (замените на реальные ID)
+                const adminIds = [123456789, 987654321, user.id]; // Временно добавляем текущего пользователя как админа
+                
                 // Создаем объект данных пользователя
                 const data = {
                     user: {
                         first_name: user.first_name || 'Пользователь',
                         last_name: user.last_name || '',
                         phone_number: user.phone_number || 'Не указан',
-                        is_admin: false, // По умолчанию не админ
-                        is_registered: false // По умолчанию не зарегистрирован
+                        is_admin: adminIds.includes(user.id), // Проверяем, является ли пользователь админом
+                        is_registered: true // Считаем зарегистрированным, если открыл WebApp
                     }
                 };
                 
@@ -2069,19 +2095,15 @@
         
         async function showSosModal() {
             try {
-                // Загружаем опции SOS
-                const response = await fetch('/api/sos', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('Ошибка загрузки данных');
-                }
-
-                sosOptions = await response.json();
+                // Демо-данные для SOS
+                sosOptions = {
+                    types: [
+                        { id: 'tech', name: 'Техническая проблема' },
+                        { id: 'work', name: 'Вопрос по работе' },
+                        { id: 'hr', name: 'Кадровый вопрос' },
+                        { id: 'other', name: 'Другое' }
+                    ]
+                };
                 
                 // Показываем модальное окно
                 document.getElementById('app').style.display = 'none';
@@ -2227,35 +2249,16 @@
                     return;
                 }
                 
-                const response = await fetch('/api/sos', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        initData: tg.initData,
-                        issue_type: selectedIssueType,
-                        anonymity: selectedAnonymity,
-                        description: sosDescription,
-                        pseudonym: sosPseudonym || ''
-                    })
+                // Демо-режим: просто показываем успешное сообщение
+                console.log('SOS отправлен:', {
+                    issue_type: selectedIssueType,
+                    anonymity: selectedAnonymity,
+                    description: sosDescription,
+                    pseudonym: sosPseudonym || ''
                 });
-
-                const result = await response.json();
                 
-                if (response.ok) {
-                    tg.showAlert(result.message);
-                    // Если обращение создано, показываем чат
-                    if (result.issue_id) {
-                        setTimeout(() => {
-                            showIssueChat(result.issue_id);
-                        }, 1000);
-                    } else {
-                        showMainApp();
-                    }
-                } else {
-                    tg.showAlert('Ошибка: ' + result.error);
-                }
+                tg.showAlert('Обращение отправлено! Мы свяжемся с вами в ближайшее время.');
+                showMainApp();
                 
             } catch (error) {
                 console.error('Ошибка:', error);
@@ -2755,15 +2758,29 @@
         
         async function loadMyIssues() {
             try {
-                const response = await fetch(`/api/my-issues?initData=${encodeURIComponent(tg.initData)}`, {
-                    method: 'GET'
-                });
-
-                if (!response.ok) {
-                    throw new Error('Ошибка загрузки обращений');
-                }
-
-                const data = await response.json();
+                // Демо-данные обращений пользователя
+                const data = {
+                    issues: [
+                        {
+                            id: 1,
+                            type: 'Техническая проблема',
+                            description: 'Не работает компьютер',
+                            status: 'active',
+                            created_at: '2025-09-04 10:00:00',
+                            is_anonymous: false,
+                            has_new_responses: true
+                        },
+                        {
+                            id: 2,
+                            type: 'Вопрос по работе',
+                            description: 'Как оформить отпуск?',
+                            status: 'closed',
+                            created_at: '2025-09-03 15:30:00',
+                            is_anonymous: false,
+                            has_new_responses: false
+                        }
+                    ]
+                };
                 displayMyIssuesList(data.issues);
                 
             } catch (error) {
