@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    <meta name="cache-control" content="no-cache">
+    <meta name="expires" content="0">
+    <meta name="pragma" content="no-cache">
     <title>Maria Bot</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -3735,6 +3738,18 @@
         }
         
         // Обработка Enter в поле ввода сообщения
+        // Принудительное обновление кеша
+        if (window.performance && window.performance.navigation.type === 1) {
+            // Страница была перезагружена - очищаем кеш
+            if ('caches' in window) {
+                caches.keys().then(names => {
+                    names.forEach(name => {
+                        caches.delete(name);
+                    });
+                });
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const messageInput = document.getElementById('chat-message-input');
             if (messageInput) {
