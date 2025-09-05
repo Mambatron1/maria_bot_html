@@ -137,7 +137,7 @@
         .container {
             max-width: 100%;
             margin: 0;
-            padding: var(--tgui-spacing-lg);
+            padding: var(--tgui-spacing-xl) var(--tgui-spacing-lg);
             background-color: var(--tgui-color-bg);
         }
 
@@ -201,9 +201,9 @@
 
         .info-card {
             background-color: var(--tgui-color-secondary-bg);
-            border-radius: var(--tgui-radius-md);
-            padding: var(--tgui-spacing-lg);
-            margin-bottom: var(--tgui-spacing-md);
+            border-radius: var(--tgui-radius-lg);
+            padding: var(--tgui-spacing-xl);
+            margin-bottom: var(--tgui-spacing-lg);
             border: none;
             box-shadow: var(--tgui-shadow-sm);
             transition: all 0.2s ease;
@@ -261,19 +261,19 @@
         .action-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: var(--tgui-spacing-sm);
-            margin-bottom: var(--tgui-spacing-xl);
+            gap: var(--tgui-spacing-md);
+            margin-bottom: var(--tgui-spacing-2xl);
         }
 
         .action-button {
             background-color: var(--tgui-color-secondary-bg);
             border: none;
-            border-radius: var(--tgui-radius-md);
-            padding: var(--tgui-spacing-lg);
+            border-radius: var(--tgui-radius-lg);
+            padding: var(--tgui-spacing-xl);
             color: var(--tgui-color-text);
             font-family: var(--tgui-font-family);
             font-weight: var(--tgui-font-weight-medium);
-            font-size: var(--tgui-font-size-sm);
+            font-size: var(--tgui-font-size-md);
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: center;
@@ -281,7 +281,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 80px;
+            min-height: 88px;
             position: relative;
             overflow: hidden;
             letter-spacing: -0.01em;
@@ -300,10 +300,12 @@
         }
 
         .action-button .icon {
-            font-size: var(--tgui-font-size-xl);
+            font-size: var(--tgui-font-size-2xl);
             display: block;
-            margin-bottom: var(--tgui-spacing-xs);
-            opacity: 0.8;
+            margin-bottom: var(--tgui-spacing-sm);
+            opacity: 0.9;
+            font-weight: normal;
+            line-height: 1;
         }
 
         /* Primary Button Variant */
@@ -326,6 +328,19 @@
         .action-button.destructive:hover {
             background-color: var(--tgui-color-destructive);
             opacity: 0.9;
+        }
+
+        /* Admin Button Variant */
+        .action-button.admin {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: var(--tgui-shadow-md);
+        }
+
+        .action-button.admin:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+            transform: translateY(-2px);
+            box-shadow: var(--tgui-shadow-lg);
         }
 
         /* TelegramUI SOS Button */
@@ -523,8 +538,8 @@
 </head>
 <body>
     <!-- Индикатор новых стилей TelegramUI -->
-    <div id="design-indicator" style="position: fixed; top: 10px; right: 10px; background: #34c759; color: white; padding: 8px 12px; border-radius: 20px; font-size: 12px; z-index: 9999; display: block;">
-        ✅ TelegramUI Design v2.0
+    <div id="design-indicator" style="position: fixed; top: 16px; right: 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 10px 16px; border-radius: 24px; font-size: 13px; font-weight: 600; z-index: 9999; display: block; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4); letter-spacing: -0.01em;">
+        ✨ Premium Design
     </div>
     
     <div class="container">
@@ -616,7 +631,7 @@
                 </div>
                 
                 <div class="action-buttons">
-                    <button onclick="handleAction('admin_menu')" class="action-button" style="background: linear-gradient(45deg, #ff6b6b, #ee5a52);">
+                    <button onclick="handleAction('admin_menu')" class="action-button admin">
                         <span class="icon">◈</span>Меню администратора
                     </button>
                 </div>
@@ -637,7 +652,7 @@
             <div class="info-cards">
                 <div class="info-card">
                     <div class="card-header">
-                        <span class="card-icon">🎯</span>
+                        <span class="card-icon">▲</span>
                         <span class="card-title">Выберите режим работы</span>
                     </div>
                 </div>
@@ -807,7 +822,7 @@
             <div class="info-cards">
                 <div class="info-card">
                     <div class="card-header">
-                        <span class="card-icon">🚨</span>
+                        <span class="card-icon">⚡</span>
                         <span class="card-title">Выберите тип проблемы</span>
                     </div>
                 </div>
@@ -1235,7 +1250,7 @@
             <div class="info-cards">
                 <div class="info-card">
                     <div class="card-header">
-                        <span class="card-icon">📊</span>
+                        <span class="card-icon">▦</span>
                         <span class="card-title">Общая статистика</span>
                     </div>
                     <div class="card-content" id="admin-stats-content">
