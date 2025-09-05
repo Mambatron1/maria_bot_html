@@ -325,6 +325,59 @@
             padding-bottom: 80px; /* space for SOS button */
         }
 
+        /* NBtender Back Button */
+        .back-button {
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 24px;
+            padding: var(--spacing-sm);
+            cursor: pointer;
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .back-button:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .back-button:active {
+            background: rgba(0, 0, 0, 0.1);
+            transform: scale(0.95);
+        }
+
+        /* Modal Headers */
+        .modal-header {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-lg) var(--spacing-xl);
+            background: var(--bg);
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .modal-title {
+            flex: 1;
+            text-align: center;
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .modal-content {
+            background: var(--bg);
+            min-height: 100vh;
+            padding-bottom: 100px; /* space for SOS button */
+        }
+
         /* TelegramUI Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -594,10 +647,11 @@
         </div>
 
         <!-- Work Mode Modal -->
-        <div id="work-mode-modal" style="display: none;">
-            <div class="header">
-                <button onclick="showMainApp()" style="background: none; border: none; color: white; font-size: 24px; float: left;">←</button>
-                <h2 style="text-align: center; margin: 0;">Режим работы</h2>
+        <div id="work-mode-modal" class="modal-content" style="display: none;">
+            <div class="modal-header">
+                <button onclick="showMainApp()" class="back-button">←</button>
+                <h2 class="modal-title">Режим работы</h2>
+                <div style="width: 40px;"></div> <!-- spacer for centering -->
             </div>
 
             <div class="info-cards">
@@ -666,10 +720,11 @@
         </div>
 
         <!-- Absence Modal -->
-        <div id="absence-modal" style="display: none;">
-            <div class="header">
-                <button onclick="showMainApp()" style="background: none; border: none; color: white; font-size: 24px; float: left;">←</button>
-                <h2 style="text-align: center; margin: 0;">Отсутствие</h2>
+        <div id="absence-modal" class="modal-content" style="display: none;">
+            <div class="modal-header">
+                <button onclick="showMainApp()" class="back-button">←</button>
+                <h2 class="modal-title">Отсутствие</h2>
+                <div style="width: 40px;"></div> <!-- spacer for centering -->
             </div>
 
             <div class="info-cards">
@@ -764,10 +819,11 @@
         </div>
 
         <!-- SOS Modal -->
-        <div id="sos-modal" style="display: none;">
-            <div class="header">
-                <button onclick="showMainApp()" style="background: none; border: none; color: white; font-size: 24px; float: left;">←</button>
-                <h2 style="text-align: center; margin: 0;">SOS - Сообщить о проблеме</h2>
+        <div id="sos-modal" class="modal-content" style="display: none;">
+            <div class="modal-header">
+                <button onclick="showMainApp()" class="back-button">←</button>
+                <h2 class="modal-title">SOS - Сообщить о проблеме</h2>
+                <div style="width: 40px;"></div> <!-- spacer for centering -->
             </div>
 
             <div class="info-cards">
@@ -856,10 +912,11 @@
         </div>
 
         <!-- Sick Leave Modal -->
-        <div id="sick-leave-modal" style="display: none;">
-            <div class="header">
-                <button onclick="showMainApp()" style="background: none; border: none; color: white; font-size: 24px; float: left;">←</button>
-                <h2 style="text-align: center; margin: 0;">🏥 Больничный лист</h2>
+        <div id="sick-leave-modal" class="modal-content" style="display: none;">
+            <div class="modal-header">
+                <button onclick="showMainApp()" class="back-button">←</button>
+                <h2 class="modal-title">🏥 Больничный лист</h2>
+                <div style="width: 40px;"></div> <!-- spacer for centering -->
             </div>
 
             <div class="info-cards">
@@ -1192,10 +1249,11 @@
         </div>
 
         <!-- Admin Menu Modal -->
-        <div id="admin-menu-modal" style="display: none;">
-            <div class="header">
-                <button onclick="showMainApp()" style="background: none; border: none; color: white; font-size: 24px; float: left;">←</button>
-                <h2 style="text-align: center; margin: 0;">👑 Меню администратора</h2>
+        <div id="admin-menu-modal" class="modal-content" style="display: none;">
+            <div class="modal-header">
+                <button onclick="showMainApp()" class="back-button">←</button>
+                <h2 class="modal-title">👑 Меню администратора</h2>
+                <div style="width: 40px;"></div> <!-- spacer for centering -->
             </div>
 
             <div class="info-cards">
