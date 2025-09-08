@@ -49,7 +49,7 @@
     </script>
     <style>
         :root {
-            --bg: #fffdf5;
+            --bg: #eff6ff;
             --ink: #0f172a;
             --muted: #64748b;
             --graphite-700: #474A51;
@@ -58,29 +58,31 @@
             --accent: #4338ca;
             --danger: #ef4444;
 
-            --fs-base: clamp(14px, 2.2vw + 0.2vh, 16px);
-            --btn-h: clamp(44px, 6vh, 52px);
-            --radius: clamp(12px, 2.6vw, 14px);
-            --pad: clamp(10px, 2.8vw, 14px);
-            --dot: clamp(6px, 1.8vw, 8px);
+            --fs-base: 16px;
+            --btn-h: 52px;
+            --radius: 14px;
+            --pad: 16px;
+            --dot: 8px;
 
             --shadow: 0 6px 18px rgba(2, 6, 23, .12);
             --shadow-strong: 0 10px 26px rgba(2, 6, 23, .18);
         }
-
-        body { 
+ 
+        body {
             margin: 0; 
             font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; 
-            background: var(--bg); 
+            background: #eff6ff; 
             color: var(--ink); 
             font-size: var(--fs-base); 
+            min-height: 100vh;
         }
-
+  
         .wrap { 
             max-width: 440px; 
-            margin: 0 auto; 
-            padding: var(--pad) var(--pad) 96px; 
+            margin: 0 auto;
+            padding: var(--pad) var(--pad) var(--pad); 
             box-sizing: border-box; 
+            min-height: 100vh;
         }
 
         header { 
@@ -90,10 +92,10 @@
             margin-bottom: 8px; 
         }
 
-        .avatar { 
+        .avatar {
             width: 44px; 
             height: 44px; 
-            border-radius: 50%; 
+            border-radius: 50%;
             background: #d1d5db; 
             overflow: hidden; 
         }
@@ -144,7 +146,7 @@
             position: relative; 
             height: var(--btn-h); 
             display: inline-flex; 
-            align-items: center; 
+            align-items: center;
             justify-content: center; 
             gap: 8px;
             border: 0; 
@@ -152,11 +154,15 @@
             background: var(--navy-700); 
             color: #eef2ff; 
             font-size: 15px; 
-            font-weight: 700;
+            font-weight: 700; 
             box-shadow: var(--shadow); 
             cursor: pointer; 
             padding: 0 16px; 
-            text-align: center; 
+            text-align: center;
+            min-width: 280px;
+            max-width: 350px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .btn:after { 
@@ -181,7 +187,7 @@
             display:inline-block; 
             width: var(--dot); 
             height: var(--dot); 
-            border-radius: 50%; 
+            border-radius: 50%;
         }
 
         .dot-holiday{ background:#f59e0b; }
@@ -194,30 +200,7 @@
             background: var(--accent); 
         }
 
-        /* SOS фиксированная внизу */
-        .sos { 
-            position: fixed; 
-            left: 0; 
-            right: 0; 
-            bottom: 0; 
-            display:flex; 
-            justify-content:center; 
-            padding: 12px 16px; 
-            background: var(--bg); 
-            box-shadow: 0 -2px 8px rgba(0,0,0,.08); 
-        }
-
-        .sos button { 
-            border: none; 
-            border-radius: 999px; 
-            padding: 14px 22px; 
-            background: var(--danger); 
-            color: white; 
-            font-weight: 800; 
-            letter-spacing:.3px; 
-            box-shadow: 0 14px 28px rgba(239,68,68,.35); 
-            cursor: pointer; 
-        }
+        /* SOS кнопка в общем стиле - как все остальные */
 
         .footer { 
             text-align:center; 
@@ -227,29 +210,29 @@
         }
 
         .compact .wrap { 
-            padding: 8px 8px 80px; 
+            padding: var(--pad) var(--pad) 96px; 
         }
 
         .compact .card { 
-            padding: 10px 12px; 
+            padding: 12px 14px; 
         }
 
         .compact .btn { 
-            height: 44px; 
-            font-size: 14px; 
+            height: var(--btn-h); 
+            font-size: 15px; 
         }
 
         .compact .title { 
-            font-size: 16px; 
+            font-size: 17px; 
         }
 
         .compact header { 
-            gap: 10px; 
+            gap: 12px; 
         }
 
         .compact .avatar { 
-            width: 40px; 
-            height: 40px; 
+            width: 44px; 
+            height: 44px; 
         }
 
         /* Modal styles for back buttons */
@@ -303,9 +286,61 @@
             min-height: 100vh;
             padding-bottom: 100px;
         }
+
+        /* Главное меню - голубой фон на весь экран */
+        #app {
+            background: #eff6ff;
+            min-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow-y: auto;
+        }
+
+        /* Модальные окна - голубой фон и фиксированная структура */
+        #work-mode-modal,
+        #absence-modal, 
+        #sick-leave-modal,
+        #admin-menu-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #eff6ff;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        /* Все модальные окна имеют одинаковую структуру */
+        #work-mode-modal .wrap,
+        #absence-modal .wrap,
+        #sick-leave-modal .wrap,
+        #admin-menu-modal .wrap {
+            max-width: 440px;
+            margin: 0 auto;
+            padding: var(--pad) var(--pad) var(--pad);
+            box-sizing: border-box;
+            min-height: 100vh;
+        }
+
+        /* Все кнопки одинаковой ширины - уже в основном правиле .btn */
+        
+        /* Контейнеры кнопок - центрированные */
+        .actions {
+            display: grid;
+            gap: 12px;
+            justify-items: center;
+        }
     </style>
 </head>
 <body>
+    <!-- Индикатор версии для провери -->
+    <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
+        NBtender SICK LEAVE STYLED
+    </div>
     
     <div class="wrap">
         <div id="loading" class="loading">
@@ -323,14 +358,14 @@
                 <div>
                     <div class="title">Привет, <span id="name">Aleksei</span></div>
                     <div class="subtitle">Пользователь</div>
-                </div>
+            </div>
             </header>
 
             <div class="stack">
-                <div class="card"><h3>Сегодня</h3><p id="today-status">Удалённая работа</p></div>
-                <div class="card"><h3>Следующий отпуск</h3><p id="next-vacation">Отпуск не запланирован</p></div>
-                <div class="card"><h3>В этот день</h3><p id="today-message">Добро пожаловать в Maria Bot!</p></div>
-            </div>
+                <div class="card" style="background: #065f46;"><h3>Сегодня</h3><p id="today-status">Удалённая работа</p></div>
+                <div class="card" style="background: #ea580c;"><h3>Следующий отпуск</h3><p id="next-vacation">Отпуск не запланирован</p></div>
+                <div class="card" style="background: #3730a3;"><h3>В этот день</h3><p id="today-message">Добро пожаловать в Maria Bot!</p></div>
+                </div>
 
             <div class="actions">
                 <button class="btn" onclick="handleAction('vacation')"><span class="dot dot-holiday"></span><span>Мой отпуск</span></button>
@@ -338,115 +373,105 @@
                 <button class="btn" onclick="handleAction('absence')"><span class="dot dot-absence"></span><span>Отсутствие</span></button>
                 <button class="btn" onclick="handleAction('sick_leave')"><span class="dot dot-sick"></span><span>Больничный</span></button>
                 <button class="btn" onclick="handleAction('crocotime')"><span class="dot dot-crocotime"></span><span>Мой Crocotime</span></button>
+                <button class="btn" onclick="handleAction('sos')"><span class="dot dot-absence"></span><span>Нужна помощь</span></button>
                 <button class="btn btn-accent" id="admin-btn" onclick="handleAction('admin')" style="display: none;">Меню администратора</button>
-            </div>
+                    </div>
             <div class="footer">@NBtender_bot</div>
         </div>
 
-        <div class="sos">
-            <button onclick="handleAction('sos')">SOS</button>
-        </div>
-
         <!-- Work Mode Modal -->
-        <div id="work-mode-modal" class="modal-content" style="display: none;">
-            <div class="modal-header">
-                <button onclick="showMainApp()" class="back-button">←</button>
-                <h2 class="modal-title">Режим работы</h2>
-                <div style="width: 40px;"></div> <!-- spacer for centering -->
+        <div id="work-mode-modal" style="display: none;">
+            <div class="wrap">
+                <header style="margin-bottom: 20px;">
+                    <button onclick="showMainApp()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
+                    <div style="flex: 1; text-align: center;">
+                        <div class="title" style="margin: 0;">Режим работы</div>
             </div>
+                    <div style="width: 40px;"></div>
+                </header>
 
-            <div class="info-cards">
-                <div class="info-card">
-                    <div class="card-header">
-                        <span class="card-icon">▲</span>
-                        <span class="card-title">Выберите режим работы</span>
+                <div class="stack" style="margin-bottom: 20px;">
+                    <div class="card">
+                        <h3>Выбери режим работы</h3>
+                        <p>Установи твой текущий режим работы</p>
                     </div>
                 </div>
 
-                <div id="work-modes" class="action-buttons">
+                <div id="work-modes" class="actions">
                     <!-- Режимы работы будут загружены динамически -->
                 </div>
 
-                <div class="info-card" id="period-section" style="display: none;">
-                    <div class="card-header">
-                        <span class="card-icon">📅</span>
-                        <span class="card-title">Выберите период</span>
+                <div id="period-section" class="stack" style="display: none; margin-top: 20px;">
+                    <div class="card">
+                        <h3>Выбери период</h3>
+                        <p>Укажи период действия режима</p>
                     </div>
                 </div>
 
-                <div id="work-periods" class="action-buttons" style="display: none;">
+                <div id="work-periods" class="actions" style="display: none;">
                     <!-- Периоды будут загружены динамически -->
                 </div>
 
-                <div id="custom-period" style="display: none; margin-top: 20px;">
-                    <div class="info-card">
-                        <div class="card-header">
-                            <span class="card-icon">📅</span>
-                            <span class="card-title">Укажите период</span>
-                        </div>
+                <div id="custom-period" class="stack" style="display: none; margin-top: 20px;">
+                    <div class="card">
+                        <h3>Укажи период</h3>
                         <div style="margin-top: 15px;">
-                            <label style="display: block; margin-bottom: 10px; color: rgba(255,255,255,0.8);">Дата начала:</label>
-                            <input type="date" id="start-date" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Дата начала:</label>
+                            <input type="date" id="start-date" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 15px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                             
-                            <label style="display: block; margin-bottom: 10px; color: rgba(255,255,255,0.8);">Дата окончания:</label>
-                            <input type="date" id="end-date" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; margin-bottom: 15px;">
-                            
-                            <button onclick="submitWorkMode()" style="width: 100%; padding: 15px; background: linear-gradient(45deg, #4ecdc4, #44a08d); border: none; border-radius: 8px; color: white; font-weight: bold;">
-                                ✅ Подтвердить
-                            </button>
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Дата окончания:</label>
+                            <input type="date" id="end-date" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 20px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                         </div>
                     </div>
+                    <button onclick="submitWorkMode()" class="btn" style="background: #0d9488; width: 100%;">
+                        <span class="dot" style="background: #10b981;"></span>
+                        <span>Подтвердить</span>
+                    </button>
                 </div>
 
-                <div id="confirmation-section" style="display: none;">
-                    <div class="info-card">
-                        <div class="card-header">
-                            <span class="card-icon">✅</span>
-                            <span class="card-title">Подтверждение</span>
+                <div id="confirmation-section" class="stack" style="display: none; margin-top: 20px;">
+                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
+                        <h3>Подтверждение</h3>
+                        <p id="confirmation-text" style="font-size: 16px; line-height: 1.4;"><!-- Текст подтверждения --></p>
                         </div>
-                        <div class="card-content" id="confirmation-text">
-                            <!-- Текст подтверждения -->
-                        </div>
-                        <div style="margin-top: 15px;">
-                            <button onclick="submitWorkMode()" style="width: 100%; padding: 15px; background: linear-gradient(45deg, #4ecdc4, #44a08d); border: none; border-radius: 8px; color: white; font-weight: bold; margin-bottom: 10px;">
-                                ✅ Подтвердить
+                    <div class="actions">
+                        <button onclick="confirmWorkMode()" class="btn" style="background: #0d9488;">
+                            <span class="dot" style="background: #10b981;"></span>
+                            <span>Подтвердить</span>
                             </button>
-                            <button onclick="showMainApp()" style="width: 100%; padding: 15px; background: rgba(255,255,255,0.2); border: none; border-radius: 8px; color: white; font-weight: bold;">
-                                ❌ Отменить
+                        <button onclick="showMainApp()" class="btn" style="background: #7f1d1d;">
+                            <span class="dot" style="background: #ef4444;"></span>
+                            <span>Отменить</span>
                             </button>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Absence Modal -->
-        <div id="absence-modal" class="modal-content" style="display: none;">
-            <div class="modal-header">
-                <button onclick="showMainApp()" class="back-button">←</button>
-                <h2 class="modal-title">Отсутствие</h2>
-                <div style="width: 40px;"></div> <!-- spacer for centering -->
+        <div id="absence-modal" style="display: none;">
+            <div class="wrap">
+                <header style="margin-bottom: 20px;">
+                    <button onclick="showMainApp()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
+                    <div style="flex: 1; text-align: center;">
+                        <div class="title" style="margin: 0;">Отсутствие</div>
             </div>
+                    <div style="width: 40px;"></div>
+                </header>
 
-            <div class="info-cards">
-                <div class="info-card">
-                    <div class="card-header">
-                        <span class="card-icon">⚠️</span>
-                        <span class="card-title">Важно!</span>
-                    </div>
-                    <div class="card-content">
-                        <strong>СНАЧАЛА СОГЛАСУЙ С РУКОВОДИТЕЛЕМ, ЧТОБЫ ОН ЗНАЛ, ЧТО ТЫ ОТСУТСТВУЕШЬ!</strong>
+                <div class="stack" style="margin-bottom: 20px;">
+                    <div class="card" style="background: var(--danger); color: white;">
+                        <h3>⚠️ Важно!</h3>
+                        <p><strong>СНАЧАЛА СОГЛАСУЙ С РУКОВОДИТЕЛЕМ, ЧТОБЫ ОН ЗНАЛ, ЧТО ТЫ ОТСУТСТВУЕШЬ!</strong></p>
+                </div>
+
+                    <div class="card" id="absence-date-section">
+                        <h3>Выберите дату</h3>
+                        <p>Укажите дату вашего отсутствия</p>
                     </div>
                 </div>
 
-                <div class="info-card" id="absence-date-section">
-                    <div class="card-header">
-                        <span class="card-icon">📅</span>
-                        <span class="card-title">Выберите дату</span>
-                    </div>
-                </div>
-
-                <div id="absence-dates" class="action-buttons">
+                <div id="absence-dates" class="actions">
                     <!-- Даты будут загружены динамически -->
                 </div>
 
@@ -613,67 +638,80 @@
         </div>
 
         <!-- Sick Leave Modal -->
-        <div id="sick-leave-modal" class="modal-content" style="display: none;">
-            <div class="modal-header">
-                <button onclick="showMainApp()" class="back-button">←</button>
-                <h2 class="modal-title">🏥 Больничный лист</h2>
-                <div style="width: 40px;"></div> <!-- spacer for centering -->
-            </div>
-
-            <div class="info-cards">
-                <div class="info-card">
-                    <div class="card-header">
-                        <span class="card-icon">😔</span>
-                        <span class="card-title">Мне очень жаль, что ты заболел(а)</span>
+        <div id="sick-leave-modal" style="display: none;">
+            <div class="wrap">
+                <header style="margin-bottom: 20px;">
+                    <button onclick="showMainApp()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
+                    <div style="flex: 1; text-align: center;">
+                        <div class="title" style="margin: 0;">Больничный лист</div>
                     </div>
-                    <div class="card-content">
-                        Давай внесем данные по больничному листу (ЭЛН)
-                    </div>
-                </div>
+                    <div style="width: 40px;"></div>
+                </header>
 
-                <div class="info-card">
-                    <div class="card-header">
-                        <span class="card-icon">📋</span>
-                        <span class="card-title">Выберите тип больничного</span>
+                <div class="stack" style="margin-bottom: 20px;">
+                    <div class="card" style="background: #8b5cf6; color: white;">
+                        <h3>Мне очень жаль, что ты заболел(а)</h3>
+                        <p>Давай внесем данные по больничному листу (ЭЛН)</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Выбери тип больничного</h3>
+                        <p>Укажи тип твоего больничного листа</p>
                     </div>
                 </div>
 
-                <div id="sick-leave-types" class="action-buttons">
+                <div id="sick-leave-types" class="actions">
                     <!-- Типы больничного будут загружены динамически -->
                 </div>
 
-                <div id="sick-leave-form-section" style="display: none; margin-top: 20px;">
-                    <div class="info-card">
-                        <div class="card-header">
-                            <span class="card-icon">📝</span>
-                            <span class="card-title">Данные больничного</span>
-                        </div>
+                <div id="sick-leave-form-section" class="stack" style="display: none; margin-top: 20px;">
+                    <div class="card">
+                        <h3>Данные больничного</h3>
                         <div style="margin-top: 15px;">
-                            <label style="display: block; margin-bottom: 5px; color: rgba(255,255,255,0.8);">Номер ЭЛН:</label>
-                            <input type="text" id="sick-leave-number" placeholder="Введите номер электронного листка нетрудоспособности" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Номер ЭЛН:</label>
+                            <input type="text" id="sick-leave-number" placeholder="Введите номер электронного листка нетрудоспособности" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 15px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                             
-                            <label style="display: block; margin-bottom: 5px; color: rgba(255,255,255,0.8);">Дата начала:</label>
-                            <input type="date" id="sick-leave-start-date" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Дата начала:</label>
+                            <input type="date" id="sick-leave-start-date" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 15px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                             
-                            <label style="display: block; margin-bottom: 5px; color: rgba(255,255,255,0.8);">Дата окончания:</label>
-                            <input type="date" id="sick-leave-end-date" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; margin-bottom: 15px;">
-                            
-                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-                                <button onclick="setSickLeaveDate('today')" style="padding: 8px; background: rgba(255,255,255,0.2); border: none; border-radius: 6px; color: white; font-size: 12px;">
-                                    Сегодня
-                                </button>
-                                <button onclick="setSickLeaveDate('yesterday')" style="padding: 8px; background: rgba(255,255,255,0.2); border: none; border-radius: 6px; color: white; font-size: 12px;">
-                                    Вчера
-                                </button>
-                                <button onclick="setSickLeaveDate('week_ago')" style="padding: 8px; background: rgba(255,255,255,0.2); border: none; border-radius: 6px; color: white; font-size: 12px;">
-                                    Неделю назад
-                                </button>
-                            </div>
-                            
-                            <button onclick="submitSickLeave()" style="width: 100%; padding: 15px; background: linear-gradient(45deg, #ff6b6b, #ee5a52); border: none; border-radius: 8px; color: white; font-weight: bold;">
-                                🏥 СОХРАНИТЬ БОЛЬНИЧНЫЙ
-                            </button>
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Дата окончания:</label>
+                            <input type="date" id="sick-leave-end-date" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 20px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                         </div>
+                    </div>
+
+                    <div id="sick-leave-period-section" class="stack" style="display: none; margin-top: 20px;">
+                        <div class="card">
+                            <h3>Выбери период</h3>
+                            <p>Укажи период действия больничного</p>
+                        </div>
+                    </div>
+
+                    <div id="sick-leave-period-buttons" class="actions" style="display: none;">
+                        <!-- Кнопки периода будут загружены динамически -->
+                    </div>
+                    
+                    <div class="actions">
+                        <button onclick="submitSickLeave()" class="btn" style="background: #0d9488;">
+                            <span class="dot" style="background: #10b981;"></span>
+                            <span>Подтвердить</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="sick-leave-confirmation-section" class="stack" style="display: none; margin-top: 20px;">
+                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
+                        <h3>Подтверждение</h3>
+                        <p id="sick-leave-confirmation-text" style="font-size: 16px; line-height: 1.4;"><!-- Текст подтверждения --></p>
+                    </div>
+                    <div class="actions">
+                        <button onclick="confirmSickLeave()" class="btn" style="background: #0d9488;">
+                            <span class="dot" style="background: #10b981;"></span>
+                            <span>Подтвердить</span>
+                        </button>
+                        <button onclick="showMainApp()" class="btn" style="background: #7f1d1d;">
+                            <span class="dot" style="background: #ef4444;"></span>
+                            <span>Отменить</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -950,43 +988,41 @@
         </div>
 
         <!-- Admin Menu Modal -->
-        <div id="admin-menu-modal" class="modal-content" style="display: none;">
-            <div class="modal-header">
-                <button onclick="showMainApp()" class="back-button">←</button>
-                <h2 class="modal-title">👑 Меню администратора</h2>
-                <div style="width: 40px;"></div> <!-- spacer for centering -->
+        <div id="admin-menu-modal" style="display: none;">
+            <div class="wrap">
+                <header>
+                    <button onclick="showMainApp()" class="back-button">←</button>
+                    <div>
+                        <div class="title">👑 Меню администратора</div>
+                        <div class="subtitle">Управление системой</div>
             </div>
+                </header>
 
-            <div class="info-cards">
-                <div class="info-card">
-                    <div class="card-header">
-                        <span class="card-icon">▦</span>
-                        <span class="card-title">Общая статистика</span>
+                <div class="stack">
+                    <div class="card">
+                        <h3>📊 Общая статистика</h3>
+                        <div id="admin-stats-content">
+                            <p>Загрузка статистики...</p>
                     </div>
-                    <div class="card-content" id="admin-stats-content">
-                        Загрузка статистики...
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <div class="card-header">
-                        <span class="card-icon">⚙️</span>
-                        <span class="card-title">Управление</span>
                     </div>
                 </div>
 
-                <div class="action-buttons">
-                    <button onclick="showEmployeesManagement()" class="action-button">
-                        <span class="icon">👥</span>Управление сотрудниками
+                <div class="actions">
+                    <button onclick="showEmployeesManagement()" class="btn">
+                        <span class="dot" style="background: #10b981;"></span>
+                        <span>Управление сотрудниками</span>
                     </button>
-                    <button onclick="showIssuesManagement()" class="action-button">
-                        <span class="icon">💬</span>Управление обращениями
+                    <button onclick="showIssuesManagement()" class="btn">
+                        <span class="dot" style="background: #f59e0b;"></span>
+                        <span>Управление обращениями</span>
                     </button>
-                    <button onclick="sendStatsToChannel()" class="action-button">
-                        <span class="icon">📤</span>Отправить статистику в канал
+                    <button onclick="sendStatsToChannel()" class="btn">
+                        <span class="dot" style="background: #3b82f6;"></span>
+                        <span>Отправить статистику в канал</span>
                     </button>
-                    <button onclick="showBroadcastMessage()" class="action-button">
-                        <span class="icon">📢</span>Отправить сообщение всем
+                    <button onclick="showBroadcastMessage()" class="btn">
+                        <span class="dot" style="background: #ef4444;"></span>
+                        <span>Отправить сообщение всем</span>
                     </button>
                 </div>
             </div>
@@ -1067,7 +1103,7 @@
         
         async function loadAdminStats() {
             try {
-                const response = await fetch(`/api/admin/stats?initData=${encodeURIComponent(tg.initData)}`, {
+                const response = await fetch(`http://localhost:5000/api/admin/stats?initData=${encodeURIComponent(tg.initData)}`, {
                     method: 'GET'
                 });
 
@@ -1080,29 +1116,29 @@
                 
                 const statsContent = document.getElementById('admin-stats-content');
                 statsContent.innerHTML = `
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
-                        <div style="text-align: center; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                            <div style="font-size: 24px; font-weight: bold; color: #4ecdc4;">${stats.total_employees}</div>
-                            <div style="font-size: 12px; color: rgba(255,255,255,0.7);">Всего сотрудников</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
+                        <div style="text-align: center; padding: 8px; background: rgba(16, 185, 129, 0.1); border-radius: var(--radius); border: 1px solid rgba(16, 185, 129, 0.2);">
+                            <div style="font-size: 20px; font-weight: bold; color: #10b981;">${stats.total_employees}</div>
+                            <div style="font-size: 11px; color: var(--muted);">Всего сотрудников</div>
                         </div>
-                        <div style="text-align: center; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                            <div style="font-size: 24px; font-weight: bold; color: #ffa500;">${stats.active_issues}</div>
-                            <div style="font-size: 12px; color: rgba(255,255,255,0.7);">Активных обращений</div>
+                        <div style="text-align: center; padding: 8px; background: rgba(245, 158, 11, 0.1); border-radius: var(--radius); border: 1px solid rgba(245, 158, 11, 0.2);">
+                            <div style="font-size: 20px; font-weight: bold; color: #f59e0b;">${stats.active_issues}</div>
+                            <div style="font-size: 11px; color: var(--muted);">Активных обращений</div>
                         </div>
-                        <div style="text-align: center; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                            <div style="font-size: 24px; font-weight: bold; color: #ff6b6b;">${stats.issues_this_week}</div>
-                            <div style="font-size: 12px; color: rgba(255,255,255,0.7);">Обращений за неделю</div>
+                        <div style="text-align: center; padding: 8px; background: rgba(59, 130, 246, 0.1); border-radius: var(--radius); border: 1px solid rgba(59, 130, 246, 0.2);">
+                            <div style="font-size: 20px; font-weight: bold; color: #3b82f6;">${stats.issues_this_week}</div>
+                            <div style="font-size: 11px; color: var(--muted);">Обращений за неделю</div>
                         </div>
-                        <div style="text-align: center; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                            <div style="font-size: 24px; font-weight: bold; color: #ff4757;">${stats.current_sick_leaves}</div>
-                            <div style="font-size: 12px; color: rgba(255,255,255,0.7);">На больничном</div>
+                        <div style="text-align: center; padding: 8px; background: rgba(239, 68, 68, 0.1); border-radius: var(--radius); border: 1px solid rgba(239, 68, 68, 0.2);">
+                            <div style="font-size: 20px; font-weight: bold; color: #ef4444;">${stats.current_sick_leaves}</div>
+                            <div style="font-size: 11px; color: var(--muted);">На больничном</div>
                         </div>
                     </div>
                 `;
                 
             } catch (error) {
                 console.error('Ошибка:', error);
-                document.getElementById('admin-stats-content').innerHTML = '<div style="color: rgba(255,255,255,0.7);">Ошибка загрузки статистики</div>';
+                document.getElementById('admin-stats-content').innerHTML = '<p style="color: var(--muted);">Ошибка загрузки статистики</p>';
             }
         }
         
@@ -2041,7 +2077,7 @@
                 avatarEl.textContent = '';
             }
         }
-         
+        
         async function loadUserData() {
             try {
                 // Возвращаем API вызов для получения данных пользователя
@@ -2130,6 +2166,11 @@
 
         async function handleAction(action) {
             try {
+                if (action === 'vacation') {
+                    tg.showAlert('Функция "Мой отпуск" в разработке');
+                    return;
+                }
+                
                 if (action === 'work_mode') {
                     await showWorkModeModal();
                     return;
@@ -2140,6 +2181,21 @@
                     return;
                 }
                 
+                if (action === 'sick_leave') {
+                    await showSickLeaveModal();
+                    return;
+                }
+                
+                if (action === 'crocotime') {
+                    tg.showAlert('Функция "Мой Crocotime" в разработке');
+                    return;
+                }
+                
+                if (action === 'admin' || action === 'admin_menu') {
+                    await showAdminMenuModal();
+                    return;
+                }
+                
                 if (action === 'sos') {
                     await showSosModal();
                     return;
@@ -2147,16 +2203,6 @@
                 
                 if (action === 'sos_menu') {
                     await showSosMenuModal();
-                    return;
-                }
-                
-                if (action === 'sick_leave') {
-                    await showSickLeaveModal();
-                    return;
-                }
-                
-                if (action === 'admin_menu') {
-                    await showAdminMenuModal();
                     return;
                 }
                 
@@ -2403,7 +2449,7 @@
         async function showSickLeaveModal() {
             try {
                 // Загружаем опции больничного
-                const response = await fetch('/api/sick-leave', {
+                const response = await fetch('http://localhost:5000/api/sick-leave', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2424,11 +2470,18 @@
                 const typesContainer = document.getElementById('sick-leave-types');
                 typesContainer.innerHTML = '';
                 
-                sickLeaveOptions.leave_types.forEach(type => {
+                sickLeaveOptions.leave_types.forEach((type, index) => {
                     const button = document.createElement('button');
-                    button.className = 'action-button';
-                    button.innerHTML = `<span class="icon">${type.name.split(' ')[0]}</span>${type.name.substring(2)}`;
-                    button.onclick = () => selectLeaveType(type.id);
+                    button.className = 'btn';
+                    const colors = ['#8b5cf6', '#f59e0b', '#ef4444', '#10b981', '#3b82f6'];
+                    const color = colors[index % colors.length];
+                    // Убираем эмодзи и переименовываем
+                    let cleanName = type.name.replace(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '').trim();
+                    if (cleanName.includes('Первичный больничный')) cleanName = 'Первичный';
+                    if (cleanName.includes('Продление больничного')) cleanName = 'Продление';
+                    button.innerHTML = `<span class="dot" style="background: ${color};"></span><span>${cleanName}</span>`;
+                    button.onclick = () => selectLeaveType(type.id, button);
+                    button.dataset.typeId = type.id;
                     typesContainer.appendChild(button);
                 });
                 
@@ -2447,11 +2500,47 @@
             }
         }
         
-        function selectLeaveType(typeId) {
+        function selectLeaveType(typeId, selectedButton) {
             selectedLeaveType = typeId;
+            
+            // Сбрасываем стили всех кнопок типов больничного
+            const typeButtons = document.querySelectorAll('#sick-leave-types .btn');
+            typeButtons.forEach(btn => {
+                btn.style.background = 'var(--navy-700)';
+            });
+            
+            // Подсвечиваем выбранную кнопку
+            if (selectedButton) {
+                selectedButton.style.background = '#ea580c';
+            }
             
             // Показываем форму
             document.getElementById('sick-leave-form-section').style.display = 'block';
+            
+            // Показываем секцию периода
+            document.getElementById('sick-leave-period-section').style.display = 'block';
+            document.getElementById('sick-leave-period-buttons').style.display = 'block';
+            
+            // Заполняем кнопки периода
+            const periodContainer = document.getElementById('sick-leave-period-buttons');
+            periodContainer.innerHTML = '';
+            
+            if (sickLeaveOptions.date_suggestions) {
+                const periods = [
+                    { name: 'Сегодня', value: 'today', color: '#10b981' },
+                    { name: 'Вчера', value: 'yesterday', color: '#f59e0b' },
+                    { name: 'Неделю назад', value: 'week_ago', color: '#ef4444' }
+                ];
+                
+                periods.forEach(period => {
+                    const button = document.createElement('button');
+                    button.className = 'btn';
+                    button.innerHTML = `<span class="dot" style="background: ${period.color};"></span><span>${period.name}</span>`;
+                    button.onclick = () => selectSickLeavePeriod(period.value, button);
+                    button.dataset.periodValue = period.value;
+                    periodContainer.appendChild(button);
+                });
+            }
             
             // Устанавливаем сегодняшнюю дату по умолчанию
             const today = new Date().toISOString().split('T')[0];
@@ -2459,6 +2548,22 @@
             document.getElementById('sick-leave-end-date').value = today;
         }
         
+        function selectSickLeavePeriod(periodValue, selectedButton) {
+            // Сбрасываем стили всех кнопок периода
+            const periodButtons = document.querySelectorAll('#sick-leave-period-buttons .btn');
+            periodButtons.forEach(btn => {
+                btn.style.background = 'var(--navy-700)';
+            });
+            
+            // Подсвечиваем выбранную кнопку
+            if (selectedButton) {
+                selectedButton.style.background = '#ea580c';
+            }
+            
+            // Устанавливаем дату
+            setSickLeaveDate(periodValue);
+        }
+
         function setSickLeaveDate(dateType) {
             const startDateInput = document.getElementById('sick-leave-start-date');
             const endDateInput = document.getElementById('sick-leave-end-date');
@@ -2482,27 +2587,49 @@
         }
         
         async function submitSickLeave() {
+            const leaveNumber = document.getElementById('sick-leave-number').value.trim();
+            const startDate = document.getElementById('sick-leave-start-date').value;
+            const endDate = document.getElementById('sick-leave-end-date').value;
+            
+            if (!leaveNumber) {
+                tg.showAlert('Пожалуйста, введи номер ЭЛН');
+                return;
+            }
+            
+            if (!startDate || !endDate) {
+                tg.showAlert('Пожалуйста, укажи даты больничного');
+                return;
+            }
+            
+            if (startDate > endDate) {
+                tg.showAlert('Дата начала не может быть позже даты окончания');
+                return;
+            }
+            
+            // Находим выбранный тип больничного
+            const selectedTypeButton = document.querySelector('#sick-leave-types .btn[style*="#ea580c"]');
+            const typeName = selectedTypeButton ? selectedTypeButton.textContent.trim() : 'Неизвестный тип';
+            
+            // Форматируем даты
+            const startDateFormatted = new Date(startDate).toLocaleDateString('ru-RU');
+            const endDateFormatted = new Date(endDate).toLocaleDateString('ru-RU');
+            
+            // Формируем текст подтверждения
+            const confirmationText = `Тип: ${typeName}\nНомер ЭЛН: ${leaveNumber}\nПериод: ${startDateFormatted} - ${endDateFormatted}`;
+            
+            // Показываем подтверждение
+            document.getElementById('sick-leave-confirmation-text').textContent = confirmationText;
+            document.getElementById('sick-leave-form-section').style.display = 'none';
+            document.getElementById('sick-leave-confirmation-section').style.display = 'block';
+        }
+        
+        async function confirmSickLeave() {
             try {
                 const leaveNumber = document.getElementById('sick-leave-number').value.trim();
                 const startDate = document.getElementById('sick-leave-start-date').value;
                 const endDate = document.getElementById('sick-leave-end-date').value;
                 
-                if (!leaveNumber) {
-                    tg.showAlert('Пожалуйста, введите номер ЭЛН');
-                    return;
-                }
-                
-                if (!startDate || !endDate) {
-                    tg.showAlert('Пожалуйста, укажите даты больничного');
-                    return;
-                }
-                
-                if (startDate > endDate) {
-                    tg.showAlert('Дата начала не может быть позже даты окончания');
-                    return;
-                }
-                
-                const response = await fetch('/api/sick-leave', {
+                const response = await fetch('http://localhost:5000/api/sick-leave', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2519,7 +2646,7 @@
                 const result = await response.json();
                 
                 if (response.ok) {
-                    tg.showAlert(result.message);
+                    tg.showAlert('Юху 🎉! Готово!');
                     showMainApp();
                 } else {
                     tg.showAlert('Ошибка: ' + result.error);
@@ -2534,7 +2661,7 @@
         async function showAbsenceModal() {
             try {
                 // Загружаем опции отсутствия
-                const response = await fetch('/api/absence', {
+                const response = await fetch('http://localhost:5000/api/absence', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2557,8 +2684,8 @@
                 
                 absenceOptions.dates.forEach(date => {
                     const button = document.createElement('button');
-                    button.className = 'action-button';
-                    button.innerHTML = `<span class="icon">📅</span>${date.name.substring(2)}`;
+                    button.className = 'btn';
+                    button.innerHTML = `<span class="dot dot-absence"></span><span>${date.name}</span>`;
                     button.onclick = () => selectAbsenceDate(date.id, date.date);
                     datesContainer.appendChild(button);
                 });
@@ -2713,7 +2840,7 @@
                     dateValue = customAbsenceDate;
                 }
                 
-                const response = await fetch('/api/absence', {
+                const response = await fetch('http://localhost:5000/api/absence', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2746,7 +2873,7 @@
         async function showWorkModeModal() {
             try {
                 // Загружаем опции режима работы
-                const response = await fetch('/api/work-mode', {
+                const response = await fetch('http://localhost:5000/api/work-mode', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2767,11 +2894,18 @@
                 const modesContainer = document.getElementById('work-modes');
                 modesContainer.innerHTML = '';
                 
-                workModeOptions.modes.forEach(mode => {
+                workModeOptions.modes.forEach((mode, index) => {
                     const button = document.createElement('button');
-                    button.className = 'action-button';
-                    button.innerHTML = `<span class="icon">${mode.name.split(' ')[0]}</span>${mode.name.substring(2)}`;
-                    button.onclick = () => selectWorkMode(mode.id);
+                    button.className = 'btn';
+                    const colors = ['#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#3b82f6'];
+                    const color = colors[index % colors.length];
+                    // Убираем эмодзи и переименовываем
+                    let cleanName = mode.name.replace(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '').trim();
+                    if (cleanName.includes('Офисный формат работы')) cleanName = 'Офисный';
+                    if (cleanName.includes('Удаленный формат работы') || cleanName.includes('Удалённый формат работы')) cleanName = 'Удалённый';
+                    button.innerHTML = `<span class="dot" style="background: ${color};"></span><span>${cleanName}</span>`;
+                    button.onclick = () => selectWorkMode(mode.id, button);
+                    button.dataset.modeId = mode.id;
                     modesContainer.appendChild(button);
                 });
                 
@@ -2781,8 +2915,17 @@
             }
         }
 
-        function selectWorkMode(mode) {
+        function selectWorkMode(mode, selectedButton) {
             selectedMode = mode;
+            
+            // Убираем подсветку со всех кнопок режимов
+            const allModeButtons = document.querySelectorAll('#work-modes .btn');
+            allModeButtons.forEach(btn => {
+                btn.style.background = 'var(--navy-700)';
+            });
+            
+            // Подсвечиваем выбранную кнопку
+            selectedButton.style.background = '#ea580c';
             
             // Показываем секцию выбора периода
             document.getElementById('period-section').style.display = 'block';
@@ -2792,17 +2935,33 @@
             const periodsContainer = document.getElementById('work-periods');
             periodsContainer.innerHTML = '';
             
-            workModeOptions.periods.forEach(period => {
+            workModeOptions.periods.forEach((period, index) => {
                 const button = document.createElement('button');
-                button.className = 'action-button';
-                button.innerHTML = `<span class="icon">📅</span>${period.name.substring(2)}`;
-                button.onclick = () => selectPeriod(period.id);
+                button.className = 'btn';
+                const colors = ['#f59e0b', '#10b981', '#8b5cf6', '#3b82f6', '#ef4444'];
+                const color = colors[index % colors.length];
+                // Убираем эмодзи из названия
+                const cleanName = period.name.replace(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '').trim();
+                button.innerHTML = `<span class="dot" style="background: ${color};"></span><span>${cleanName}</span>`;
+                button.onclick = () => selectPeriod(period.id, button);
+                button.dataset.periodId = period.id;
                 periodsContainer.appendChild(button);
             });
         }
 
-        function selectPeriod(period) {
+        function selectPeriod(period, selectedButton) {
             selectedPeriod = period;
+            
+            // Убираем подсветку со всех кнопок периодов
+            const allPeriodButtons = document.querySelectorAll('#work-periods .btn');
+            allPeriodButtons.forEach(btn => {
+                btn.style.background = 'var(--navy-700)';
+            });
+            
+            // Подсвечиваем выбранную кнопку
+            if (selectedButton) {
+                selectedButton.style.background = '#ea580c';
+            }
             
             if (period === 'custom') {
                 // Показываем поля для ввода дат
@@ -2840,7 +2999,7 @@
                     }
                 }
                 
-                const response = await fetch('/api/work-mode', {
+                const response = await fetch('http://localhost:5000/api/work-mode', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2857,7 +3016,7 @@
                 const result = await response.json();
                 
                 if (response.ok) {
-                    tg.showAlert(result.message);
+                    tg.showAlert('Юху 🎉! Готово!');
                     showMainApp();
                 } else {
                     tg.showAlert('Ошибка: ' + result.error);
@@ -3806,7 +3965,8 @@
             function applyCompact() {
                 const w = window.innerWidth; 
                 const h = window.innerHeight;
-                const compact = (w < 360) || (h < 560);
+                // Убираем компактный режим - всегда используем полный размер
+                const compact = false;
                 document.body.classList.toggle('compact', compact);
                 document.documentElement.style.setProperty('--vh', `${h * 0.01}px`);
             }
