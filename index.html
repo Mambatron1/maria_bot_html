@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для провери -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        NBtender SOS TEXT FIXED
+        NBtender SOS STATE RESET
     </div>
      
     <div class="wrap">
@@ -2316,11 +2316,9 @@
                 
                 // Сбрасываем выделение всех кнопок
                 setTimeout(() => {
-                    const allButtons = document.querySelectorAll('#sos-issue-types .action-button, #sos-anonymity-options .action-button');
+                    const allButtons = document.querySelectorAll('#sos-issue-types .btn, #sos-anonymity-options .btn');
                     allButtons.forEach(btn => {
-                        btn.style.background = '';
-                        btn.style.boxShadow = '';
-                        btn.style.transform = '';
+                        btn.style.background = 'var(--navy-700)';
                     });
                 }, 100);
                 
@@ -2330,6 +2328,10 @@
                 document.getElementById('sos-pseudonym-section').style.display = 'none';
                 document.getElementById('sos-description-section').style.display = 'none';
                 document.getElementById('sos-confirmation-section').style.display = 'none';
+                
+                // Очищаем поля ввода
+                document.getElementById('sos-pseudonym').value = '';
+                document.getElementById('sos-description').value = '';
                 
             } catch (error) {
                 console.error('Ошибка:', error);
