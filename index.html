@@ -303,9 +303,10 @@
 
         /* Модальные окна - голубой фон и фиксированная структура */
         #work-mode-modal,
-        #absence-modal, 
+        #absence-modal,
         #sick-leave-modal,
-        #admin-menu-modal {
+        #admin-menu-modal,
+        #sos-modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -320,7 +321,8 @@
         #work-mode-modal .wrap,
         #absence-modal .wrap,
         #sick-leave-modal .wrap,
-        #admin-menu-modal .wrap {
+        #admin-menu-modal .wrap,
+        #sos-modal .wrap {
             max-width: 440px;
             margin: 0 auto;
             padding: var(--pad) var(--pad) var(--pad);
@@ -341,7 +343,7 @@
 <body>
     <!-- Индикатор версии для провери -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        NBtender SICK LEAVE SIMPLE
+        NBtender SOS STYLED
     </div>
      
     <div class="wrap">
@@ -547,93 +549,107 @@
         </div>
 
         <!-- SOS Modal -->
-        <div id="sos-modal" class="modal-content" style="display: none;">
-            <div class="modal-header">
-                <button onclick="showMainApp()" class="back-button">←</button>
-                <h2 class="modal-title">SOS - Сообщить о проблеме</h2>
-                <div style="width: 40px;"></div> <!-- spacer for centering -->
-            </div>
+        <div id="sos-modal" style="display: none;">
+            <div class="wrap">
+                <header style="margin-bottom: 20px;">
+                    <button onclick="showMainApp()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
+                    <div style="flex: 1; text-align: center;">
+                        <div class="title" style="margin: 0;">Нужна помощь</div>
+                    </div>
+                    <div style="width: 40px;"></div>
+                </header>
 
-            <div class="info-cards">
-                <div class="info-card">
-                    <div class="card-header">
-                        <span class="card-icon">⚡</span>
-                        <span class="card-title">Выберите тип проблемы</span>
+                <div class="stack" style="margin-bottom: 20px;">
+                    <div class="card" style="background: #ef4444; color: white;">
+                        <h3>Расскажи о своей проблеме</h3>
+                        <p>Мы поможем тебе решить любой вопрос</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Выбери тип проблемы</h3>
+                        <p>Укажи, с чем связана твоя проблема</p>
                     </div>
                 </div>
 
-                <div id="sos-issue-types" class="action-buttons">
+                <div id="sos-issue-types" class="actions">
                     <!-- Типы проблем будут загружены динамически -->
                 </div>
 
                 <!-- Кнопка "Мои обращения" -->
-                <div class="info-card" style="margin-top: 20px;">
-                    <button onclick="showSosMenuModal()" class="action-button" style="width: 100%; padding: 15px; background: linear-gradient(45deg, #667eea, #764ba2); border: none; border-radius: 8px; color: white; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                        <span style="font-size: 20px;">📋</span>
+                <div class="actions" style="margin-top: 20px;">
+                    <button onclick="showSosMenuModal()" class="btn" style="background: #667eea;">
+                        <span class="dot" style="background: #764ba2;"></span>
                         <span>Мои обращения</span>
                     </button>
                 </div>
 
-                <div class="info-card" id="sos-anonymity-section" style="display: none;">
-                    <div class="card-header">
-                        <span class="card-icon">🕵️</span>
-                        <span class="card-title">Как вы хотите обратиться?</span>
+                <div id="sos-anonymity-section" class="stack" style="display: none; margin-top: 20px;">
+                    <div class="card">
+                        <h3>Как ты хочешь обратиться?</h3>
+                        <p>Выбери способ обращения</p>
                     </div>
                 </div>
 
-                <div id="sos-anonymity-options" class="action-buttons" style="display: none;">
+                <div id="sos-anonymity-options" class="actions" style="display: none;">
                     <!-- Опции анонимности будут загружены динамически -->
                 </div>
 
-                <div id="sos-pseudonym-section" style="display: none; margin-top: 20px;">
-                    <div class="info-card">
-                        <div class="card-header">
-                            <span class="card-icon">🎭</span>
-                            <span class="card-title">Укажите псевдоним</span>
-                        </div>
+                <div id="sos-pseudonym-section" class="stack" style="display: none; margin-top: 20px;">
+                    <div class="card">
+                        <h3>Укажи псевдоним</h3>
                         <div style="margin-top: 15px;">
-                            <input type="text" id="sos-pseudonym" placeholder="Введите псевдоним" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; margin-bottom: 15px;">
-                            
-                            <button onclick="selectSosPseudonym()" style="width: 100%; padding: 15px; background: linear-gradient(45deg, #4ecdc4, #44a08d); border: none; border-radius: 8px; color: white; font-weight: bold;">
-                                ✅ Продолжить
-                            </button>
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Псевдоним:</label>
+                            <input type="text" id="sos-pseudonym" placeholder="Введи псевдоним" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 15px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                         </div>
+                    </div>
+                    
+                    <div class="actions">
+                        <button onclick="selectSosPseudonym()" class="btn" style="background: #0d9488;">
+                            <span class="dot" style="background: #10b981;"></span>
+                            <span>Продолжить</span>
+                        </button>
+                        <button onclick="showMainApp()" class="btn" style="background: #7f1d1d;">
+                            <span class="dot" style="background: #ef4444;"></span>
+                            <span>Отменить</span>
+                        </button>
                     </div>
                 </div>
 
-                <div id="sos-description-section" style="display: none; margin-top: 20px;">
-                    <div class="info-card">
-                        <div class="card-header">
-                            <span class="card-icon">📝</span>
-                            <span class="card-title">Опишите проблему</span>
-                        </div>
+                <div id="sos-description-section" class="stack" style="display: none; margin-top: 20px;">
+                    <div class="card">
+                        <h3>Опиши проблему</h3>
                         <div style="margin-top: 15px;">
-                            <textarea id="sos-description" placeholder="Подробно опишите вашу проблему (минимум 10 символов)" style="width: 100%; height: 120px; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; margin-bottom: 15px; resize: vertical; font-family: inherit;"></textarea>
-                            
-                            <button onclick="submitSos()" style="width: 100%; padding: 15px; background: linear-gradient(45deg, #ff4757, #ff3742); border: none; border-radius: 8px; color: white; font-weight: bold;">
-                                🚨 ОТПРАВИТЬ SOS
-                            </button>
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Описание проблемы:</label>
+                            <textarea id="sos-description" placeholder="Подробно опиши твою проблему (минимум 10 символов)" style="width: calc(100% - 24px); height: 120px; padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 15px; resize: vertical; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;"></textarea>
                         </div>
+                    </div>
+                    
+                    <div class="actions">
+                        <button onclick="submitSos()" class="btn" style="background: #0d9488;">
+                            <span class="dot" style="background: #10b981;"></span>
+                            <span>Подтвердить</span>
+                        </button>
+                        <button onclick="showMainApp()" class="btn" style="background: #7f1d1d;">
+                            <span class="dot" style="background: #ef4444;"></span>
+                            <span>Отменить</span>
+                        </button>
                     </div>
                 </div>
 
-                <div id="sos-confirmation-section" style="display: none;">
-                    <div class="info-card">
-                        <div class="card-header">
-                            <span class="card-icon">✅</span>
-                            <span class="card-title">Подтверждение</span>
-                        </div>
-                        <div class="card-content" id="sos-confirmation-text">
-                            <!-- Текст подтверждения -->
-                        </div>
-                        <div style="margin-top: 15px;">
-                            <button onclick="submitSos()" style="width: 100%; padding: 15px; background: linear-gradient(45deg, #ff4757, #ff3742); border: none; border-radius: 8px; color: white; font-weight: bold; margin-bottom: 10px;">
-                                🚨 ОТПРАВИТЬ SOS
-                            </button>
-                            <button onclick="showMainApp()" style="width: 100%; padding: 15px; background: rgba(255,255,255,0.2); border: none; border-radius: 8px; color: white; font-weight: bold;">
-                                ❌ Отменить
-                            </button>
-                        </div>
+                <div id="sos-confirmation-section" class="stack" style="display: none; margin-top: 20px;">
+                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
+                        <h3>Подтверждение</h3>
+                        <p id="sos-confirmation-text" style="font-size: 16px; line-height: 1.4;"><!-- Текст подтверждения --></p>
+                    </div>
+                    <div class="actions">
+                        <button onclick="confirmSos()" class="btn" style="background: #0d9488;">
+                            <span class="dot" style="background: #10b981;"></span>
+                            <span>Отправить</span>
+                        </button>
+                        <button onclick="showMainApp()" class="btn" style="background: #7f1d1d;">
+                            <span class="dot" style="background: #ef4444;"></span>
+                            <span>Отменить</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -2270,12 +2286,18 @@
                 const typesContainer = document.getElementById('sos-issue-types');
                 typesContainer.innerHTML = '';
                 
-                sosOptions.issue_types.forEach(type => {
+                sosOptions.issue_types.forEach((type, index) => {
                     const button = document.createElement('button');
-                    button.className = 'action-button';
-                    button.id = `issue-type-${type.id}`;
-                    button.innerHTML = `<span class="icon">${type.name.split(' ')[0]}</span>${type.name.substring(2)}`;
-                    button.onclick = () => selectIssueType(type.id);
+                    button.className = 'btn';
+                    const colors = ['#ef4444', '#f59e0b', '#10b981', '#8b5cf6', '#3b82f6'];
+                    const color = colors[index % colors.length];
+                    // Убираем эмодзи и переименовываем
+                    let cleanName = type.name.replace(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '').trim();
+                    if (cleanName.includes('Проблема личного характера')) cleanName = 'Личная проблема';
+                    if (cleanName.includes('Техническая проблема')) cleanName = 'Техническая проблема';
+                    button.innerHTML = `<span class="dot" style="background: ${color};"></span><span>${cleanName}</span>`;
+                    button.onclick = () => selectIssueType(type.id, button);
+                    button.dataset.typeId = type.id;
                     typesContainer.appendChild(button);
                 });
                 
@@ -2308,60 +2330,56 @@
             }
         }
         
-        function selectIssueType(typeId) {
+        function selectIssueType(typeId, selectedButton) {
             selectedIssueType = typeId;
             
-            // Убираем выделение со всех кнопок типов проблем
-            const allTypeButtons = document.querySelectorAll('#sos-issue-types .action-button');
-            allTypeButtons.forEach(btn => {
-                btn.style.background = '';
-                btn.style.boxShadow = '';
-                btn.style.transform = '';
+            // Сбрасываем стили всех кнопок типов проблем
+            const typeButtons = document.querySelectorAll('#sos-issue-types .btn');
+            typeButtons.forEach(btn => {
+                btn.style.background = 'var(--navy-700)';
             });
             
-            // Выделяем выбранную кнопку
-            const selectedButton = document.getElementById(`issue-type-${typeId}`);
+            // Подсвечиваем выбранную кнопку
             if (selectedButton) {
-                selectedButton.style.background = 'linear-gradient(45deg, #ff6b6b, #ee5a24)';
-                selectedButton.style.boxShadow = '0 0 20px rgba(255, 107, 107, 0.5)';
-                selectedButton.style.transform = 'scale(1.05)';
+                selectedButton.style.background = '#ea580c';
             }
             
             // Показываем секцию выбора анонимности
             document.getElementById('sos-anonymity-section').style.display = 'block';
-            document.getElementById('sos-anonymity-options').style.display = 'grid';
+            document.getElementById('sos-anonymity-options').style.display = 'block';
             
             // Заполняем опции анонимности
             const anonymityContainer = document.getElementById('sos-anonymity-options');
             anonymityContainer.innerHTML = '';
             
-            sosOptions.anonymity_options.forEach(option => {
+            sosOptions.anonymity_options.forEach((option, index) => {
                 const button = document.createElement('button');
-                button.className = 'action-button';
-                button.id = `anonymity-${option.id}`;
-                button.innerHTML = `<span class="icon">${option.name.split(' ')[0]}</span>${option.name.substring(2)}`;
-                button.onclick = () => selectAnonymity(option.id);
+                button.className = 'btn';
+                const colors = ['#10b981', '#f59e0b', '#8b5cf6'];
+                const color = colors[index % colors.length];
+                // Убираем эмодзи и переименовываем
+                let cleanName = option.name.replace(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '').trim();
+                if (cleanName.includes('Открыто (с именем)')) cleanName = 'Открыто';
+                if (cleanName.includes('Анонимно')) cleanName = 'Анонимно';
+                button.innerHTML = `<span class="dot" style="background: ${color};"></span><span>${cleanName}</span>`;
+                button.onclick = () => selectAnonymity(option.id, button);
+                button.dataset.anonymityId = option.id;
                 anonymityContainer.appendChild(button);
             });
         }
         
-        function selectAnonymity(anonymityId) {
+        function selectAnonymity(anonymityId, selectedButton) {
             selectedAnonymity = anonymityId;
             
-            // Убираем выделение со всех кнопок анонимности
-            const allAnonymityButtons = document.querySelectorAll('#sos-anonymity-options .action-button');
-            allAnonymityButtons.forEach(btn => {
-                btn.style.background = '';
-                btn.style.boxShadow = '';
-                btn.style.transform = '';
+            // Сбрасываем стили всех кнопок анонимности
+            const anonymityButtons = document.querySelectorAll('#sos-anonymity-options .btn');
+            anonymityButtons.forEach(btn => {
+                btn.style.background = 'var(--navy-700)';
             });
             
-            // Выделяем выбранную кнопку
-            const selectedButton = document.getElementById(`anonymity-${anonymityId}`);
+            // Подсвечиваем выбранную кнопку
             if (selectedButton) {
-                selectedButton.style.background = 'linear-gradient(45deg, #5f27cd, #341f97)';
-                selectedButton.style.boxShadow = '0 0 20px rgba(95, 39, 205, 0.5)';
-                selectedButton.style.transform = 'scale(1.05)';
+                selectedButton.style.background = '#ea580c';
             }
             
             if (anonymityId === 'anonymous') {
@@ -2390,21 +2408,44 @@
         }
         
         async function submitSos() {
+            // Получаем описание
+            const descriptionInput = document.getElementById('sos-description');
+            sosDescription = descriptionInput.value.trim();
+            
+            if (!sosDescription) {
+                tg.showAlert('Пожалуйста, опиши проблему');
+                return;
+            }
+            
+            if (sosDescription.length < 10) {
+                tg.showAlert('Описание должно содержать минимум 10 символов');
+                return;
+            }
+            
+            // Находим выбранный тип проблемы
+            const selectedTypeButton = document.querySelector('#sos-issue-types .btn[style*="#ea580c"]');
+            const typeName = selectedTypeButton ? selectedTypeButton.textContent.trim() : 'Неизвестный тип';
+            
+            // Находим выбранный способ обращения
+            const selectedAnonymityButton = document.querySelector('#sos-anonymity-options .btn[style*="#ea580c"]');
+            const anonymityName = selectedAnonymityButton ? selectedAnonymityButton.textContent.trim() : 'Неизвестно';
+            
+            // Формируем текст подтверждения
+            let confirmationText = `Тип проблемы: ${typeName}\nСпособ обращения: ${anonymityName}`;
+            if (sosPseudonym) {
+                confirmationText += `\nПсевдоним: ${sosPseudonym}`;
+            }
+            confirmationText += `\nОписание: ${sosDescription}`;
+            
+            // Показываем подтверждение
+            document.getElementById('sos-confirmation-text').textContent = confirmationText;
+            document.getElementById('sos-description-section').style.display = 'none';
+            document.getElementById('sos-pseudonym-section').style.display = 'none';
+            document.getElementById('sos-confirmation-section').style.display = 'block';
+        }
+        
+        async function confirmSos() {
             try {
-                // Получаем описание
-                const descriptionInput = document.getElementById('sos-description');
-                sosDescription = descriptionInput.value.trim();
-                
-                if (!sosDescription) {
-                    tg.showAlert('Пожалуйста, опишите проблему');
-                    return;
-                }
-                
-                if (sosDescription.length < 10) {
-                    tg.showAlert('Описание должно содержать минимум 10 символов');
-                    return;
-                }
-                
                 const response = await fetch('http://localhost:5000/api/sos', {
                     method: 'POST',
                     headers: {
@@ -2422,7 +2463,7 @@
                 const result = await response.json();
                 
                 if (response.ok) {
-                    tg.showAlert(result.message);
+                    tg.showAlert('Юху 🎉! Готово!');
                     // Если обращение создано, показываем чат
                     if (result.issue_id) {
                         setTimeout(() => {
