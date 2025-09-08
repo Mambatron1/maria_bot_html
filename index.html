@@ -341,7 +341,7 @@
 <body>
     <!-- Индикатор версии для провери -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        NBtender SICK LEAVE V2 FINAL
+        NBtender SICK LEAVE SIMPLE
     </div>
     
     <div class="wrap">
@@ -680,22 +680,15 @@
                             <input type="date" id="sick-leave-end-date" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 20px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                         </div>
                     </div>
-
-                    <div id="sick-leave-period-section" class="stack" style="display: none; margin-top: 20px;">
-                        <div class="card">
-                            <h3>Выбери период</h3>
-                            <p>Укажи период действия больничного</p>
-                        </div>
-                    </div>
-
-                    <div id="sick-leave-period-buttons" class="actions" style="display: none;">
-                        <!-- Кнопки периода будут загружены динамически -->
-                    </div>
                     
                     <div class="actions">
                         <button onclick="submitSickLeave()" class="btn" style="background: #0d9488;">
                             <span class="dot" style="background: #10b981;"></span>
                             <span>Подтвердить</span>
+                        </button>
+                        <button onclick="showMainApp()" class="btn" style="background: #7f1d1d;">
+                            <span class="dot" style="background: #ef4444;"></span>
+                            <span>Отменить</span>
                         </button>
                     </div>
                 </div>
@@ -2519,74 +2512,12 @@
             // Показываем форму
             document.getElementById('sick-leave-form-section').style.display = 'block';
             
-            // Показываем секцию периода
-            document.getElementById('sick-leave-period-section').style.display = 'block';
-            document.getElementById('sick-leave-period-buttons').style.display = 'block';
-            
-            // Заполняем кнопки периода
-            const periodContainer = document.getElementById('sick-leave-period-buttons');
-            periodContainer.innerHTML = '';
-            
-            if (sickLeaveOptions.date_suggestions) {
-                const periods = [
-                    { name: 'Сегодня', value: 'today', color: '#10b981' },
-                    { name: 'Вчера', value: 'yesterday', color: '#f59e0b' },
-                    { name: 'Неделю назад', value: 'week_ago', color: '#ef4444' }
-                ];
-                
-                periods.forEach(period => {
-                    const button = document.createElement('button');
-                    button.className = 'btn';
-                    button.innerHTML = `<span class="dot" style="background: ${period.color};"></span><span>${period.name}</span>`;
-                    button.onclick = () => selectSickLeavePeriod(period.value, button);
-                    button.dataset.periodValue = period.value;
-                    periodContainer.appendChild(button);
-                });
-            }
-            
             // Устанавливаем сегодняшнюю дату по умолчанию
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('sick-leave-start-date').value = today;
             document.getElementById('sick-leave-end-date').value = today;
         }
         
-        function selectSickLeavePeriod(periodValue, selectedButton) {
-            // Сбрасываем стили всех кнопок периода
-            const periodButtons = document.querySelectorAll('#sick-leave-period-buttons .btn');
-            periodButtons.forEach(btn => {
-                btn.style.background = 'var(--navy-700)';
-            });
-            
-            // Подсвечиваем выбранную кнопку
-            if (selectedButton) {
-                selectedButton.style.background = '#ea580c';
-            }
-            
-            // Устанавливаем дату
-            setSickLeaveDate(periodValue);
-        }
-
-        function setSickLeaveDate(dateType) {
-            const startDateInput = document.getElementById('sick-leave-start-date');
-            const endDateInput = document.getElementById('sick-leave-end-date');
-            
-            let dateValue = '';
-            
-            if (dateType === 'today') {
-                dateValue = sickLeaveOptions.date_suggestions.today;
-            } else if (dateType === 'yesterday') {
-                dateValue = sickLeaveOptions.date_suggestions.yesterday;
-            } else if (dateType === 'week_ago') {
-                dateValue = sickLeaveOptions.date_suggestions.week_ago;
-            }
-            
-            startDateInput.value = dateValue;
-            
-            // Если дата окончания не установлена или меньше даты начала, устанавливаем её равной дате начала
-            if (!endDateInput.value || endDateInput.value < dateValue) {
-                endDateInput.value = dateValue;
-            }
-        }
         
         async function submitSickLeave() {
             const leaveNumber = document.getElementById('sick-leave-number').value.trim();
