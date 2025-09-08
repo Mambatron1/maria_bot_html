@@ -338,12 +338,17 @@
             gap: 12px;
             justify-items: center;
         }
+        
+        /* Увеличенный отступ для кнопок анонимности в SOS */
+        #sos-anonymity-options.actions {
+            gap: 20px;
+        }
     </style>
 </head>
 <body>
     <!-- Индикатор версии для провери -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        NBtender SOS STYLED
+        NBtender SOS FIXED
     </div>
      
     <div class="wrap">
@@ -2424,11 +2429,21 @@
             
             // Находим выбранный тип проблемы
             const selectedTypeButton = document.querySelector('#sos-issue-types .btn[style*="#ea580c"]');
-            const typeName = selectedTypeButton ? selectedTypeButton.textContent.trim() : 'Неизвестный тип';
+            let typeName = 'Неизвестный тип';
+            if (selectedTypeButton) {
+                // Извлекаем только текст, исключая dot
+                const textSpan = selectedTypeButton.querySelector('span:last-child');
+                typeName = textSpan ? textSpan.textContent.trim() : selectedTypeButton.textContent.trim();
+            }
             
             // Находим выбранный способ обращения
             const selectedAnonymityButton = document.querySelector('#sos-anonymity-options .btn[style*="#ea580c"]');
-            const anonymityName = selectedAnonymityButton ? selectedAnonymityButton.textContent.trim() : 'Неизвестно';
+            let anonymityName = 'Неизвестно';
+            if (selectedAnonymityButton) {
+                // Извлекаем только текст, исключая dot
+                const textSpan = selectedAnonymityButton.querySelector('span:last-child');
+                anonymityName = textSpan ? textSpan.textContent.trim() : selectedAnonymityButton.textContent.trim();
+            }
             
             // Формируем текст подтверждения
             let confirmationText = `Тип проблемы: ${typeName}\nСпособ обращения: ${anonymityName}`;
