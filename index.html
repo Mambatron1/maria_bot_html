@@ -339,16 +339,23 @@
             justify-items: center;
         }
         
-        /* Увеличенный отступ для кнопок анонимности в SOS */
+        /* Стандартный отступ для кнопок анонимности в SOS */
         #sos-anonymity-options.actions {
-            gap: 20px;
+            gap: 12px !important;
+        }
+        
+        /* Дополнительное правило для кнопок анонимности */
+        #sos-anonymity-options {
+            display: grid !important;
+            gap: 12px !important;
+            justify-items: center !important;
         }
     </style>
 </head>
 <body>
     <!-- Индикатор версии для провери -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        NBtender SOS FIXED
+        NBtender SOS CLEAN
     </div>
      
     <div class="wrap">
@@ -565,11 +572,6 @@
                 </header>
 
                 <div class="stack" style="margin-bottom: 20px;">
-                    <div class="card" style="background: #ef4444; color: white;">
-                        <h3>Расскажи о своей проблеме</h3>
-                        <p>Мы поможем тебе решить любой вопрос</p>
-                    </div>
-
                     <div class="card">
                         <h3>Выбери тип проблемы</h3>
                         <p>Укажи, с чем связана твоя проблема</p>
