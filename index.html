@@ -786,40 +786,82 @@
 
         <!-- Employees Management Modal -->
         <div id="employees-management-modal" style="display: none;">
-            <div class="header">
-                <button onclick="showAdminMenuModal()" style="background: none; border: none; color: white; font-size: 24px; float: left;">←</button>
-                <h2 style="text-align: center; margin: 0;">👥 Управление сотрудниками</h2>
-            </div>
+            <div class="container">
+                <header>
+                    <button onclick="showAdminMenuModal()" class="back-btn">←</button>
+                    <div class="title">
+                        <h1>👥 Управление сотрудниками</h1>
+                        <div class="subtitle" id="employees-subtitle">Управление персоналом</div>
+                    </div>
+                </header>
 
-            <div style="padding: 20px; height: calc(100vh - 80px); overflow-y: auto;">
-                <div class="action-buttons" style="margin-bottom: 20px;">
-                    <button onclick="showAddEmployeeModal()" class="action-button" style="background: linear-gradient(45deg, #2ed573, #17c0eb);">
-                        <span class="icon">➕</span>Добавить сотрудника
-                    </button>
-                </div>
-                
-                <!-- Поле поиска -->
-                <div style="margin-bottom: 20px;">
-                    <div class="info-card">
-                        <div class="card-header">
-                            <span class="card-icon">🔍</span>
-                            <span class="card-title">Поиск сотрудников</span>
+                <div class="stack">
+                    <!-- Статистика сотрудников -->
+                    <div class="card">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                            <h3 style="margin: 0;">📊 Статистика персонала</h3>
+                            <button onclick="loadEmployeesList()" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); color: #3b82f6; border-radius: 6px; padding: 4px 8px; font-size: 12px; cursor: pointer;">🔄</button>
                         </div>
-                        <div class="card-content">
-                            <input type="text" id="employee-search" placeholder="Введите имя, фамилию или номер телефона..." 
-                                   oninput="filterEmployees()" 
-                                   style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); 
-                                          background: rgba(255,255,255,0.1); color: white; font-size: 16px;">
-                            <div id="search-results-count" style="margin-top: 8px; font-size: 12px; color: rgba(255,255,255,0.6);">
-                                <!-- Счетчик результатов поиска -->
+                        <div id="employees-stats-content">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+                                <div style="text-align: center; padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: var(--radius); border: 1px solid rgba(16, 185, 129, 0.2);">
+                                    <div style="font-size: 24px; font-weight: bold; color: #10b981;" id="total-employees-count">0</div>
+                                    <div style="font-size: 12px; color: var(--muted);">Всего</div>
+                                </div>
+                                <div style="text-align: center; padding: 12px; background: rgba(59, 130, 246, 0.1); border-radius: var(--radius); border: 1px solid rgba(59, 130, 246, 0.2);">
+                                    <div style="font-size: 24px; font-weight: bold; color: #3b82f6;" id="active-employees-count">0</div>
+                                    <div style="font-size: 12px; color: var(--muted);">Активных</div>
+                                </div>
+                                <div style="text-align: center; padding: 12px; background: rgba(239, 68, 68, 0.1); border-radius: var(--radius); border: 1px solid rgba(239, 68, 68, 0.2);">
+                                    <div style="font-size: 24px; font-weight: bold; color: #ef4444;" id="blocked-employees-count">0</div>
+                                    <div style="font-size: 12px; color: var(--muted);">Заблокированных</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <div id="employees-list">
-                    <div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">
-                        Загрузка списка сотрудников...
+
+                    <!-- Управление -->
+                    <div class="card">
+                        <h3>⚙️ Действия</h3>
+                        <div class="actions">
+                            <button onclick="showAddEmployeeModal()" class="btn">
+                                <span class="dot" style="background: #10b981;"></span>
+                                <span>Добавить сотрудника</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Поиск и фильтры -->
+                    <div class="card">
+                        <h3>🔍 Поиск и фильтры</h3>
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <input type="text" id="employee-search" placeholder="Поиск по имени, фамилии или телефону..." 
+                                   oninput="filterEmployees()" 
+                                   style="flex: 1; padding: 12px; border-radius: var(--radius); border: 1px solid var(--border); 
+                                          background: var(--card); color: var(--text); font-size: 14px;">
+                            <select id="employee-status-filter" onchange="filterEmployees()" 
+                                    style="padding: 12px; border-radius: var(--radius); border: 1px solid var(--border); 
+                                           background: var(--card); color: var(--text); font-size: 14px;">
+                                <option value="all">Все статусы</option>
+                                <option value="active">Активные</option>
+                                <option value="blocked">Заблокированные</option>
+                                <option value="admin">Администраторы</option>
+                            </select>
+                        </div>
+                        <div id="search-results-count" style="font-size: 12px; color: var(--muted);">
+                            <!-- Счетчик результатов поиска -->
+                        </div>
+                    </div>
+
+                    <!-- Список сотрудников -->
+                    <div class="card">
+                        <h3>👥 Список сотрудников</h3>
+                        <div id="employees-list">
+                            <div style="text-align: center; color: var(--muted); padding: 20px;">
+                                <div style="font-size: 16px;">📈 Загрузка списка сотрудников...</div>
+                                <div style="font-size: 12px; margin-top: 8px;">Получение данных из базы</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -935,15 +977,82 @@
 
         <!-- Issues Management Modal -->
         <div id="issues-management-modal" style="display: none;">
-            <div class="header">
-                <button onclick="showAdminMenuModal()" style="background: none; border: none; color: white; font-size: 24px; float: left;">←</button>
-                <h2 style="text-align: center; margin: 0;">💬 Управление обращениями</h2>
-            </div>
+            <div class="container">
+                <header>
+                    <button onclick="showAdminMenuModal()" class="back-btn">←</button>
+                    <div class="title">
+                        <h1>💬 Управление обращениями</h1>
+                        <div class="subtitle" id="issues-subtitle">Обработка запросов пользователей</div>
+                    </div>
+                </header>
 
-            <div style="padding: 20px; height: calc(100vh - 80px); overflow-y: auto;">
-                <div id="issues-list">
-                    <div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">
-                        Загрузка списка обращений...
+                <div class="stack">
+                    <!-- Статистика обращений -->
+                    <div class="card">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                            <h3 style="margin: 0;">📊 Статистика обращений</h3>
+                            <button onclick="loadIssuesList()" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); color: #3b82f6; border-radius: 6px; padding: 4px 8px; font-size: 12px; cursor: pointer;">🔄</button>
+                        </div>
+                        <div id="issues-stats-content">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px;">
+                                <div style="text-align: center; padding: 10px; background: rgba(245, 158, 11, 0.1); border-radius: var(--radius); border: 1px solid rgba(245, 158, 11, 0.2);">
+                                    <div style="font-size: 20px; font-weight: bold; color: #f59e0b;" id="active-issues-count">0</div>
+                                    <div style="font-size: 11px; color: var(--muted);">Активных</div>
+                                </div>
+                                <div style="text-align: center; padding: 10px; background: rgba(16, 185, 129, 0.1); border-radius: var(--radius); border: 1px solid rgba(16, 185, 129, 0.2);">
+                                    <div style="font-size: 20px; font-weight: bold; color: #10b981;" id="closed-issues-count">0</div>
+                                    <div style="font-size: 11px; color: var(--muted);">Закрытых</div>
+                                </div>
+                                <div style="text-align: center; padding: 10px; background: rgba(59, 130, 246, 0.1); border-radius: var(--radius); border: 1px solid rgba(59, 130, 246, 0.2);">
+                                    <div style="font-size: 20px; font-weight: bold; color: #3b82f6;" id="technical-issues-count">0</div>
+                                    <div style="font-size: 11px; color: var(--muted);">Технических</div>
+                                </div>
+                                <div style="text-align: center; padding: 10px; background: rgba(139, 92, 246, 0.1); border-radius: var(--radius); border: 1px solid rgba(139, 92, 246, 0.2);">
+                                    <div style="font-size: 20px; font-weight: bold; color: #8b5cf6;" id="personal-issues-count">0</div>
+                                    <div style="font-size: 11px; color: var(--muted);">Личных</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Фильтры -->
+                    <div class="card">
+                        <h3>🔍 Поиск и фильтры</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                            <input type="text" id="issues-search" placeholder="Поиск по тексту..." 
+                                   oninput="filterIssues()" 
+                                   style="padding: 12px; border-radius: var(--radius); border: 1px solid var(--border); 
+                                          background: var(--card); color: var(--text); font-size: 14px;">
+                            <select id="issues-status-filter" onchange="filterIssues()" 
+                                    style="padding: 12px; border-radius: var(--radius); border: 1px solid var(--border); 
+                                           background: var(--card); color: var(--text); font-size: 14px;">
+                                <option value="all">Все статусы</option>
+                                <option value="open">Открытые</option>
+                                <option value="in_progress">В работе</option>
+                                <option value="closed">Закрытые</option>
+                            </select>
+                            <select id="issues-type-filter" onchange="filterIssues()" 
+                                    style="padding: 12px; border-radius: var(--radius); border: 1px solid var(--border); 
+                                           background: var(--card); color: var(--text); font-size: 14px;">
+                                <option value="all">Все типы</option>
+                                <option value="technical">Технические</option>
+                                <option value="personal">Личные</option>
+                            </select>
+                        </div>
+                        <div id="issues-results-count" style="font-size: 12px; color: var(--muted);">
+                            <!-- Счетчик результатов поиска -->
+                        </div>
+                    </div>
+
+                    <!-- Список обращений -->
+                    <div class="card">
+                        <h3>📋 Список обращений</h3>
+                        <div id="issues-list">
+                            <div style="text-align: center; color: var(--muted); padding: 20px;">
+                                <div style="font-size: 16px;">📈 Загрузка списка обращений...</div>
+                                <div style="font-size: 12px; margin-top: 8px;">Получение данных из базы</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1236,6 +1345,9 @@
                 allEmployees = data.employees;
                 filteredEmployees = [...allEmployees];
                 
+                // Обновляем статистику
+                updateEmployeesStats(allEmployees);
+                
                 // Очищаем поле поиска
                 document.getElementById('employee-search').value = '';
                 
@@ -1251,48 +1363,123 @@
         function displayEmployeesList(employees) {
             const container = document.getElementById('employees-list');
             if (!employees || employees.length === 0) {
-                container.innerHTML = '<div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">Сотрудники не найдены</div>';
+                container.innerHTML = '<div style="text-align: center; color: var(--muted); padding: 20px;">Сотрудники не найдены</div>';
                 return;
             }
             
             container.innerHTML = '';
             employees.forEach(emp => {
                 const empDiv = document.createElement('div');
-                empDiv.className = 'info-card';
-                empDiv.style.marginBottom = '15px';
+                empDiv.style.cssText = `
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-radius: var(--radius);
+                    padding: 16px;
+                    margin-bottom: 12px;
+                    transition: all 0.2s ease;
+                `;
                 
                 const statusIcon = emp.is_blocked ? '🔴' : '🟢';
                 const statusText = emp.is_blocked ? 'Заблокирован' : 'Активен';
-                const statusColor = emp.is_blocked ? '#ff4757' : '#2ed573';
-                const adminBadge = emp.is_admin ? '<span style="background: #ffa500; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; margin-left: 10px;">АДМИН</span>' : '';
+                const statusColor = emp.is_blocked ? '#ef4444' : '#10b981';
+                const adminBadge = emp.is_admin ? '<span style="background: #f59e0b; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; margin-left: 8px;">АДМИН</span>' : '';
+                const botStatus = emp.chat_id ? '✅ В боте' : '⚠️ Не авторизован';
+                const botStatusColor = emp.chat_id ? '#10b981' : '#f59e0b';
                 
                 empDiv.innerHTML = `
-                    <div class="card-header">
-                        <span class="card-icon">👤</span>
-                        <span class="card-title">${emp.first_name} ${emp.last_name}${adminBadge}</span>
-                        <span style="float: right; font-size: 12px; color: ${statusColor};">${statusIcon} ${statusText}</span>
-                    </div>
-                    <div class="card-content">
-                        <div style="font-size: 14px; margin-bottom: 10px;">📞 ${emp.phone}</div>
-                        ${emp.chat_id ? '<div style="font-size: 12px; color: rgba(255,255,255,0.6);">✅ Зарегистрирован в боте</div>' : '<div style="font-size: 12px; color: rgba(255,255,255,0.6);">⚠️ Не авторизован в боте</div>'}
-                        <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
-                            <button onclick="toggleEmployeeBlock('${emp.phone}', ${!emp.is_blocked})" 
-                                    style="padding: 8px 16px; background: ${emp.is_blocked ? '#2ed573' : '#ff4757'}; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer;">
-                                ${emp.is_blocked ? '✅ Разблокировать' : '🔒 Заблокировать'}
-                            </button>
-                            <button onclick="editEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}', ${emp.is_admin})" 
-                                    style="padding: 8px 16px; background: #ffa500; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer;">
-                                ✏️ Редактировать
-                            </button>
-                            <button onclick="deleteEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}')" 
-                                    style="padding: 8px 16px; background: #ff4757; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer;">
-                                🗑️ Удалить
-                            </button>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                        <div>
+                            <div style="font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px;">
+                                👤 ${emp.first_name} ${emp.last_name}${adminBadge}
+                            </div>
+                            <div style="font-size: 14px; color: var(--muted); margin-bottom: 4px;">📞 ${emp.phone}</div>
+                            <div style="font-size: 12px; color: ${botStatusColor};">${botStatus}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 12px; color: ${statusColor}; font-weight: 500;">${statusIcon} ${statusText}</div>
                         </div>
                     </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button onclick="toggleEmployeeBlock('${emp.phone}', ${!emp.is_blocked})" 
+                                style="padding: 6px 12px; background: ${emp.is_blocked ? '#10b981' : '#ef4444'}; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: opacity 0.2s;">
+                            ${emp.is_blocked ? '✅ Разблокировать' : '🔒 Заблокировать'}
+                        </button>
+                        <button onclick="editEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}', ${emp.is_admin})" 
+                                style="padding: 6px 12px; background: #f59e0b; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: opacity 0.2s;">
+                            ✏️ Редактировать
+                        </button>
+                        <button onclick="deleteEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}')" 
+                                style="padding: 6px 12px; background: #ef4444; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: opacity 0.2s;">
+                            🗑️ Удалить
+                        </button>
+                    </div>
                 `;
+                
+                // Добавляем hover эффект
+                empDiv.addEventListener('mouseenter', () => {
+                    empDiv.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                    empDiv.style.transform = 'translateY(-1px)';
+                });
+                empDiv.addEventListener('mouseleave', () => {
+                    empDiv.style.borderColor = 'var(--border)';
+                    empDiv.style.transform = 'translateY(0)';
+                });
+                
                 container.appendChild(empDiv);
             });
+        }
+        
+        function updateEmployeesStats(employees) {
+            const total = employees.length;
+            const active = employees.filter(emp => !emp.is_blocked).length;
+            const blocked = employees.filter(emp => emp.is_blocked).length;
+            
+            document.getElementById('total-employees-count').textContent = total;
+            document.getElementById('active-employees-count').textContent = active;
+            document.getElementById('blocked-employees-count').textContent = blocked;
+            
+            // Обновляем подзаголовок
+            document.getElementById('employees-subtitle').textContent = `${total} сотрудников, ${active} активных`;
+        }
+        
+        function filterEmployees() {
+            const searchTerm = document.getElementById('employee-search').value.toLowerCase();
+            const statusFilter = document.getElementById('employee-status-filter').value;
+            
+            filteredEmployees = allEmployees.filter(emp => {
+                // Фильтр по поиску
+                const matchesSearch = !searchTerm || 
+                    emp.first_name.toLowerCase().includes(searchTerm) ||
+                    emp.last_name.toLowerCase().includes(searchTerm) ||
+                    emp.phone.includes(searchTerm);
+                
+                // Фильтр по статусу
+                let matchesStatus = true;
+                if (statusFilter === 'active') {
+                    matchesStatus = !emp.is_blocked;
+                } else if (statusFilter === 'blocked') {
+                    matchesStatus = emp.is_blocked;
+                } else if (statusFilter === 'admin') {
+                    matchesStatus = emp.is_admin;
+                }
+                
+                return matchesSearch && matchesStatus;
+            });
+            
+            displayEmployeesList(filteredEmployees);
+            updateSearchResultsCount();
+        }
+        
+        function updateSearchResultsCount() {
+            const total = allEmployees ? allEmployees.length : 0;
+            const filtered = filteredEmployees ? filteredEmployees.length : 0;
+            const countElement = document.getElementById('search-results-count');
+            
+            if (filtered === total) {
+                countElement.textContent = `Показано ${filtered} сотрудников`;
+            } else {
+                countElement.textContent = `Найдено ${filtered} из ${total} сотрудников`;
+            }
         }
         
         async function toggleEmployeeBlock(phone, isBlocked) {
@@ -1381,9 +1568,14 @@
                 
                 // Сохраняем в кэш
                 issuesListCache = data.issues;
+                allIssues = [...issuesListCache];
+                filteredIssues = [...allIssues];
+                
+                // Обновляем статистику
+                updateIssuesStats(allIssues);
                 
                 // Отображаем
-                displayCachedIssuesList();
+                displayIssuesList(filteredIssues);
                 
             } catch (error) {
                 console.error('Ошибка в loadIssuesList:', error);
@@ -1391,167 +1583,175 @@
             }
         }
         
-        function displayCachedIssuesList() {
-            const container = document.getElementById('issues-list');
-            const data = { issues: issuesListCache };
+        function updateIssuesStats(issues) {
+            const active = issues.filter(issue => issue.status !== 'closed').length;
+            const closed = issues.filter(issue => issue.status === 'closed').length;
+            const technical = issues.filter(issue => issue.type === 'technical').length;
+            const personal = issues.filter(issue => issue.type === 'personal').length;
             
-            setTimeout(() => {
-                setTimeout(() => {
-                        // Создаем полный список всех обращений
-                        let html = '<div style="padding: 20px;">';
-                        
-                        data.issues.forEach(issue => {
-                            let statusIcon = '🟡';
-                            let statusText = 'Активно';
-                            let statusColor = '#ffa500';
-                            if (issue.status === 'closed') {
-                                statusIcon = '🔴';
-                                statusText = 'Закрыто';
-                                statusColor = '#ff4757';
-                            } else if (issue.status === 'resolved') {
-                                statusIcon = '🟢';
-                                statusText = 'Решено';
-                                statusColor = '#2ed573';
-                            }
-                            
-                            const typeIcon = issue.type === 'personal' ? '💔' : '🖥';
-                            const typeText = issue.type === 'personal' ? 'Личная проблема' : 'Техническая проблема';
-                            const anonymityText = issue.is_anonymous ? ` (${issue.pseudonym || 'Анонимно'})` : '';
-                            
-                            html += '<div style="background: rgba(255,255,255,0.1); margin: 15px 0; padding: 15px; border-radius: 8px;">';
-                            html += '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">';
-                            html += '<div style="font-weight: bold;">' + typeIcon + ' Обращение #' + issue.id + anonymityText + '</div>';
-                            html += '<div style="font-size: 12px; color: ' + statusColor + ';">' + statusIcon + ' ' + statusText + '</div>';
-                            html += '</div>';
-                            html += '<div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 5px;">' + typeText + '</div>';
-                            html += '<div style="font-size: 14px; margin-bottom: 8px;">' + issue.description + '</div>';
-                            html += '<div style="font-size: 12px; color: rgba(255,255,255,0.6);">От: ' + issue.employee_name + '</div>';
-                            html += '<div style="font-size: 12px; color: rgba(255,255,255,0.6);">Создано: ' + new Date(issue.created_at).toLocaleString('ru-RU') + '</div>';
-                            
-                            if (issue.last_response_preview) {
-                                html += '<div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2);">';
-                                html += '<div style="font-size: 12px; color: rgba(255,255,255,0.6);">Последний ответ:</div>';
-                                html += '<div style="font-size: 13px; color: rgba(255,255,255,0.8);">' + issue.last_response_preview + '</div>';
-                                html += '</div>';
-                            }
-                            
-                            html += '<div style="margin-top: 15px; text-align: center;">';
-                            if (issue.status === 'closed') {
-                                // Для закрытых обращений - кнопка просмотра
-                                html += '<button onclick="openIssueDialog(' + issue.id + ')" style="background: #667eea; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 12px; cursor: pointer;">👁️ Просмотр</button>';
-                            } else {
-                                // Для активных обращений - кнопки ответить и закрыть
-                                html += '<button onclick="openIssueDialog(' + issue.id + ')" style="background: #2ed573; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 12px; cursor: pointer; margin-right: 10px;">💬 Ответить</button>';
-                                html += '<button onclick="closeIssue(' + issue.id + ')" style="background: #ff4757; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 12px; cursor: pointer;">✅ Закрыть обращение</button>';
-                            }
-                            html += '</div>';
-                            
-                            html += '</div>';
-                        });
-                        
-                        html += '</div>';
-                        container.innerHTML = html;
-                    }, 1000);
-                }, 1000);
+            document.getElementById('active-issues-count').textContent = active;
+            document.getElementById('closed-issues-count').textContent = closed;
+            document.getElementById('technical-issues-count').textContent = technical;
+            document.getElementById('personal-issues-count').textContent = personal;
+            
+            // Обновляем подзаголовок
+            document.getElementById('issues-subtitle').textContent = `${issues.length} обращений, ${active} активных`;
+        }
+        
+        function filterIssues() {
+            const searchTerm = document.getElementById('issues-search').value.toLowerCase();
+            const statusFilter = document.getElementById('issues-status-filter').value;
+            const typeFilter = document.getElementById('issues-type-filter').value;
+            
+            filteredIssues = allIssues.filter(issue => {
+                // Фильтр по поиску
+                const matchesSearch = !searchTerm || 
+                    issue.description.toLowerCase().includes(searchTerm) ||
+                    issue.employee_name.toLowerCase().includes(searchTerm) ||
+                    (issue.pseudonym && issue.pseudonym.toLowerCase().includes(searchTerm));
+                
+                // Фильтр по статусу
+                let matchesStatus = true;
+                if (statusFilter === 'open') {
+                    matchesStatus = issue.status === 'open';
+                } else if (statusFilter === 'in_progress') {
+                    matchesStatus = issue.status === 'in_progress';
+                } else if (statusFilter === 'closed') {
+                    matchesStatus = issue.status === 'closed';
+                }
+                
+                // Фильтр по типу
+                let matchesType = true;
+                if (typeFilter === 'technical') {
+                    matchesType = issue.type === 'technical';
+                } else if (typeFilter === 'personal') {
+                    matchesType = issue.type === 'personal';
+                }
+                
+                return matchesSearch && matchesStatus && matchesType;
+            });
+            
+            displayIssuesList(filteredIssues);
+            updateIssuesResultsCount();
+        }
+        
+        function updateIssuesResultsCount() {
+            const total = allIssues ? allIssues.length : 0;
+            const filtered = filteredIssues ? filteredIssues.length : 0;
+            const countElement = document.getElementById('issues-results-count');
+            
+            if (filtered === total) {
+                countElement.textContent = `Показано ${filtered} обращений`;
+            } else {
+                countElement.textContent = `Найдено ${filtered} из ${total} обращений`;
+            }
         }
         
         function displayIssuesList(issues) {
-            try {
-                const container = document.getElementById('issues-list');
-                
-                if (!issues || issues.length === 0) {
-                    container.innerHTML = '<div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">Обращения не найдены</div>';
-                    return;
-                }
-
-                container.innerHTML = '<div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">Шаг 4: Отображаем ' + issues.length + ' обращений...</div>';
+            const container = document.getElementById('issues-list');
             
-            // Небольшая задержка для показа сообщения
-            setTimeout(() => {
-                container.innerHTML = '';
+            if (!issues || issues.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: var(--muted); padding: 20px;">Обращения не найдены</div>';
+                return;
+            }
+
+            container.innerHTML = '';
             issues.forEach(issue => {
                 const issueDiv = document.createElement('div');
-                issueDiv.className = 'info-card';
-                issueDiv.style.marginBottom = '15px';
+                issueDiv.style.cssText = `
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-radius: var(--radius);
+                    padding: 16px;
+                    margin-bottom: 12px;
+                    transition: all 0.2s ease;
+                `;
                 
                 let statusIcon = '🟡';
-                let statusText = 'Активно';
-                let statusColor = '#ffa500';
+                let statusText = 'Открыто';
+                let statusColor = '#f59e0b';
+                
                 if (issue.status === 'closed') {
                     statusIcon = '🔴';
                     statusText = 'Закрыто';
-                    statusColor = '#ff4757';
+                    statusColor = '#ef4444';
+                } else if (issue.status === 'in_progress') {
+                    statusIcon = '🟠';
+                    statusText = 'В работе';
+                    statusColor = '#f97316';
                 } else if (issue.status === 'resolved') {
                     statusIcon = '🟢';
                     statusText = 'Решено';
-                    statusColor = '#2ed573';
+                    statusColor = '#10b981';
                 }
                 
                 const typeIcon = issue.type === 'personal' ? '💔' : '🖥';
                 const typeText = issue.type === 'personal' ? 'Личная проблема' : 'Техническая проблема';
+                const typeColor = issue.type === 'personal' ? '#8b5cf6' : '#3b82f6';
                 const anonymityText = issue.is_anonymous ? ` (${issue.pseudonym || 'Анонимно'})` : '';
-                
-                let lastMessageInfo = '';
-                if (issue.last_response_preview) {
-                    lastMessageInfo = `
-                        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2);">
-                            <div style="font-size: 12px; color: rgba(255,255,255,0.6);">Последний ответ:</div>
-                            <div style="font-size: 13px; color: rgba(255,255,255,0.8);">${issue.last_response_preview}</div>
-                        </div>
-                    `;
-                }
                 
                 // Определяем кнопки в зависимости от статуса
                 let buttonsHtml = '';
                 if (issue.status === 'closed') {
-                    // Для закрытых обращений - кнопка просмотра
                     buttonsHtml = `
                         <button onclick="openIssueDialog(${issue.id})" 
-                                style="padding: 8px 16px; background: #667eea; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer;">
+                                style="padding: 6px 12px; background: #6366f1; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: opacity 0.2s;">
                             👁️ Просмотр
                         </button>
                     `;
                 } else {
-                    // Для активных обращений - кнопки ответить и закрыть
                     buttonsHtml = `
                         <button onclick="openIssueDialog(${issue.id})" 
-                                style="padding: 8px 16px; background: #2ed573; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; margin-right: 10px;">
+                                style="padding: 6px 12px; background: #10b981; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; margin-right: 8px; transition: opacity 0.2s;">
                             💬 Ответить
                         </button>
                         <button onclick="closeIssue(${issue.id})" 
-                                style="padding: 8px 16px; background: #ff4757; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer;">
-                            ✅ Закрыть обращение
+                                style="padding: 6px 12px; background: #ef4444; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: opacity 0.2s;">
+                            ✅ Закрыть
                         </button>
                     `;
                 }
 
                 issueDiv.innerHTML = `
-                    <div class="card-header">
-                        <span class="card-icon">${typeIcon}</span>
-                        <span class="card-title">Обращение #${issue.id}${anonymityText}</span>
-                        <span style="float: right; font-size: 12px; color: ${statusColor};">${statusIcon} ${statusText}</span>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                        <div>
+                            <div style="font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px;">
+                                ${typeIcon} Обращение #${issue.id}${anonymityText}
+                            </div>
+                            <div style="font-size: 12px; color: ${typeColor}; margin-bottom: 8px;">${typeText}</div>
+                            <div style="font-size: 14px; color: var(--text); margin-bottom: 8px; line-height: 1.4;">${issue.description}</div>
+                            <div style="font-size: 12px; color: var(--muted);">
+                                👤 ${issue.employee_name} • 📅 ${new Date(issue.created_at).toLocaleString('ru-RU')}
+                                ${issue.response_count > 0 ? ` • 💬 ${issue.response_count} ответов` : ''}
+                            </div>
+                            ${issue.last_response_preview ? `
+                                <div style="margin-top: 8px; padding: 8px; background: rgba(59, 130, 246, 0.1); border-radius: 6px; border-left: 3px solid #3b82f6;">
+                                    <div style="font-size: 11px; color: var(--muted); margin-bottom: 2px;">Последний ответ:</div>
+                                    <div style="font-size: 12px; color: var(--text);">${issue.last_response_preview}</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 12px; color: ${statusColor}; font-weight: 500; margin-bottom: 8px;">${statusIcon} ${statusText}</div>
+                        </div>
                     </div>
-                    <div class="card-content">
-                        <div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 5px;">${typeText}</div>
-                        <div style="font-size: 14px; margin-bottom: 8px;">${issue.description}</div>
-                        <div style="font-size: 12px; color: rgba(255,255,255,0.6);">
-                            👤 ${issue.employee_name} • 📅 ${new Date(issue.created_at).toLocaleString('ru-RU')}
-                            ${issue.response_count > 0 ? ` • 💬 ${issue.response_count} ответов` : ''}
-                        </div>
-                        ${lastMessageInfo}
-                        <div style="margin-top: 15px;">
-                            ${buttonsHtml}
-                        </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        ${buttonsHtml}
                     </div>
                 `;
+                
+                // Добавляем hover эффект
+                issueDiv.addEventListener('mouseenter', () => {
+                    issueDiv.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                    issueDiv.style.transform = 'translateY(-1px)';
+                });
+                issueDiv.addEventListener('mouseleave', () => {
+                    issueDiv.style.borderColor = 'var(--border)';
+                    issueDiv.style.transform = 'translateY(0)';
+                });
+                
                 container.appendChild(issueDiv);
             });
-            }, 1000);
-            
-            } catch (error) {
-                const container = document.getElementById('issues-list');
-                container.innerHTML = '<div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">Ошибка в displayIssuesList: ' + error.message + '</div>';
-            }
         }
         
         let currentIssueId = null;
@@ -2223,6 +2423,10 @@
         // Переменные для поиска сотрудников
         let allEmployees = [];
         let filteredEmployees = [];
+        
+        // Переменные для обращений
+        let allIssues = [];
+        let filteredIssues = [];
 
         async function handleAction(action) {
             try {
