@@ -1018,10 +1018,19 @@
 
                 <div class="stack">
                     <div class="card">
-                        <h3>📊 Общая статистика</h3>
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                            <h3 style="margin: 0;">📊 Общая статистика системы</h3>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="font-size: 12px; color: var(--muted);">Обновлено: <span id="stats-update-time">загрузка...</span></div>
+                                <button onclick="loadAdminStats()" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); color: #3b82f6; border-radius: 6px; padding: 4px 8px; font-size: 12px; cursor: pointer;">🔄</button>
+                            </div>
+                        </div>
                         <div id="admin-stats-content">
-                            <p>Загрузка статистики...</p>
-                    </div>
+                            <div style="text-align: center; padding: 20px; color: var(--muted);">
+                                <div style="font-size: 16px;">📈 Загрузка статистики...</div>
+                                <div style="font-size: 12px; margin-top: 8px;">Получение данных из базы</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1132,31 +1141,64 @@
                 const data = await response.json();
                 const stats = data.stats;
                 
+                // Обновляем время последнего обновления
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+                document.getElementById('stats-update-time').textContent = timeString;
+                
                 const statsContent = document.getElementById('admin-stats-content');
                 statsContent.innerHTML = `
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
-                        <div style="text-align: center; padding: 8px; background: rgba(16, 185, 129, 0.1); border-radius: var(--radius); border: 1px solid rgba(16, 185, 129, 0.2);">
-                            <div style="font-size: 20px; font-weight: bold; color: #10b981;">${stats.total_employees}</div>
-                            <div style="font-size: 11px; color: var(--muted);">Всего сотрудников</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <!-- Основные показатели -->
+                        <div style="text-align: center; padding: 15px; background: rgba(16, 185, 129, 0.15); border-radius: var(--radius); border: 1px solid rgba(16, 185, 129, 0.3);">
+                            <div style="font-size: 28px; font-weight: bold; color: #10b981;">${stats.total_employees}</div>
+                            <div style="font-size: 14px; color: var(--text); font-weight: 500; margin-top: 4px;">Всего сотрудников</div>
+                            <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Активных: ${stats.active_employees || stats.total_employees}</div>
                         </div>
-                        <div style="text-align: center; padding: 8px; background: rgba(245, 158, 11, 0.1); border-radius: var(--radius); border: 1px solid rgba(245, 158, 11, 0.2);">
-                            <div style="font-size: 20px; font-weight: bold; color: #f59e0b;">${stats.active_issues}</div>
-                            <div style="font-size: 11px; color: var(--muted);">Активных обращений</div>
+                        
+                        <div style="text-align: center; padding: 15px; background: rgba(245, 158, 11, 0.15); border-radius: var(--radius); border: 1px solid rgba(245, 158, 11, 0.3);">
+                            <div style="font-size: 28px; font-weight: bold; color: #f59e0b;">${stats.active_issues}</div>
+                            <div style="font-size: 14px; color: var(--text); font-weight: 500; margin-top: 4px;">Активных обращений</div>
+                            <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Сегодня: ${stats.issues_today || 0}</div>
                         </div>
-                        <div style="text-align: center; padding: 8px; background: rgba(59, 130, 246, 0.1); border-radius: var(--radius); border: 1px solid rgba(59, 130, 246, 0.2);">
-                            <div style="font-size: 20px; font-weight: bold; color: #3b82f6;">${stats.issues_this_week}</div>
-                            <div style="font-size: 11px; color: var(--muted);">Обращений за неделю</div>
+                        
+                        <div style="text-align: center; padding: 15px; background: rgba(59, 130, 246, 0.15); border-radius: var(--radius); border: 1px solid rgba(59, 130, 246, 0.3);">
+                            <div style="font-size: 28px; font-weight: bold; color: #3b82f6;">${stats.issues_this_week}</div>
+                            <div style="font-size: 14px; color: var(--text); font-weight: 500; margin-top: 4px;">Обращений за неделю</div>
+                            <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Решено: ${stats.resolved_issues_week || 0}</div>
                         </div>
-                        <div style="text-align: center; padding: 8px; background: rgba(239, 68, 68, 0.1); border-radius: var(--radius); border: 1px solid rgba(239, 68, 68, 0.2);">
-                            <div style="font-size: 20px; font-weight: bold; color: #ef4444;">${stats.current_sick_leaves}</div>
-                            <div style="font-size: 11px; color: var(--muted);">На больничном</div>
+                        
+                        <div style="text-align: center; padding: 15px; background: rgba(239, 68, 68, 0.15); border-radius: var(--radius); border: 1px solid rgba(239, 68, 68, 0.3);">
+                            <div style="font-size: 28px; font-weight: bold; color: #ef4444;">${stats.current_sick_leaves}</div>
+                            <div style="font-size: 14px; color: var(--text); font-weight: 500; margin-top: 4px;">На больничном</div>
+                            <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Сейчас</div>
+                        </div>
+                        
+                        <!-- Дополнительные показатели -->
+                        <div style="text-align: center; padding: 15px; background: rgba(139, 92, 246, 0.15); border-radius: var(--radius); border: 1px solid rgba(139, 92, 246, 0.3);">
+                            <div style="font-size: 28px; font-weight: bold; color: #8b5cf6;">${stats.users_with_bot || 0}</div>
+                            <div style="font-size: 14px; color: var(--text); font-weight: 500; margin-top: 4px;">Пользователей бота</div>
+                            <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">${Math.round((stats.users_with_bot || 0)/(stats.total_employees || 1)*100)}% от всех</div>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 15px; background: rgba(168, 85, 247, 0.15); border-radius: var(--radius); border: 1px solid rgba(168, 85, 247, 0.3);">
+                            <div style="font-size: 20px; font-weight: bold; color: #a855f7;">${(stats.technical_issues_month || 0)}/${(stats.personal_issues_month || 0)}</div>
+                            <div style="font-size: 14px; color: var(--text); font-weight: 500; margin-top: 4px;">Тех./Личн. за месяц</div>
+                            <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Всего: ${(stats.technical_issues_month || 0) + (stats.personal_issues_month || 0)}</div>
                         </div>
                     </div>
                 `;
                 
             } catch (error) {
                 console.error('Ошибка:', error);
-                document.getElementById('admin-stats-content').innerHTML = '<p style="color: var(--muted);">Ошибка загрузки статистики</p>';
+                document.getElementById('admin-stats-content').innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: #ef4444;">
+                        <div style="font-size: 16px;">❌ Ошибка загрузки статистики</div>
+                        <div style="font-size: 12px; margin-top: 8px; color: var(--muted);">${error.message}</div>
+                        <button onclick="loadAdminStats()" style="margin-top: 10px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; border-radius: var(--radius); padding: 8px 16px; font-size: 12px; cursor: pointer;">Повторить</button>
+                    </div>
+                `;
+                document.getElementById('stats-update-time').textContent = 'ошибка';
             }
         }
         
