@@ -786,69 +786,39 @@
 
         <!-- Employees Management Modal -->
         <div id="employees-management-modal" style="display: none;">
-            <div class="container">
-                <header>
-                    <button onclick="showAdminMenuModal()" class="back-btn">←</button>
-                    <div class="title">
-                        <h1>👥 Управление сотрудниками</h1>
-                        <div class="subtitle" id="employees-subtitle">Управление персоналом</div>
+            <div class="wrap">
+                <header style="margin-bottom: 20px;">
+                    <button onclick="showAdminMenuModal()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
+                    <div style="flex: 1; text-align: center;">
+                        <div class="title" style="margin: 0;">Управление сотрудниками</div>
                     </div>
+                    <div style="width: 40px;"></div>
                 </header>
 
-                <div class="stack">
-                    <!-- Статистика сотрудников -->
-                    <div class="card">
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-                            <h3 style="margin: 0;">📊 Статистика персонала</h3>
-                            <button onclick="loadEmployeesList()" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); color: #3b82f6; border-radius: 6px; padding: 4px 8px; font-size: 12px; cursor: pointer;">🔄</button>
-                        </div>
-                        <div id="employees-stats-content">
-                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
-                                <div style="text-align: center; padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: var(--radius); border: 1px solid rgba(16, 185, 129, 0.2);">
-                                    <div style="font-size: 24px; font-weight: bold; color: #10b981;" id="total-employees-count">0</div>
-                                    <div style="font-size: 12px; color: var(--muted);">Всего</div>
-                                </div>
-                                <div style="text-align: center; padding: 12px; background: rgba(59, 130, 246, 0.1); border-radius: var(--radius); border: 1px solid rgba(59, 130, 246, 0.2);">
-                                    <div style="font-size: 24px; font-weight: bold; color: #3b82f6;" id="active-employees-count">0</div>
-                                    <div style="font-size: 12px; color: var(--muted);">Активных</div>
-                                </div>
-                                <div style="text-align: center; padding: 12px; background: rgba(239, 68, 68, 0.1); border-radius: var(--radius); border: 1px solid rgba(239, 68, 68, 0.2);">
-                                    <div style="font-size: 24px; font-weight: bold; color: #ef4444;" id="blocked-employees-count">0</div>
-                                    <div style="font-size: 12px; color: var(--muted);">Заблокированных</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Управление -->
-                    <div class="card">
-                        <h3>⚙️ Действия</h3>
-                        <div class="actions">
-                            <button onclick="showAddEmployeeModal()" class="btn">
-                                <span class="dot" style="background: #10b981;"></span>
-                                <span>Добавить сотрудника</span>
-                            </button>
-                        </div>
-                    </div>
+                <div class="actions" style="margin-bottom: 20px;">
+                    <button onclick="showAddEmployeeModal()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700;">
+                        <span class="dot" style="background: #10b981;"></span>
+                        <span>Добавить сотрудника</span>
+                    </button>
 
                     <!-- Поиск и фильтры -->
-                    <div class="card">
-                        <h3>🔍 Поиск и фильтры</h3>
+                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
+                        <h3 style="font-size: 16px; line-height: 1.4;">🔍 Поиск</h3>
                         <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                             <input type="text" id="employee-search" placeholder="Поиск по имени, фамилии или телефону..." 
                                    oninput="filterEmployees()" 
-                                   style="flex: 1; padding: 12px; border-radius: var(--radius); border: 1px solid var(--border); 
-                                          background: var(--card); color: var(--text); font-size: 14px;">
+                                   style="flex: 1; padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                          background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                             <select id="employee-status-filter" onchange="filterEmployees()" 
-                                    style="padding: 12px; border-radius: var(--radius); border: 1px solid var(--border); 
-                                           background: var(--card); color: var(--text); font-size: 14px;">
+                                    style="padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                           background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                                 <option value="all">Все статусы</option>
                                 <option value="active">Активные</option>
                                 <option value="blocked">Заблокированные</option>
                                 <option value="admin">Администраторы</option>
                             </select>
                         </div>
-                        <div id="search-results-count" style="font-size: 12px; color: var(--muted);">
+                        <div id="search-results-count" style="font-size: 12px; color: rgba(255, 255, 255, 0.6);">
                             <!-- Счетчик результатов поиска -->
                         </div>
                     </div>
@@ -869,53 +839,54 @@
 
         <!-- Add Employee Modal -->
         <div id="add-employee-modal" style="display: none;">
-            <div class="header">
-                <button onclick="showEmployeesManagement()" style="background: none; border: none; color: white; font-size: 24px; float: left;">←</button>
-                <h2 style="text-align: center; margin: 0;">➕ Добавить сотрудника</h2>
-            </div>
-
-            <div style="padding: 20px;">
-                <div class="info-card" style="margin-bottom: 20px;">
-                    <div class="card-header">
-                        <span class="card-icon">ℹ️</span>
-                        <span class="card-title">Информация</span>
+            <div class="wrap">
+                <header style="margin-bottom: 20px;">
+                    <button onclick="showEmployeesManagement()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
+                    <div style="flex: 1; text-align: center;">
+                        <div class="title" style="margin: 0;">Добавить сотрудника</div>
                     </div>
-                    <div class="card-content">
-                        Добавьте нового сотрудника в систему. После добавления он сможет авторизоваться в боте по номеру телефона.
+                    <div style="width: 40px;"></div>
+                </header>
+
+                <div class="stack" style="margin-bottom: 20px;">
+                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
+                        <h3 style="font-size: 16px; line-height: 1.4;">ℹ️ Информация</h3>
+                        <p style="font-size: 16px; line-height: 1.4; color: rgba(255, 255, 255, 0.8);">Добавьте нового сотрудника в систему. После добавления он сможет авторизоваться в боте по номеру телефона.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Форма добавления</h3>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Номер телефона:</label>
+                            <input type="tel" id="add-phone" placeholder="+7XXXXXXXXXX" 
+                                   style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin-bottom: 15px;">
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Имя:</label>
+                            <input type="text" id="add-first-name" placeholder="Введите имя" 
+                                   style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin-bottom: 15px;">
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Фамилия:</label>
+                            <input type="text" id="add-last-name" placeholder="Введите фамилию" 
+                                   style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin-bottom: 20px;">
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: flex; align-items: center; color: var(--text); cursor: pointer;">
+                                <input type="checkbox" id="add-is-admin" style="margin-right: 10px; transform: scale(1.2);">
+                                <span style="font-weight: bold;">Права администратора</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 8px; color: white; font-weight: bold;">Номер телефона:</label>
-                    <input type="tel" id="add-phone" placeholder="+7XXXXXXXXXX" 
-                           style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); 
-                                  background: rgba(255,255,255,0.1); color: white; font-size: 16px;">
-                </div>
-
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 8px; color: white; font-weight: bold;">Имя:</label>
-                    <input type="text" id="add-first-name" placeholder="Введите имя" 
-                           style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); 
-                                  background: rgba(255,255,255,0.1); color: white; font-size: 16px;">
-                </div>
-
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 8px; color: white; font-weight: bold;">Фамилия:</label>
-                    <input type="text" id="add-last-name" placeholder="Введите фамилию" 
-                           style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); 
-                                  background: rgba(255,255,255,0.1); color: white; font-size: 16px;">
-                </div>
-
-                <div style="margin-bottom: 20px;">
-                    <label style="display: flex; align-items: center; color: white; cursor: pointer;">
-                        <input type="checkbox" id="add-is-admin" style="margin-right: 10px; transform: scale(1.2);">
-                        <span style="font-weight: bold;">Права администратора</span>
-                    </label>
-                </div>
-
-                <div class="action-buttons">
-                    <button onclick="addEmployee()" class="action-button" style="background: linear-gradient(45deg, #2ed573, #17c0eb);">
-                        <span class="icon">✅</span>Добавить сотрудника
+                <div class="actions">
+                    <button onclick="addEmployee()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700; background: #0d9488;">
+                        <span class="dot" style="background: #10b981;"></span>
+                        <span>Добавить сотрудника</span>
                     </button>
                 </div>
             </div>
@@ -923,53 +894,54 @@
 
         <!-- Edit Employee Modal -->
         <div id="edit-employee-modal" style="display: none;">
-            <div class="header">
-                <button onclick="showEmployeesManagement()" style="background: none; border: none; color: white; font-size: 24px; float: left;">←</button>
-                <h2 style="text-align: center; margin: 0;">✏️ Редактировать сотрудника</h2>
-            </div>
-
-            <div style="padding: 20px;">
-                <div class="info-card" style="margin-bottom: 20px;">
-                    <div class="card-header">
-                        <span class="card-icon">⚠️</span>
-                        <span class="card-title">Внимание</span>
+            <div class="wrap">
+                <header style="margin-bottom: 20px;">
+                    <button onclick="showEmployeesManagement()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
+                    <div style="flex: 1; text-align: center;">
+                        <div class="title" style="margin: 0;">Редактировать сотрудника</div>
                     </div>
-                    <div class="card-content">
-                        Изменение данных сотрудника повлияет на его доступ к системе
+                    <div style="width: 40px;"></div>
+                </header>
+
+                <div class="stack" style="margin-bottom: 20px;">
+                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
+                        <h3 style="font-size: 16px; line-height: 1.4;">⚠️ Внимание</h3>
+                        <p style="font-size: 16px; line-height: 1.4; color: rgba(255, 255, 255, 0.8);">Изменение данных сотрудника повлияет на его доступ к системе</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Форма редактирования</h3>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Номер телефона:</label>
+                            <input type="tel" id="edit-phone" readonly 
+                                   style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #6b7280; background: #6b7280; color: rgba(255,255,255,0.7); font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin-bottom: 15px;">
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Имя:</label>
+                            <input type="text" id="edit-first-name" placeholder="Введите имя" 
+                                   style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin-bottom: 15px;">
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Фамилия:</label>
+                            <input type="text" id="edit-last-name" placeholder="Введите фамилию" 
+                                   style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin-bottom: 20px;">
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: flex; align-items: center; color: var(--text); cursor: pointer;">
+                                <input type="checkbox" id="edit-is-admin" style="margin-right: 10px; transform: scale(1.2);">
+                                <span style="font-weight: bold;">Права администратора</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 8px; color: white; font-weight: bold;">Номер телефона:</label>
-                    <input type="tel" id="edit-phone" readonly 
-                           style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); 
-                                  background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.7); font-size: 16px;">
-                </div>
-
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 8px; color: white; font-weight: bold;">Имя:</label>
-                    <input type="text" id="edit-first-name" placeholder="Введите имя" 
-                           style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); 
-                                  background: rgba(255,255,255,0.1); color: white; font-size: 16px;">
-                </div>
-
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 8px; color: white; font-weight: bold;">Фамилия:</label>
-                    <input type="text" id="edit-last-name" placeholder="Введите фамилию" 
-                           style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); 
-                                  background: rgba(255,255,255,0.1); color: white; font-size: 16px;">
-                </div>
-
-                <div style="margin-bottom: 20px;">
-                    <label style="display: flex; align-items: center; color: white; cursor: pointer;">
-                        <input type="checkbox" id="edit-is-admin" style="margin-right: 10px; transform: scale(1.2);">
-                        <span style="font-weight: bold;">Права администратора</span>
-                    </label>
-                </div>
-
-                <div class="action-buttons">
-                    <button onclick="saveEmployeeChanges()" class="action-button" style="background: linear-gradient(45deg, #ffa500, #ff6b6b);">
-                        <span class="icon">💾</span>Сохранить изменения
+                <div class="actions">
+                    <button onclick="saveEmployeeChanges()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700; background: #f59e0b;">
+                        <span class="dot" style="background: #fbbf24;"></span>
+                        <span>Сохранить изменения</span>
                     </button>
                 </div>
             </div>
@@ -977,69 +949,41 @@
 
         <!-- Issues Management Modal -->
         <div id="issues-management-modal" style="display: none;">
-            <div class="container">
-                <header>
-                    <button onclick="showAdminMenuModal()" class="back-btn">←</button>
-                    <div class="title">
-                        <h1>💬 Управление обращениями</h1>
-                        <div class="subtitle" id="issues-subtitle">Обработка запросов пользователей</div>
+            <div class="wrap">
+                <header style="margin-bottom: 20px;">
+                    <button onclick="showAdminMenuModal()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
+                    <div style="flex: 1; text-align: center;">
+                        <div class="title" style="margin: 0;">Управление обращениями</div>
                     </div>
+                    <div style="width: 40px;"></div>
                 </header>
 
-                <div class="stack">
-                    <!-- Статистика обращений -->
-                    <div class="card">
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-                            <h3 style="margin: 0;">📊 Статистика обращений</h3>
-                            <button onclick="loadIssuesList()" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); color: #3b82f6; border-radius: 6px; padding: 4px 8px; font-size: 12px; cursor: pointer;">🔄</button>
-                        </div>
-                        <div id="issues-stats-content">
-                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px;">
-                                <div style="text-align: center; padding: 10px; background: rgba(245, 158, 11, 0.1); border-radius: var(--radius); border: 1px solid rgba(245, 158, 11, 0.2);">
-                                    <div style="font-size: 20px; font-weight: bold; color: #f59e0b;" id="active-issues-count">0</div>
-                                    <div style="font-size: 11px; color: var(--muted);">Активных</div>
-                                </div>
-                                <div style="text-align: center; padding: 10px; background: rgba(16, 185, 129, 0.1); border-radius: var(--radius); border: 1px solid rgba(16, 185, 129, 0.2);">
-                                    <div style="font-size: 20px; font-weight: bold; color: #10b981;" id="closed-issues-count">0</div>
-                                    <div style="font-size: 11px; color: var(--muted);">Закрытых</div>
-                                </div>
-                                <div style="text-align: center; padding: 10px; background: rgba(59, 130, 246, 0.1); border-radius: var(--radius); border: 1px solid rgba(59, 130, 246, 0.2);">
-                                    <div style="font-size: 20px; font-weight: bold; color: #3b82f6;" id="technical-issues-count">0</div>
-                                    <div style="font-size: 11px; color: var(--muted);">Технических</div>
-                                </div>
-                                <div style="text-align: center; padding: 10px; background: rgba(139, 92, 246, 0.1); border-radius: var(--radius); border: 1px solid rgba(139, 92, 246, 0.2);">
-                                    <div style="font-size: 20px; font-weight: bold; color: #8b5cf6;" id="personal-issues-count">0</div>
-                                    <div style="font-size: 11px; color: var(--muted);">Личных</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Фильтры -->
-                    <div class="card">
-                        <h3>🔍 Поиск и фильтры</h3>
+                <div class="stack" style="margin-bottom: 20px;">
+                    <!-- Поиск и фильтры -->
+                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
+                        <h3 style="font-size: 16px; line-height: 1.4;">🔍 Поиск и фильтры</h3>
                         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px;">
                             <input type="text" id="issues-search" placeholder="Поиск по тексту..." 
                                    oninput="filterIssues()" 
-                                   style="padding: 12px; border-radius: var(--radius); border: 1px solid var(--border); 
-                                          background: var(--card); color: var(--text); font-size: 14px;">
+                                   style="padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                          background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                             <select id="issues-status-filter" onchange="filterIssues()" 
-                                    style="padding: 12px; border-radius: var(--radius); border: 1px solid var(--border); 
-                                           background: var(--card); color: var(--text); font-size: 14px;">
+                                    style="padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                           background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                                 <option value="all">Все статусы</option>
                                 <option value="open">Открытые</option>
                                 <option value="in_progress">В работе</option>
                                 <option value="closed">Закрытые</option>
                             </select>
                             <select id="issues-type-filter" onchange="filterIssues()" 
-                                    style="padding: 12px; border-radius: var(--radius); border: 1px solid var(--border); 
-                                           background: var(--card); color: var(--text); font-size: 14px;">
+                                    style="padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                           background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                                 <option value="all">Все типы</option>
                                 <option value="technical">Технические</option>
                                 <option value="personal">Личные</option>
                             </select>
                         </div>
-                        <div id="issues-results-count" style="font-size: 12px; color: var(--muted);">
+                        <div id="issues-results-count" style="font-size: 12px; color: rgba(255, 255, 255, 0.6);">
                             <!-- Счетчик результатов поиска -->
                         </div>
                     </div>
@@ -1081,34 +1025,143 @@
             </div>
         </div>
 
+        <!-- Messaging Menu Modal -->
+        <div id="messaging-menu-modal" style="display: none;">
+            <div class="wrap">
+                <header style="margin-bottom: 20px;">
+                    <button onclick="showAdminMenuModal()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
+                    <div style="flex: 1; text-align: center;">
+                        <div class="title" style="margin: 0;">Сообщение сотрудникам</div>
+                    </div>
+                    <div style="width: 40px;"></div>
+                </header>
+
+                <div class="actions">
+                    <button onclick="showBroadcastMessage()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700;">
+                        <span class="dot" style="background: #ef4444;"></span>
+                        <span>Сообщение всем</span>
+                    </button>
+                    <button onclick="showEmployeeMessageMenu()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700;">
+                        <span class="dot" style="background: #3b82f6;"></span>
+                        <span>Сообщение сотруднику</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Broadcast Message Modal -->
         <div id="broadcast-modal" style="display: none;">
-            <div class="header">
-                <button onclick="showAdminMenuModal()" style="background: none; border: none; color: white; font-size: 24px; float: left;">←</button>
-                <h2 style="text-align: center; margin: 0;">📢 Рассылка сообщений</h2>
+            <div class="wrap">
+                <header style="margin-bottom: 20px;">
+                    <button onclick="showMessagingMenu()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
+                    <div style="flex: 1; text-align: center;">
+                        <div class="title" style="margin: 0;">Сообщение всем</div>
+                    </div>
+                    <div style="width: 40px;"></div>
+                </header>
+
+                <div class="stack" style="margin-bottom: 20px;">
+                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
+                        <h3 style="font-size: 16px; line-height: 1.4;">⚠️ Внимание</h3>
+                        <p style="font-size: 16px; line-height: 1.4; color: rgba(255, 255, 255, 0.8);">Сообщение будет отправлено всем сотрудникам, зарегистрированным в системе</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Текст сообщения</h3>
+                        <textarea id="broadcast-message" placeholder="Введите сообщение для рассылки..." 
+                                  style="width: calc(100% - 24px); height: 120px; padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; resize: vertical; margin-bottom: 15px;"></textarea>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.9); font-size: 14px; font-weight: 600;">📎 Прикрепить файл (необязательно)</label>
+                            <input type="file" id="broadcast-file" accept="*/*" 
+                                   style="width: 100%; padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                            <div id="broadcast-file-info" style="margin-top: 8px; font-size: 12px; color: rgba(255, 255, 255, 0.7); display: none;">
+                                <!-- Информация о выбранном файле -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button onclick="sendBroadcastMessage()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700; background: #ef4444;">
+                        <span class="dot" style="background: #f87171;"></span>
+                        <span>Отправить всем</span>
+                    </button>
+                </div>
             </div>
+        </div>
 
-            <div style="padding: 20px;">
-                <div class="info-card" style="margin-bottom: 20px;">
-                    <div class="card-header">
-                        <span class="card-icon">⚠️</span>
-                        <span class="card-title">Внимание</span>
+        <!-- Employee Message Modal -->
+        <div id="employee-message-modal" style="display: none;">
+            <div class="wrap">
+                <header style="margin-bottom: 20px;">
+                    <button onclick="showMessagingMenu()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
+                    <div style="flex: 1; text-align: center;">
+                        <div class="title" style="margin: 0;">Сообщение сотруднику</div>
                     </div>
-                    <div class="card-content">
-                        Сообщение будет отправлено всем сотрудникам, зарегистрированным в системе
+                    <div style="width: 40px;"></div>
+                </header>
+
+                <div class="stack" style="margin-bottom: 20px;">
+                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
+                        <h3 style="font-size: 16px; line-height: 1.4;">👤 Выбор сотрудника</h3>
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <input type="text" id="employee-message-search" placeholder="Поиск по имени, фамилии..." 
+                                   oninput="filterEmployeesForMessage()" 
+                                   style="flex: 1; padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                          background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>👥 Список сотрудников</h3>
+                        <div id="employee-message-list">
+                            <div style="text-align: center; color: var(--muted); padding: 20px;">
+                                <div style="font-size: 16px;">📈 Загрузка списка сотрудников...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Send Message to Employee Modal -->
+        <div id="send-employee-message-modal" style="display: none;">
+            <div class="wrap">
+                <header style="margin-bottom: 20px;">
+                    <button onclick="showEmployeeMessageMenu()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
+                    <div style="flex: 1; text-align: center;">
+                        <div class="title" style="margin: 0;" id="employee-message-title">Сообщение сотруднику</div>
+                    </div>
+                    <div style="width: 40px;"></div>
+                </header>
+
+                <div class="stack" style="margin-bottom: 20px;">
+                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
+                        <h3 style="font-size: 16px; line-height: 1.4;">💬 Получатель</h3>
+                        <p style="font-size: 16px; line-height: 1.4; color: rgba(255, 255, 255, 0.8);" id="selected-employee-info">Выбранный сотрудник</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Текст сообщения</h3>
+                        <textarea id="employee-message-text" placeholder="Введите сообщение для сотрудника..." 
+                                  style="width: calc(100% - 24px); height: 120px; padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; resize: vertical; margin-bottom: 15px;"></textarea>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.9); font-size: 14px; font-weight: 600;">📎 Прикрепить файл (необязательно)</label>
+                            <input type="file" id="employee-message-file" accept="*/*" 
+                                   style="width: 100%; padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                            <div id="employee-file-info" style="margin-top: 8px; font-size: 12px; color: rgba(255, 255, 255, 0.7); display: none;">
+                                <!-- Информация о выбранном файле -->
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 10px; color: white; font-weight: bold;">Текст сообщения:</label>
-                    <textarea id="broadcast-message" placeholder="Введите сообщение для рассылки..." 
-                              style="width: 100%; height: 150px; padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.3); 
-                                     background: rgba(255,255,255,0.1); color: white; font-size: 16px; resize: vertical;"></textarea>
-                </div>
-
-                <div class="action-buttons">
-                    <button onclick="sendBroadcastMessage()" class="action-button" style="background: linear-gradient(45deg, #ff6b6b, #ee5a52);">
-                        <span class="icon">📤</span>Отправить всем
+                <div class="actions">
+                    <button onclick="sendEmployeeMessage()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700; background: #3b82f6;">
+                        <span class="dot" style="background: #60a5fa;"></span>
+                        <span>Отправить сообщение</span>
                     </button>
                 </div>
             </div>
@@ -1156,9 +1209,9 @@
                         <span class="dot" style="background: #3b82f6;"></span>
                         <span>Отправить статистику в канал</span>
                     </button>
-                    <button onclick="showBroadcastMessage()" class="btn">
+                    <button onclick="showMessagingMenu()" class="btn">
                         <span class="dot" style="background: #ef4444;"></span>
-                        <span>Отправить сообщение всем</span>
+                        <span>Сообщение сотрудникам</span>
                     </button>
                 </div>
             </div>
@@ -1222,6 +1275,9 @@
                 document.getElementById('employees-management-modal').style.display = 'none';
                 document.getElementById('issues-management-modal').style.display = 'none';
                 document.getElementById('broadcast-modal').style.display = 'none';
+                document.getElementById('messaging-menu-modal').style.display = 'none';
+                document.getElementById('employee-message-modal').style.display = 'none';
+                document.getElementById('send-employee-message-modal').style.display = 'none';
                 document.getElementById('add-employee-modal').style.display = 'none';
                 document.getElementById('edit-employee-modal').style.display = 'none';
                 
@@ -1319,6 +1375,9 @@
                 document.getElementById('edit-employee-modal').style.display = 'none';
                 document.getElementById('issues-management-modal').style.display = 'none';
                 document.getElementById('broadcast-modal').style.display = 'none';
+                document.getElementById('messaging-menu-modal').style.display = 'none';
+                document.getElementById('employee-message-modal').style.display = 'none';
+                document.getElementById('send-employee-message-modal').style.display = 'none';
                 
                 // Показываем управление сотрудниками
                 document.getElementById('employees-management-modal').style.display = 'block';
@@ -1371,12 +1430,13 @@
             employees.forEach(emp => {
                 const empDiv = document.createElement('div');
                 empDiv.style.cssText = `
-                    background: var(--card);
-                    border: 1px solid var(--border);
+                    background: #8b5cf6;
+                    border: 1px solid #7c3aed;
                     border-radius: var(--radius);
                     padding: 16px;
                     margin-bottom: 12px;
                     transition: all 0.2s ease;
+                    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
                 `;
                 
                 const statusIcon = emp.is_blocked ? '🔴' : '🟢';
@@ -1389,27 +1449,27 @@
                 empDiv.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
                         <div>
-                            <div style="font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px;">
+                            <div style="font-size: 16px; font-weight: 600; color: white; margin-bottom: 4px;">
                                 👤 ${emp.first_name} ${emp.last_name}${adminBadge}
                             </div>
-                            <div style="font-size: 14px; color: var(--muted); margin-bottom: 4px;">📞 ${emp.phone}</div>
-                            <div style="font-size: 12px; color: ${botStatusColor};">${botStatus}</div>
+                            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.8); margin-bottom: 4px;">📞 ${emp.phone}</div>
+                            <div style="font-size: 12px; color: ${botStatusColor === '#10b981' ? '#a7f3d0' : '#fed7aa'};">${botStatus}</div>
                         </div>
                         <div style="text-align: right;">
-                            <div style="font-size: 12px; color: ${statusColor}; font-weight: 500;">${statusIcon} ${statusText}</div>
+                            <div style="font-size: 12px; color: ${statusColor === '#10b981' ? '#a7f3d0' : '#fca5a5'}; font-weight: 500;">${statusIcon} ${statusText}</div>
                         </div>
                     </div>
                     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                         <button onclick="toggleEmployeeBlock('${emp.phone}', ${!emp.is_blocked})" 
-                                style="padding: 6px 12px; background: ${emp.is_blocked ? '#10b981' : '#ef4444'}; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: opacity 0.2s;">
+                                style="padding: 6px 12px; background: ${emp.is_blocked ? 'rgba(16, 185, 129, 0.8)' : 'rgba(239, 68, 68, 0.8)'}; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: opacity 0.2s;">
                             ${emp.is_blocked ? '✅ Разблокировать' : '🔒 Заблокировать'}
                         </button>
                         <button onclick="editEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}', ${emp.is_admin})" 
-                                style="padding: 6px 12px; background: #f59e0b; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: opacity 0.2s;">
+                                style="padding: 6px 12px; background: rgba(245, 158, 11, 0.8); border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: opacity 0.2s;">
                             ✏️ Редактировать
                         </button>
                         <button onclick="deleteEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}')" 
-                                style="padding: 6px 12px; background: #ef4444; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: opacity 0.2s;">
+                                style="padding: 6px 12px; background: rgba(239, 68, 68, 0.8); border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: opacity 0.2s;">
                             🗑️ Удалить
                         </button>
                     </div>
@@ -1417,12 +1477,14 @@
                 
                 // Добавляем hover эффект
                 empDiv.addEventListener('mouseenter', () => {
-                    empDiv.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                    empDiv.style.borderColor = '#a855f7';
                     empDiv.style.transform = 'translateY(-1px)';
+                    empDiv.style.boxShadow = '0 4px 12px rgba(139, 92, 246, 0.3)';
                 });
                 empDiv.addEventListener('mouseleave', () => {
-                    empDiv.style.borderColor = 'var(--border)';
+                    empDiv.style.borderColor = '#7c3aed';
                     empDiv.style.transform = 'translateY(0)';
+                    empDiv.style.boxShadow = '0 2px 8px rgba(139, 92, 246, 0.2)';
                 });
                 
                 container.appendChild(empDiv);
@@ -1434,12 +1496,14 @@
             const active = employees.filter(emp => !emp.is_blocked).length;
             const blocked = employees.filter(emp => emp.is_blocked).length;
             
-            document.getElementById('total-employees-count').textContent = total;
-            document.getElementById('active-employees-count').textContent = active;
-            document.getElementById('blocked-employees-count').textContent = blocked;
+            // Обновляем счетчики (если они есть)
+            const totalElement = document.getElementById('total-employees-count');
+            const activeElement = document.getElementById('active-employees-count');
+            const blockedElement = document.getElementById('blocked-employees-count');
             
-            // Обновляем подзаголовок
-            document.getElementById('employees-subtitle').textContent = `${total} сотрудников, ${active} активных`;
+            if (totalElement) totalElement.textContent = total;
+            if (activeElement) activeElement.textContent = active;
+            if (blockedElement) blockedElement.textContent = blocked;
         }
         
         function filterEmployees() {
@@ -1521,6 +1585,9 @@
                 document.getElementById('admin-menu-modal').style.display = 'none';
                 document.getElementById('employees-management-modal').style.display = 'none';
                 document.getElementById('broadcast-modal').style.display = 'none';
+                document.getElementById('messaging-menu-modal').style.display = 'none';
+                document.getElementById('employee-message-modal').style.display = 'none';
+                document.getElementById('send-employee-message-modal').style.display = 'none';
                 document.getElementById('issue-dialog-modal').style.display = 'none';
                 
                 // Очищаем поле ввода ответа
@@ -1589,13 +1656,16 @@
             const technical = issues.filter(issue => issue.type === 'technical').length;
             const personal = issues.filter(issue => issue.type === 'personal').length;
             
-            document.getElementById('active-issues-count').textContent = active;
-            document.getElementById('closed-issues-count').textContent = closed;
-            document.getElementById('technical-issues-count').textContent = technical;
-            document.getElementById('personal-issues-count').textContent = personal;
+            // Обновляем счетчики (если они есть)
+            const activeElement = document.getElementById('active-issues-count');
+            const closedElement = document.getElementById('closed-issues-count');
+            const technicalElement = document.getElementById('technical-issues-count');
+            const personalElement = document.getElementById('personal-issues-count');
             
-            // Обновляем подзаголовок
-            document.getElementById('issues-subtitle').textContent = `${issues.length} обращений, ${active} активных`;
+            if (activeElement) activeElement.textContent = active;
+            if (closedElement) closedElement.textContent = closed;
+            if (technicalElement) technicalElement.textContent = technical;
+            if (personalElement) personalElement.textContent = personal;
         }
         
         function filterIssues() {
@@ -1659,12 +1729,13 @@
             issues.forEach(issue => {
                 const issueDiv = document.createElement('div');
                 issueDiv.style.cssText = `
-                    background: var(--card);
-                    border: 1px solid var(--border);
+                    background: #8b5cf6;
+                    border: 1px solid #7c3aed;
                     border-radius: var(--radius);
                     padding: 16px;
                     margin-bottom: 12px;
                     transition: all 0.2s ease;
+                    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
                 `;
                 
                 let statusIcon = '🟡';
@@ -1715,39 +1786,41 @@
                 issueDiv.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
                         <div>
-                            <div style="font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px;">
+                            <div style="font-size: 16px; font-weight: 600; color: white; margin-bottom: 4px;">
                                 ${typeIcon} Обращение #${issue.id}${anonymityText}
                             </div>
-                            <div style="font-size: 12px; color: ${typeColor}; margin-bottom: 8px;">${typeText}</div>
-                            <div style="font-size: 14px; color: var(--text); margin-bottom: 8px; line-height: 1.4;">${issue.description}</div>
-                            <div style="font-size: 12px; color: var(--muted);">
+                            <div style="font-size: 12px; color: ${typeColor === '#8b5cf6' ? '#e9d5ff' : '#bfdbfe'}; margin-bottom: 8px;">${typeText}</div>
+                            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px; line-height: 1.4;">${issue.description}</div>
+                            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.7);">
                                 👤 ${issue.employee_name} • 📅 ${new Date(issue.created_at).toLocaleString('ru-RU')}
                                 ${issue.response_count > 0 ? ` • 💬 ${issue.response_count} ответов` : ''}
                             </div>
                             ${issue.last_response_preview ? `
-                                <div style="margin-top: 8px; padding: 8px; background: rgba(59, 130, 246, 0.1); border-radius: 6px; border-left: 3px solid #3b82f6;">
-                                    <div style="font-size: 11px; color: var(--muted); margin-bottom: 2px;">Последний ответ:</div>
-                                    <div style="font-size: 12px; color: var(--text);">${issue.last_response_preview}</div>
+                                <div style="margin-top: 8px; padding: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 6px; border-left: 3px solid rgba(255, 255, 255, 0.3);">
+                                    <div style="font-size: 11px; color: rgba(255, 255, 255, 0.6); margin-bottom: 2px;">Последний ответ:</div>
+                                    <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9);">${issue.last_response_preview}</div>
                                 </div>
                             ` : ''}
                         </div>
                         <div style="text-align: right;">
-                            <div style="font-size: 12px; color: ${statusColor}; font-weight: 500; margin-bottom: 8px;">${statusIcon} ${statusText}</div>
+                            <div style="font-size: 12px; color: ${statusColor === '#10b981' ? '#a7f3d0' : statusColor === '#ef4444' ? '#fca5a5' : '#fed7aa'}; font-weight: 500; margin-bottom: 8px;">${statusIcon} ${statusText}</div>
                         </div>
                     </div>
                     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                        ${buttonsHtml}
+                        ${buttonsHtml.replace(/background: #10b981/g, 'background: rgba(16, 185, 129, 0.8)').replace(/background: #ef4444/g, 'background: rgba(239, 68, 68, 0.8)').replace(/background: #6366f1/g, 'background: rgba(99, 102, 241, 0.8)')}
                     </div>
                 `;
                 
                 // Добавляем hover эффект
                 issueDiv.addEventListener('mouseenter', () => {
-                    issueDiv.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                    issueDiv.style.borderColor = '#a855f7';
                     issueDiv.style.transform = 'translateY(-1px)';
+                    issueDiv.style.boxShadow = '0 4px 12px rgba(139, 92, 246, 0.3)';
                 });
                 issueDiv.addEventListener('mouseleave', () => {
-                    issueDiv.style.borderColor = 'var(--border)';
+                    issueDiv.style.borderColor = '#7c3aed';
                     issueDiv.style.transform = 'translateY(0)';
+                    issueDiv.style.boxShadow = '0 2px 8px rgba(139, 92, 246, 0.2)';
                 });
                 
                 container.appendChild(issueDiv);
@@ -2034,45 +2107,107 @@
             }
         }
         
-        function showBroadcastMessage() {
+        function showMessagingMenu() {
             // Скрываем все модальные окна
             document.getElementById('admin-menu-modal').style.display = 'none';
             document.getElementById('employees-management-modal').style.display = 'none';
             document.getElementById('issues-management-modal').style.display = 'none';
+            document.getElementById('broadcast-modal').style.display = 'none';
+            document.getElementById('employee-message-modal').style.display = 'none';
+            document.getElementById('send-employee-message-modal').style.display = 'none';
+            
+            // Показываем меню выбора типа сообщения
+            document.getElementById('messaging-menu-modal').style.display = 'block';
+        }
+        
+        function showBroadcastMessage() {
+            // Скрываем все модальные окна
+            document.getElementById('messaging-menu-modal').style.display = 'none';
+            document.getElementById('employee-message-modal').style.display = 'none';
+            document.getElementById('send-employee-message-modal').style.display = 'none';
             
             // Показываем модальное окно рассылки
             document.getElementById('broadcast-modal').style.display = 'block';
             document.getElementById('broadcast-message').value = '';
+            document.getElementById('broadcast-file').value = '';
+            document.getElementById('broadcast-file-info').style.display = 'none';
+        }
+        
+        async function showEmployeeMessageMenu() {
+            try {
+                // Скрываем все модальные окна
+                document.getElementById('messaging-menu-modal').style.display = 'none';
+                document.getElementById('broadcast-modal').style.display = 'none';
+                document.getElementById('send-employee-message-modal').style.display = 'none';
+                
+                // Показываем модальное окно выбора сотрудника
+                document.getElementById('employee-message-modal').style.display = 'block';
+                
+                // Загружаем список сотрудников
+                await loadEmployeesForMessage();
+            } catch (error) {
+                console.error('Ошибка:', error);
+                tg.showAlert('Ошибка загрузки списка сотрудников');
+            }
         }
         
         async function sendBroadcastMessage() {
             try {
                 const messageText = document.getElementById('broadcast-message').value.trim();
+                const fileInput = document.getElementById('broadcast-file');
+                const file = fileInput.files[0];
                 
-                if (!messageText) {
-                    tg.showAlert('Введите текст сообщения');
+                if (!messageText && !file) {
+                    tg.showAlert('Введите текст сообщения или выберите файл');
                     return;
                 }
                 
-                const response = await fetch('/api/admin/broadcast', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        initData: tg.initData,
-                        message: messageText
-                    })
-                });
-
-                const result = await response.json();
-                
-                if (result.success) {
-                    tg.showAlert(result.message);
-                    document.getElementById('broadcast-message').value = '';
-                    showAdminMenuModal(); // Возвращаемся в админ-меню
+                // Если есть файл, отправляем через FormData
+                if (file) {
+                    const formData = new FormData();
+                    formData.append('initData', tg.initData);
+                    formData.append('message', messageText || '');
+                    formData.append('file', file);
+                    formData.append('target', 'all');
+                    
+                    const response = await fetch('/api/admin/send-file', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        tg.showAlert('Сообщение с файлом отправлено всем сотрудникам');
+                        document.getElementById('broadcast-message').value = '';
+                        fileInput.value = '';
+                        document.getElementById('broadcast-file-info').style.display = 'none';
+                        showAdminMenuModal();
+                    } else {
+                        tg.showAlert('Ошибка: ' + result.error);
+                    }
                 } else {
-                    tg.showAlert('Ошибка: ' + result.error);
+                    // Отправляем только текст
+                    const response = await fetch('/api/admin/broadcast', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            initData: tg.initData,
+                            message: messageText
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        tg.showAlert(result.message);
+                        document.getElementById('broadcast-message').value = '';
+                        showAdminMenuModal();
+                    } else {
+                        tg.showAlert('Ошибка: ' + result.error);
+                    }
                 }
                 
             } catch (error) {
@@ -2080,6 +2215,249 @@
                 tg.showAlert('Ошибка отправки сообщения');
             }
         }
+        
+        let allEmployeesForMessage = [];
+        let filteredEmployeesForMessage = [];
+        let selectedEmployeeForMessage = null;
+        
+        async function loadEmployeesForMessage() {
+            try {
+                const response = await fetch(`http://localhost:5000/api/admin/employees?initData=${encodeURIComponent(tg.initData)}`);
+                
+                if (!response.ok) {
+                    throw new Error('Ошибка загрузки данных');
+                }
+                
+                const data = await response.json();
+                allEmployeesForMessage = data.employees || [];
+                filteredEmployeesForMessage = [...allEmployeesForMessage];
+                
+                // Очищаем поле поиска
+                document.getElementById('employee-message-search').value = '';
+                
+                displayEmployeesForMessage(filteredEmployeesForMessage);
+                
+            } catch (error) {
+                console.error('Ошибка:', error);
+                document.getElementById('employee-message-list').innerHTML = '<div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">Ошибка загрузки сотрудников</div>';
+            }
+        }
+        
+        function displayEmployeesForMessage(employees) {
+            const container = document.getElementById('employee-message-list');
+            if (!employees || employees.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: var(--muted); padding: 20px;">Сотрудники не найдены</div>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            employees.forEach(emp => {
+                // Пропускаем сотрудников без chat_id
+                if (!emp.chat_id) {
+                    return;
+                }
+                
+                const empDiv = document.createElement('div');
+                empDiv.style.cssText = `
+                    background: #8b5cf6;
+                    border: 1px solid #7c3aed;
+                    border-radius: var(--radius);
+                    padding: 16px;
+                    margin-bottom: 12px;
+                    transition: all 0.2s ease;
+                    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
+                    cursor: pointer;
+                `;
+                
+                const statusIcon = emp.is_blocked ? '🔴' : '🟢';
+                const statusText = emp.is_blocked ? 'Заблокирован' : 'Активен';
+                const adminBadge = emp.is_admin ? '<span style="background: #f59e0b; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; margin-left: 8px;">АДМИН</span>' : '';
+                
+                empDiv.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-size: 16px; font-weight: 600; color: white; margin-bottom: 4px;">
+                                👤 ${emp.first_name} ${emp.last_name}${adminBadge}
+                            </div>
+                            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.8); margin-bottom: 2px;">📞 ${emp.phone}</div>
+                            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.7);">✅ В боте</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 12px; color: ${emp.is_blocked ? '#fca5a5' : '#a7f3d0'}; font-weight: 500;">${statusIcon} ${statusText}</div>
+                        </div>
+                    </div>
+                `;
+                
+                // Добавляем hover эффект
+                empDiv.addEventListener('mouseenter', () => {
+                    empDiv.style.borderColor = '#a855f7';
+                    empDiv.style.transform = 'translateY(-1px)';
+                    empDiv.style.boxShadow = '0 4px 12px rgba(139, 92, 246, 0.3)';
+                });
+                empDiv.addEventListener('mouseleave', () => {
+                    empDiv.style.borderColor = '#7c3aed';
+                    empDiv.style.transform = 'translateY(0)';
+                    empDiv.style.boxShadow = '0 2px 8px rgba(139, 92, 246, 0.2)';
+                });
+                
+                // Обработчик клика
+                empDiv.addEventListener('click', () => {
+                    selectEmployeeForMessage(emp);
+                });
+                
+                container.appendChild(empDiv);
+            });
+        }
+        
+        function filterEmployeesForMessage() {
+            const searchTerm = document.getElementById('employee-message-search').value.toLowerCase().trim();
+            
+            if (!searchTerm) {
+                filteredEmployeesForMessage = [...allEmployeesForMessage];
+            } else {
+                filteredEmployeesForMessage = allEmployeesForMessage.filter(emp => {
+                    const fullName = `${emp.first_name} ${emp.last_name}`.toLowerCase();
+                    const phone = emp.phone.toLowerCase();
+                    
+                    return fullName.includes(searchTerm) || 
+                           emp.first_name.toLowerCase().includes(searchTerm) ||
+                           emp.last_name.toLowerCase().includes(searchTerm) ||
+                           phone.includes(searchTerm);
+                });
+            }
+            
+            displayEmployeesForMessage(filteredEmployeesForMessage);
+        }
+        
+        function selectEmployeeForMessage(employee) {
+            selectedEmployeeForMessage = employee;
+            
+            // Скрываем модальное окно выбора сотрудника
+            document.getElementById('employee-message-modal').style.display = 'none';
+            
+            // Показываем модальное окно отправки сообщения
+            document.getElementById('send-employee-message-modal').style.display = 'block';
+            
+            // Обновляем информацию о выбранном сотруднике
+            document.getElementById('employee-message-title').textContent = `Сообщение для ${employee.first_name} ${employee.last_name}`;
+            document.getElementById('selected-employee-info').textContent = `${employee.first_name} ${employee.last_name} (${employee.phone})`;
+            
+            // Очищаем поля сообщения и файла
+            document.getElementById('employee-message-text').value = '';
+            document.getElementById('employee-message-file').value = '';
+            document.getElementById('employee-file-info').style.display = 'none';
+        }
+        
+        async function sendEmployeeMessage() {
+            try {
+                if (!selectedEmployeeForMessage) {
+                    tg.showAlert('Не выбран сотрудник');
+                    return;
+                }
+                
+                const messageText = document.getElementById('employee-message-text').value.trim();
+                const fileInput = document.getElementById('employee-message-file');
+                const file = fileInput.files[0];
+                
+                if (!messageText && !file) {
+                    tg.showAlert('Введите текст сообщения или выберите файл');
+                    return;
+                }
+                
+                // Если есть файл, отправляем через FormData
+                if (file) {
+                    const formData = new FormData();
+                    formData.append('initData', tg.initData);
+                    formData.append('message', messageText || '');
+                    formData.append('file', file);
+                    formData.append('target', 'one');
+                    formData.append('employee_id', selectedEmployeeForMessage.chat_id);
+                    
+                    const response = await fetch('/api/admin/send-file', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        tg.showAlert(`Сообщение с файлом отправлено ${selectedEmployeeForMessage.first_name} ${selectedEmployeeForMessage.last_name}`);
+                        document.getElementById('employee-message-text').value = '';
+                        fileInput.value = '';
+                        document.getElementById('employee-file-info').style.display = 'none';
+                        selectedEmployeeForMessage = null;
+                        showAdminMenuModal();
+                    } else {
+                        tg.showAlert('Ошибка: ' + result.error);
+                    }
+                } else {
+                    // Отправляем только текст
+                    const response = await fetch('/api/admin/send-message', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            initData: tg.initData,
+                            message: messageText,
+                            employee_id: selectedEmployeeForMessage.chat_id
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        tg.showAlert(`Сообщение отправлено ${selectedEmployeeForMessage.first_name} ${selectedEmployeeForMessage.last_name}`);
+                        document.getElementById('employee-message-text').value = '';
+                        selectedEmployeeForMessage = null;
+                        showAdminMenuModal();
+                    } else {
+                        tg.showAlert('Ошибка: ' + result.error);
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Ошибка:', error);
+                tg.showAlert('Ошибка отправки сообщения');
+            }
+        }
+        
+        // Обработчики для полей выбора файлов
+        document.addEventListener('DOMContentLoaded', function() {
+            // Обработчик для поля файла в рассылке всем
+            const broadcastFileInput = document.getElementById('broadcast-file');
+            if (broadcastFileInput) {
+                broadcastFileInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    const infoDiv = document.getElementById('broadcast-file-info');
+                    
+                    if (file) {
+                        const fileSize = (file.size / 1024 / 1024).toFixed(2);
+                        infoDiv.innerHTML = `📄 ${file.name} (${fileSize} MB)`;
+                        infoDiv.style.display = 'block';
+                    } else {
+                        infoDiv.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Обработчик для поля файла в сообщении сотруднику
+            const employeeFileInput = document.getElementById('employee-message-file');
+            if (employeeFileInput) {
+                employeeFileInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    const infoDiv = document.getElementById('employee-file-info');
+                    
+                    if (file) {
+                        const fileSize = (file.size / 1024 / 1024).toFixed(2);
+                        infoDiv.innerHTML = `📄 ${file.name} (${fileSize} MB)`;
+                        infoDiv.style.display = 'block';
+                    } else {
+                        infoDiv.style.display = 'none';
+                    }
+                });
+            }
+        });
         
         function showAddEmployeeModal() {
             // Скрываем все модальные окна
@@ -2256,7 +2634,7 @@
             const countElement = document.getElementById('search-results-count');
             
             if (!searchTerm) {
-                countElement.textContent = `Всего сотрудников: ${allEmployees.length}`;
+                countElement.textContent = '';
                 countElement.style.color = 'rgba(255,255,255,0.6)';
             } else {
                 if (filteredEmployees.length === 0) {
@@ -4160,6 +4538,9 @@
             document.getElementById('employees-management-modal').style.display = 'none';
             document.getElementById('issues-management-modal').style.display = 'none';
             document.getElementById('broadcast-modal').style.display = 'none';
+            document.getElementById('messaging-menu-modal').style.display = 'none';
+            document.getElementById('employee-message-modal').style.display = 'none';
+            document.getElementById('send-employee-message-modal').style.display = 'none';
             document.getElementById('add-employee-modal').style.display = 'none';
             document.getElementById('edit-employee-modal').style.display = 'none';
             document.getElementById('app').style.display = 'block';
