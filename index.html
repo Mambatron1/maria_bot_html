@@ -1073,8 +1073,32 @@
                         
                         <div style="margin-bottom: 15px;">
                             <label style="display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.9); font-size: 14px; font-weight: 600;">📎 Прикрепить файл (необязательно)</label>
-                            <input type="file" id="broadcast-file" accept="*/*" 
-                                   style="width: 100%; padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                            <div style="position: relative; width: calc(100% - 24px);">
+                                <input type="file" id="broadcast-file" accept="*/*" 
+                                       style="position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2;"
+                                       onchange="updateBroadcastFileInfo()">
+                                <div id="broadcast-file-button" style="
+                                    width: 100%; 
+                                    padding: 12px; 
+                                    border-radius: var(--radius); 
+                                    border: 2px dashed rgba(255, 255, 255, 0.3); 
+                                    background: rgba(255, 255, 255, 0.05); 
+                                    color: rgba(255, 255, 255, 0.7); 
+                                    font-size: 14px; 
+                                    font-weight: 600; 
+                                    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+                                    text-align: center;
+                                    cursor: pointer;
+                                    transition: all 0.2s ease;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    gap: 8px;
+                                ">
+                                    <span>📎</span>
+                                    <span id="broadcast-file-button-text">Выбрать файл</span>
+                                </div>
+                            </div>
                             <div id="broadcast-file-info" style="margin-top: 8px; font-size: 12px; color: rgba(255, 255, 255, 0.7); display: none;">
                                 <!-- Информация о выбранном файле -->
                             </div>
@@ -1083,8 +1107,8 @@
                 </div>
 
                 <div class="actions">
-                    <button onclick="sendBroadcastMessage()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700; background: #ef4444;">
-                        <span class="dot" style="background: #f87171;"></span>
+                    <button onclick="sendBroadcastMessage()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700; background: #0d9488;">
+                        <span class="dot" style="background: #10b981;"></span>
                         <span>Отправить всем</span>
                     </button>
                 </div>
@@ -1149,8 +1173,32 @@
                         
                         <div style="margin-bottom: 15px;">
                             <label style="display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.9); font-size: 14px; font-weight: 600;">📎 Прикрепить файл (необязательно)</label>
-                            <input type="file" id="employee-message-file" accept="*/*" 
-                                   style="width: 100%; padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                            <div style="position: relative; width: calc(100% - 24px);">
+                                <input type="file" id="employee-message-file" accept="*/*" 
+                                       style="position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2;"
+                                       onchange="updateEmployeeFileInfo()">
+                                <div id="employee-file-button" style="
+                                    width: 100%; 
+                                    padding: 12px; 
+                                    border-radius: var(--radius); 
+                                    border: 2px dashed rgba(255, 255, 255, 0.3); 
+                                    background: rgba(255, 255, 255, 0.05); 
+                                    color: rgba(255, 255, 255, 0.7); 
+                                    font-size: 14px; 
+                                    font-weight: 600; 
+                                    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+                                    text-align: center;
+                                    cursor: pointer;
+                                    transition: all 0.2s ease;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    gap: 8px;
+                                ">
+                                    <span>📎</span>
+                                    <span id="file-button-text">Выбрать файл</span>
+                                </div>
+                            </div>
                             <div id="employee-file-info" style="margin-top: 8px; font-size: 12px; color: rgba(255, 255, 255, 0.7); display: none;">
                                 <!-- Информация о выбранном файле -->
                             </div>
@@ -1159,8 +1207,8 @@
                 </div>
 
                 <div class="actions">
-                    <button onclick="sendEmployeeMessage()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700; background: #3b82f6;">
-                        <span class="dot" style="background: #60a5fa;"></span>
+                    <button onclick="sendEmployeeMessage()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700; background: #0d9488;">
+                        <span class="dot" style="background: #10b981;"></span>
                         <span>Отправить сообщение</span>
                     </button>
                 </div>
@@ -1433,10 +1481,13 @@
                     background: #8b5cf6;
                     border: 1px solid #7c3aed;
                     border-radius: var(--radius);
-                    padding: 16px;
+                    padding: 12px 14px;
                     margin-bottom: 12px;
                     transition: all 0.2s ease;
                     box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
+                    width: 100%;
+                    box-sizing: border-box;
+                    max-width: 100%;
                 `;
                 
                 const statusIcon = emp.is_blocked ? '🔴' : '🟢';
@@ -1447,30 +1498,30 @@
                 const botStatusColor = emp.chat_id ? '#10b981' : '#f59e0b';
                 
                 empDiv.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-                        <div>
-                            <div style="font-size: 16px; font-weight: 600; color: white; margin-bottom: 4px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; width: 100%;">
+                        <div style="flex: 1; min-width: 0; margin-right: 8px;">
+                            <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 2px; word-wrap: break-word;">
                                 👤 ${emp.first_name} ${emp.last_name}${adminBadge}
                             </div>
-                            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.8); margin-bottom: 4px;">📞 ${emp.phone}</div>
-                            <div style="font-size: 12px; color: ${botStatusColor === '#10b981' ? '#a7f3d0' : '#fed7aa'};">${botStatus}</div>
+                            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.8); margin-bottom: 2px; word-wrap: break-word;">📞 ${emp.phone}</div>
+                            <div style="font-size: 11px; color: ${botStatusColor === '#10b981' ? '#a7f3d0' : '#fed7aa'};">${botStatus}</div>
                         </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 12px; color: ${statusColor === '#10b981' ? '#a7f3d0' : '#fca5a5'}; font-weight: 500;">${statusIcon} ${statusText}</div>
+                        <div style="text-align: right; flex-shrink: 0;">
+                            <div style="font-size: 11px; color: ${statusColor === '#10b981' ? '#a7f3d0' : '#fca5a5'}; font-weight: 500;">${statusIcon} ${statusText}</div>
                         </div>
                     </div>
-                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <div style="display: flex; gap: 4px; width: 100%;">
                         <button onclick="toggleEmployeeBlock('${emp.phone}', ${!emp.is_blocked})" 
-                                style="padding: 6px 12px; background: ${emp.is_blocked ? 'rgba(16, 185, 129, 0.8)' : 'rgba(239, 68, 68, 0.8)'}; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: opacity 0.2s;">
-                            ${emp.is_blocked ? '✅ Разблокировать' : '🔒 Заблокировать'}
+                                style="padding: 4px 6px; background: ${emp.is_blocked ? 'rgba(16, 185, 129, 0.8)' : 'rgba(239, 68, 68, 0.8)'}; border: none; border-radius: 6px; color: white; font-size: 10px; cursor: pointer; transition: opacity 0.2s; flex: 1;">
+                            ${emp.is_blocked ? '✅' : '🔒'}
                         </button>
                         <button onclick="editEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}', ${emp.is_admin})" 
-                                style="padding: 6px 12px; background: rgba(245, 158, 11, 0.8); border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: opacity 0.2s;">
-                            ✏️ Редактировать
+                                style="padding: 4px 6px; background: rgba(245, 158, 11, 0.8); border: none; border-radius: 6px; color: white; font-size: 10px; cursor: pointer; transition: opacity 0.2s; flex: 1;">
+                            ✏️
                         </button>
                         <button onclick="deleteEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}')" 
-                                style="padding: 6px 12px; background: rgba(239, 68, 68, 0.8); border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: opacity 0.2s;">
-                            🗑️ Удалить
+                                style="padding: 4px 6px; background: rgba(239, 68, 68, 0.8); border: none; border-radius: 6px; color: white; font-size: 10px; cursor: pointer; transition: opacity 0.2s; flex: 1;">
+                            🗑️
                         </button>
                     </div>
                 `;
@@ -1548,7 +1599,7 @@
         
         async function toggleEmployeeBlock(phone, isBlocked) {
             try {
-                const response = await fetch('/api/admin/employee/block', {
+                const response = await fetch('http://localhost:5000/api/admin/employee/block', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1623,7 +1674,7 @@
             container.innerHTML = '<div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">Загрузка обращений...</div>';
             
             try {
-                const response = await fetch(`/api/admin/issues/all?initData=${encodeURIComponent(tg.initData)}`, {
+                const response = await fetch(`http://localhost:5000/api/admin/issues/all?initData=${encodeURIComponent(tg.initData)}`, {
                     method: 'GET'
                 });
 
@@ -1861,7 +1912,7 @@
                 const container = document.getElementById('issue-dialog-content');
                 container.innerHTML = '<div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">Загрузка диалога...</div>';
                 
-                const response = await fetch(`/api/admin/issue/${issueId}/dialog?initData=${encodeURIComponent(tg.initData)}`, {
+                const response = await fetch(`http://localhost:5000/api/admin/issue/${issueId}/dialog?initData=${encodeURIComponent(tg.initData)}`, {
                     method: 'GET'
                 });
 
@@ -2005,7 +2056,7 @@
                     return;
                 }
                 
-                const response = await fetch(`/api/admin/issue/${currentIssueId}/respond`, {
+                const response = await fetch(`http://localhost:5000/api/admin/issue/${currentIssueId}/respond`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2054,7 +2105,7 @@
         
         async function closeIssue(issueId) {
             try {
-                const response = await fetch(`/api/admin/issue/${issueId}/close`, {
+                const response = await fetch(`http://localhost:5000/api/admin/issue/${issueId}/close`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2083,7 +2134,7 @@
         
         async function sendStatsToChannel() {
             try {
-                const response = await fetch('/api/admin/send-stats', {
+                const response = await fetch('http://localhost:5000/api/admin/send-stats', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2131,6 +2182,16 @@
             document.getElementById('broadcast-message').value = '';
             document.getElementById('broadcast-file').value = '';
             document.getElementById('broadcast-file-info').style.display = 'none';
+            
+            // Сбрасываем стиль кнопки файла
+            const broadcastFileButton = document.getElementById('broadcast-file-button');
+            const broadcastFileButtonText = document.getElementById('broadcast-file-button-text');
+            if (broadcastFileButton && broadcastFileButtonText) {
+                broadcastFileButton.style.border = '2px dashed rgba(255, 255, 255, 0.3)';
+                broadcastFileButton.style.background = 'rgba(255, 255, 255, 0.05)';
+                broadcastFileButton.style.color = 'rgba(255, 255, 255, 0.7)';
+                broadcastFileButtonText.textContent = 'Выбрать файл';
+            }
         }
         
         async function showEmployeeMessageMenu() {
@@ -2170,7 +2231,7 @@
                     formData.append('file', file);
                     formData.append('target', 'all');
                     
-                    const response = await fetch('/api/admin/send-file', {
+                    const response = await fetch('http://localhost:5000/api/admin/send-file', {
                         method: 'POST',
                         body: formData
                     });
@@ -2181,14 +2242,14 @@
                         tg.showAlert('Сообщение с файлом отправлено всем сотрудникам');
                         document.getElementById('broadcast-message').value = '';
                         fileInput.value = '';
-                        document.getElementById('broadcast-file-info').style.display = 'none';
+                        updateBroadcastFileInfo(); // Сбрасываем стиль кнопки
                         showAdminMenuModal();
                     } else {
                         tg.showAlert('Ошибка: ' + result.error);
                     }
                 } else {
                     // Отправляем только текст
-                    const response = await fetch('/api/admin/broadcast', {
+                    const response = await fetch('http://localhost:5000/api/admin/broadcast', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -2262,11 +2323,14 @@
                     background: #8b5cf6;
                     border: 1px solid #7c3aed;
                     border-radius: var(--radius);
-                    padding: 16px;
+                    padding: 12px 14px;
                     margin-bottom: 12px;
                     transition: all 0.2s ease;
                     box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
                     cursor: pointer;
+                    width: 100%;
+                    box-sizing: border-box;
+                    max-width: 100%;
                 `;
                 
                 const statusIcon = emp.is_blocked ? '🔴' : '🟢';
@@ -2274,16 +2338,16 @@
                 const adminBadge = emp.is_admin ? '<span style="background: #f59e0b; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; margin-left: 8px;">АДМИН</span>' : '';
                 
                 empDiv.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-size: 16px; font-weight: 600; color: white; margin-bottom: 4px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <div style="flex: 1; min-width: 0; margin-right: 8px;">
+                            <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 2px; word-wrap: break-word;">
                                 👤 ${emp.first_name} ${emp.last_name}${adminBadge}
                             </div>
-                            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.8); margin-bottom: 2px;">📞 ${emp.phone}</div>
-                            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.7);">✅ В боте</div>
+                            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.8); margin-bottom: 2px; word-wrap: break-word;">📞 ${emp.phone}</div>
+                            <div style="font-size: 11px; color: rgba(255, 255, 255, 0.7);">✅ В боте</div>
                         </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 12px; color: ${emp.is_blocked ? '#fca5a5' : '#a7f3d0'}; font-weight: 500;">${statusIcon} ${statusText}</div>
+                        <div style="text-align: right; flex-shrink: 0;">
+                            <div style="font-size: 11px; color: ${emp.is_blocked ? '#fca5a5' : '#a7f3d0'}; font-weight: 500;">${statusIcon} ${statusText}</div>
                         </div>
                     </div>
                 `;
@@ -2373,7 +2437,7 @@
                     formData.append('target', 'one');
                     formData.append('employee_id', selectedEmployeeForMessage.chat_id);
                     
-                    const response = await fetch('/api/admin/send-file', {
+                    const response = await fetch('http://localhost:5000/api/admin/send-file', {
                         method: 'POST',
                         body: formData
                     });
@@ -2391,8 +2455,8 @@
                         tg.showAlert('Ошибка: ' + result.error);
                     }
                 } else {
-                    // Отправляем только текст
-                    const response = await fetch('/api/admin/send-message', {
+                    // Отправляем только текст через broadcast API с указанием конкретного сотрудника
+                    const response = await fetch('http://localhost:5000/api/admin/broadcast', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -2400,7 +2464,7 @@
                         body: JSON.stringify({
                             initData: tg.initData,
                             message: messageText,
-                            employee_id: selectedEmployeeForMessage.chat_id
+                            target_employee_id: selectedEmployeeForMessage.chat_id
                         })
                     });
                     
@@ -2420,6 +2484,90 @@
                 console.error('Ошибка:', error);
                 tg.showAlert('Ошибка отправки сообщения');
             }
+        }
+        
+        function updateEmployeeFileInfo() {
+            const fileInput = document.getElementById('employee-message-file');
+            const fileInfo = document.getElementById('employee-file-info');
+            const fileButton = document.getElementById('employee-file-button');
+            const fileButtonText = document.getElementById('file-button-text');
+            
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const fileSize = (file.size / 1024 / 1024).toFixed(2);
+                
+                fileInfo.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 8px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 6px;">
+                        <span style="color: #10b981;">📎</span>
+                        <div style="flex: 1; min-width: 0;">
+                            <div style="font-size: 12px; color: #10b981; font-weight: 600; word-wrap: break-word;">${file.name}</div>
+                            <div style="font-size: 11px; color: rgba(16, 185, 129, 0.8);">${fileSize} МБ</div>
+                        </div>
+                        <button onclick="clearEmployeeFile()" style="background: none; border: none; color: rgba(255, 255, 255, 0.5); cursor: pointer; padding: 2px; font-size: 14px;">✕</button>
+                    </div>
+                `;
+                fileInfo.style.display = 'block';
+                
+                // Обновляем стиль кнопки
+                fileButton.style.border = '2px solid #10b981';
+                fileButton.style.background = 'rgba(16, 185, 129, 0.1)';
+                fileButton.style.color = '#10b981';
+                fileButtonText.textContent = 'Файл выбран';
+            } else {
+                fileInfo.style.display = 'none';
+                fileButton.style.border = '2px dashed rgba(255, 255, 255, 0.3)';
+                fileButton.style.background = 'rgba(255, 255, 255, 0.05)';
+                fileButton.style.color = 'rgba(255, 255, 255, 0.7)';
+                fileButtonText.textContent = 'Выбрать файл';
+            }
+        }
+        
+        function clearEmployeeFile() {
+            const fileInput = document.getElementById('employee-message-file');
+            fileInput.value = '';
+            updateEmployeeFileInfo();
+        }
+        
+        function updateBroadcastFileInfo() {
+            const fileInput = document.getElementById('broadcast-file');
+            const fileInfo = document.getElementById('broadcast-file-info');
+            const fileButton = document.getElementById('broadcast-file-button');
+            const fileButtonText = document.getElementById('broadcast-file-button-text');
+            
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const fileSize = (file.size / 1024 / 1024).toFixed(2);
+                
+                fileInfo.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 8px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 6px;">
+                        <span style="color: #10b981;">📎</span>
+                        <div style="flex: 1; min-width: 0;">
+                            <div style="font-size: 12px; color: #10b981; font-weight: 600; word-wrap: break-word;">${file.name}</div>
+                            <div style="font-size: 11px; color: rgba(16, 185, 129, 0.8);">${fileSize} МБ</div>
+                        </div>
+                        <button onclick="clearBroadcastFile()" style="background: none; border: none; color: rgba(255, 255, 255, 0.5); cursor: pointer; padding: 2px; font-size: 14px;">✕</button>
+                    </div>
+                `;
+                fileInfo.style.display = 'block';
+                
+                // Обновляем стиль кнопки
+                fileButton.style.border = '2px solid #10b981';
+                fileButton.style.background = 'rgba(16, 185, 129, 0.1)';
+                fileButton.style.color = '#10b981';
+                fileButtonText.textContent = 'Файл выбран';
+            } else {
+                fileInfo.style.display = 'none';
+                fileButton.style.border = '2px dashed rgba(255, 255, 255, 0.3)';
+                fileButton.style.background = 'rgba(255, 255, 255, 0.05)';
+                fileButton.style.color = 'rgba(255, 255, 255, 0.7)';
+                fileButtonText.textContent = 'Выбрать файл';
+            }
+        }
+        
+        function clearBroadcastFile() {
+            const fileInput = document.getElementById('broadcast-file');
+            fileInput.value = '';
+            updateBroadcastFileInfo();
         }
         
         // Обработчики для полей выбора файлов
@@ -2487,7 +2635,7 @@
                     return;
                 }
                 
-                const response = await fetch('/api/admin/employee/add', {
+                const response = await fetch('http://localhost:5000/api/admin/employee/add', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2544,7 +2692,7 @@
                     return;
                 }
                 
-                const response = await fetch('/api/admin/employee/edit', {
+                const response = await fetch('http://localhost:5000/api/admin/employee/edit', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2580,7 +2728,7 @@
                     return;
                 }
                 
-                const response = await fetch('/api/admin/employee/delete', {
+                const response = await fetch('http://localhost:5000/api/admin/employee/delete', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2851,7 +2999,7 @@
                 // Показываем индикатор загрузки
                 tg.showAlert('Обрабатываем запрос...');
                 
-                const response = await fetch('/api/actions', {
+                const response = await fetch('http://localhost:5000/api/actions', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -3990,7 +4138,7 @@
                 const container = document.getElementById('my-issue-dialog-content');
                 container.innerHTML = '<div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">Загрузка диалога...</div>';
                 
-                const response = await fetch(`/api/my-issue/${issueId}/dialog?initData=${encodeURIComponent(tg.initData)}`, {
+                const response = await fetch(`http://localhost:5000/api/my-issue/${issueId}/dialog?initData=${encodeURIComponent(tg.initData)}`, {
                     method: 'GET'
                 });
 
@@ -4099,7 +4247,7 @@
                     return;
                 }
                 
-                const response = await fetch(`/api/my-issue/${currentMyIssueId}/respond`, {
+                const response = await fetch(`http://localhost:5000/api/my-issue/${currentMyIssueId}/respond`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -4142,7 +4290,7 @@
                 currentIssueId = issueId;
                 
                 // Загружаем данные чата
-                const response = await fetch(`/api/issue-chat/${issueId}?initData=${encodeURIComponent(tg.initData)}`, {
+                const response = await fetch(`http://localhost:5000/api/issue-chat/${issueId}?initData=${encodeURIComponent(tg.initData)}`, {
                     method: 'GET'
                 });
 
@@ -4244,7 +4392,7 @@
             if (!currentIssueId) return;
             
             try {
-                const response = await fetch(`/api/issue-chat/${currentIssueId}?initData=${encodeURIComponent(tg.initData)}`, {
+                const response = await fetch(`http://localhost:5000/api/issue-chat/${currentIssueId}?initData=${encodeURIComponent(tg.initData)}`, {
                     method: 'GET'
                 });
 
@@ -4269,7 +4417,7 @@
             }
             
             try {
-                const response = await fetch(`/api/issue-chat/${currentIssueId}/message`, {
+                const response = await fetch(`http://localhost:5000/api/issue-chat/${currentIssueId}/message`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -4336,7 +4484,7 @@
         async function checkNewResponsesOnLoad() {
             try {
                 console.log('Проверяем новые ответы...');
-                const response = await fetch(`/api/check-new-responses?initData=${encodeURIComponent(tg.initData)}`, {
+                const response = await fetch(`http://localhost:5000/api/check-new-responses?initData=${encodeURIComponent(tg.initData)}`, {
                     method: 'GET'
                 });
 
@@ -4424,7 +4572,7 @@
         async function markResponsesAsRead(issueId) {
             try {
                 console.log('Отмечаем ответы как прочитанные для обращения:', issueId);
-                const response = await fetch(`/api/mark-responses-read/${issueId}`, {
+                const response = await fetch(`http://localhost:5000/api/mark-responses-read/${issueId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
