@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: #0d9488; color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        NBtender v3.1.9 • 12.09.25
+        NBtender v3.2.0 • 12.09.25
     </div>
      
     <div class="wrap">
@@ -3004,7 +3004,8 @@
                 }
                 
                 if (action === 'admin' || action === 'admin_menu') {
-                    await showAdminMenuModal();
+                    tg.showAlert('Админ-меню временно отключено для отладки');
+                    // await showAdminMenuModal();
                     return;
                 }
                 
