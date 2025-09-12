@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: #0d9488; color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        NBtender v3.2.2 • 12.09.25
+        NBtender v3.2.3 • 12.09.25
     </div>
      
     <div class="wrap">
@@ -1319,15 +1319,26 @@
 
         async function showAdminMenuModal() {
             try {
-                // Скрываем главное приложение
+                // Скрываем все модальные окна
                 document.getElementById('app').style.display = 'none';
+                document.getElementById('employees-management-modal').style.display = 'none';
+                document.getElementById('issues-management-modal').style.display = 'none';
+                document.getElementById('broadcast-modal').style.display = 'none';
+                document.getElementById('messaging-menu-modal').style.display = 'none';
+                document.getElementById('employee-message-modal').style.display = 'none';
+                document.getElementById('send-employee-message-modal').style.display = 'none';
+                document.getElementById('add-employee-modal').style.display = 'none';
+                document.getElementById('edit-employee-modal').style.display = 'none';
                 
                 // Показываем админ-меню
                 document.getElementById('admin-menu-modal').style.display = 'block';
                 
+                // Загружаем статистику
+                await loadAdminStats();
+                
             } catch (error) {
                 console.error('Ошибка:', error);
-                tg.showAlert('Ошибка: ' + error.message);
+                tg.showAlert('Ошибка загрузки админ-меню');
             }
         }
         
