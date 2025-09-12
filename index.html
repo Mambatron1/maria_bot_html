@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: #0d9488; color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        NBtender v3.2.0 • 12.09.25
+        NBtender v3.2.1 • 12.09.25
     </div>
      
     <div class="wrap">
@@ -1346,8 +1346,8 @@
                     statsContent.innerHTML = '<div style="text-align: center; padding: 20px;">Загружаем статистику...</div>';
                 }
                 
-                // Загружаем статистику
-                await loadAdminStats();
+                // Статистика загружается отдельно
+                // await loadAdminStats();
                 
             } catch (error) {
                 console.error('Ошибка:', error);
@@ -3004,8 +3004,7 @@
                 }
                 
                 if (action === 'admin' || action === 'admin_menu') {
-                    tg.showAlert('Админ-меню временно отключено для отладки');
-                    // await showAdminMenuModal();
+                    await showAdminMenuModal();
                     return;
                 }
                 
