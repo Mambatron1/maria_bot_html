@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="nbtender-sick-leave-v2-final-1234567890">
-    <meta name="version" content="nbtender-sick-leave-v2-final-1234567890">
+    <meta name="cache-bust" content="nbtender-webapp-v3-messaging-fix-20250912">
+    <meta name="version" content="nbtender-webapp-v3-messaging-fix-20250912">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -353,9 +353,9 @@
     </style>
 </head>
 <body>
-    <!-- Индикатор версии для провери -->
-    <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        NBtender SOS STATE RESET
+    <!-- Индикатор версии для проверки -->
+    <div style="position: fixed; top: 10px; right: 10px; background: #0d9488; color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
+        NBtender v3.0 • 12.09.25
     </div>
      
     <div class="wrap">
@@ -392,7 +392,7 @@
                 <button class="btn" onclick="handleAction('sos')"><span class="dot dot-absence"></span><span>Нужна помощь</span></button>
                 <button class="btn btn-accent" id="admin-btn" onclick="handleAction('admin')" style="display: none;">Меню администратора</button>
                     </div>
-            <div class="footer">@NBtender_bot</div>
+            <div class="footer">@NBtender_bot • v3.0 (12.09.2025)</div>
         </div>
 
         <!-- Work Mode Modal -->
@@ -1222,7 +1222,7 @@
                     <button onclick="showMainApp()" class="back-button">←</button>
                     <div>
                         <div class="title">👑 Меню администратора</div>
-                        <div class="subtitle">Управление системой</div>
+                        <div class="subtitle">Управление системой • v3.0</div>
             </div>
                 </header>
 
@@ -1315,6 +1315,10 @@
         
         // Применяем тему Telegram
         document.body.style.backgroundColor = tg.themeParams.bg_color || '#667eea';
+        
+        // Выводим информацию о версии в консоль
+        console.log('🤖 NBtender WebApp v3.0 (12.09.2025)');
+        console.log('📝 Changelog: Исправлены окна отправки сообщений, улучшены кнопки выбора файлов, обновлены цвета кнопок');
 
         async function showAdminMenuModal() {
             try {
