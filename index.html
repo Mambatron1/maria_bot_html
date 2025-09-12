@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: #0d9488; color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        NBtender v3.2.1 • 12.09.25
+        NBtender v3.2.2 • 12.09.25
     </div>
      
     <div class="wrap">
@@ -1319,39 +1319,15 @@
 
         async function showAdminMenuModal() {
             try {
-                // Скрываем все модальные окна
+                // Скрываем главное приложение
                 document.getElementById('app').style.display = 'none';
-                document.getElementById('employees-management-modal').style.display = 'none';
-                document.getElementById('issues-management-modal').style.display = 'none';
-                document.getElementById('broadcast-modal').style.display = 'none';
-                document.getElementById('messaging-menu-modal').style.display = 'none';
-                document.getElementById('employee-message-modal').style.display = 'none';
-                document.getElementById('send-employee-message-modal').style.display = 'none';
-                document.getElementById('add-employee-modal').style.display = 'none';
-                document.getElementById('edit-employee-modal').style.display = 'none';
                 
                 // Показываем админ-меню
-                const adminModal = document.getElementById('admin-menu-modal');
-                if (adminModal) {
-                    adminModal.style.display = 'block';
-                    console.log('Админ-меню показано');
-                } else {
-                    console.error('Элемент admin-menu-modal не найден!');
-                    return;
-                }
-                
-                // Показываем индикатор загрузки в статистике
-                const statsContent = document.getElementById('admin-stats-content');
-                if (statsContent) {
-                    statsContent.innerHTML = '<div style="text-align: center; padding: 20px;">Загружаем статистику...</div>';
-                }
-                
-                // Статистика загружается отдельно
-                // await loadAdminStats();
+                document.getElementById('admin-menu-modal').style.display = 'block';
                 
             } catch (error) {
                 console.error('Ошибка:', error);
-                tg.showAlert('Ошибка загрузки админ-меню');
+                tg.showAlert('Ошибка: ' + error.message);
             }
         }
         
