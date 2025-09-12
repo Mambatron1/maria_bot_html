@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.1.1-20250912">
-    <meta name="version" content="maria-bot-v1.1.1">
+    <meta name="cache-bust" content="maria-bot-v1.1.2-20250912">
+    <meta name="version" content="maria-bot-v1.1.2">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.1.1
+        Maria Bot v1.1.2
     </div>
      
     <div class="wrap">
@@ -795,30 +795,43 @@
                     <div style="width: 40px;"></div>
                 </header>
 
-                <div class="actions">
-                    <button onclick="showAddEmployeeModal()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700;">
-                        <span class="dot" style="background: #10b981;"></span>
-                        <span>Добавить сотрудника</span>
-                    </button>
-                </div>
-
                 <div class="stack" style="margin-bottom: 20px;">
+                    <!-- Управление сотрудниками -->
+                    <div class="card" style="background: #065f46; margin-bottom: 20px;">
+                        <h3 style="font-size: 16px; line-height: 1.4;">👥 Управление сотрудниками</h3>
+                        <div style="margin-bottom: 15px;">
+                            <button onclick="showAddEmployeeModal()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700; width: 100%; background: #10b981;">
+                                <span class="dot" style="background: #ffffff;"></span>
+                                <span>Добавить сотрудника</span>
+                            </button>
+                        </div>
+                    </div>
+
                     <!-- Поиск и фильтры -->
                     <div class="card" style="background: #474A51; margin-bottom: 20px;">
-                        <h3 style="font-size: 16px; line-height: 1.4;">🔍 Поиск</h3>
-                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <h3 style="font-size: 16px; line-height: 1.4;">🔍 Поиск и фильтры</h3>
+                        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
                             <input type="text" id="employee-search" placeholder="Поиск по имени, фамилии..." 
                                    oninput="filterEmployees()" 
-                                   style="width: 200px; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                   style="width: 100%; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
                                           background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
-                            <select id="employee-status-filter" onchange="filterEmployees()" 
-                                    style="width: 140px; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                           background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
-                                <option value="all">Все статусы</option>
-                                <option value="active">Активные</option>
-                                <option value="blocked">Заблокированные</option>
-                                <option value="admin">Администраторы</option>
-                            </select>
+                            <div style="display: flex; gap: 10px;">
+                                <select id="employee-status-filter" onchange="filterEmployees()" 
+                                        style="flex: 1; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                               background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
+                                    <option value="all">Все статусы</option>
+                                    <option value="active">Активные</option>
+                                    <option value="blocked">Заблокированные</option>
+                                    <option value="admin">Администраторы</option>
+                                </select>
+                                <select id="employee-type-filter" onchange="filterEmployees()" 
+                                        style="flex: 1; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                               background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
+                                    <option value="all">Все роли</option>
+                                    <option value="admin">Администраторы</option>
+                                    <option value="user">Пользователи</option>
+                                </select>
+                            </div>
                         </div>
                         <div id="search-results-count" style="font-size: 12px; color: rgba(255, 255, 255, 0.6);">
                             <!-- Счетчик результатов поиска -->
