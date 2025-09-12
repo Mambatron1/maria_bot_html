@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: #0d9488; color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        NBtender v3.1.6 • 12.09.25
+        NBtender v3.1.8 • 12.09.25
     </div>
      
     <div class="wrap">
@@ -2867,9 +2867,6 @@
         
         async function loadUserData() {
             try {
-                // Показываем, что функция запустилась
-                document.getElementById('loading').innerHTML = '<div class="spinner"></div><p>Загружаем данные...</p>';
-                
                 // Возвращаем API вызов для получения данных пользователя
                 const response = await fetch('http://localhost:5000/api/user-info', {
                     method: 'POST',
@@ -2886,9 +2883,6 @@
                 }
 
                 const data = await response.json();
-                
-                // Показываем, что данные получены
-                document.getElementById('loading').innerHTML = '<div class="spinner"></div><p>Обрабатываем данные...</p>';
                 
                 // Сохраняем данные пользователя глобально
                 currentUserData = data;
