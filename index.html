@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: #0d9488; color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        NBtender v3.1.1 • 12.09.25
+        NBtender v3.1.3 • 12.09.25
     </div>
      
     <div class="wrap">
@@ -1316,7 +1316,7 @@
         
         // Применяем тему Telegram
         document.body.style.backgroundColor = tg.themeParams.bg_color || '#667eea';
-        
+
         async function showAdminMenuModal() {
             try {
                 // Скрываем все модальные окна
@@ -2867,6 +2867,11 @@
         
         async function loadUserData() {
             try {
+                // Проверяем, что initData не пустой
+                if (!tg.initData) {
+                    throw new Error('Telegram initData is empty');
+                }
+                
                 // Возвращаем API вызов для получения данных пользователя
                 const response = await fetch('http://localhost:5000/api/user-info', {
                     method: 'POST',
