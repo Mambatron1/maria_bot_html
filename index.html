@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: #0d9488; color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        NBtender v3.1.4 • 12.09.25
+        NBtender v3.1.6 • 12.09.25
     </div>
      
     <div class="wrap">
@@ -1316,18 +1316,6 @@
         
         // Применяем тему Telegram
         document.body.style.backgroundColor = tg.themeParams.bg_color || '#667eea';
-        
-        // Инициализируем приложение
-        document.addEventListener('DOMContentLoaded', function() {
-            loadUserData();
-        });
-        
-        // Если DOM уже загружен, запускаем сразу
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadUserData);
-        } else {
-            loadUserData();
-        }
 
         async function showAdminMenuModal() {
             try {
@@ -2879,10 +2867,8 @@
         
         async function loadUserData() {
             try {
-                // Проверяем, что initData не пустой
-                if (!tg.initData) {
-                    throw new Error('Telegram initData is empty');
-                }
+                // Показываем, что функция запустилась
+                document.getElementById('loading').innerHTML = '<div class="spinner"></div><p>Загружаем данные...</p>';
                 
                 // Возвращаем API вызов для получения данных пользователя
                 const response = await fetch('http://localhost:5000/api/user-info', {
@@ -2900,6 +2886,9 @@
                 }
 
                 const data = await response.json();
+                
+                // Показываем, что данные получены
+                document.getElementById('loading').innerHTML = '<div class="spinner"></div><p>Обрабатываем данные...</p>';
                 
                 // Сохраняем данные пользователя глобально
                 currentUserData = data;
@@ -2932,8 +2921,14 @@
                 
             } catch (error) {
                 console.error('Ошибка:', error);
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('error').style.display = 'block';
+                // Показываем ошибку прямо в loading
+                document.getElementById('loading').innerHTML = `
+                    <div style="color: #ef4444; padding: 20px; text-align: center;">
+                        <div style="font-size: 24px; margin-bottom: 10px;">❌</div>
+                        <div style="font-size: 16px; margin-bottom: 10px;">Ошибка загрузки</div>
+                        <div style="font-size: 12px; color: #999;">${error.message}</div>
+                    </div>
+                `;
             }
         }
 
@@ -4743,7 +4738,8 @@
             selectedLeaveType = null;
         }
 
-        // Данные пользователя загружаются в начале скрипта
+        // Загружаем данные пользователя при загрузке страницы
+        loadUserData();
 
         // Адаптивный дизайн
         (function(){
