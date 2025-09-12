@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="nbtender-sick-leave-v2-final-1234567890">
-    <meta name="version" content="nbtender-sick-leave-v2-final-1234567890">
+    <meta name="cache-bust" content="maria-bot-v1.1.0-20250912">
+    <meta name="version" content="maria-bot-v1.1.0">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -353,9 +353,9 @@
     </style>
 </head>
 <body>
-    <!-- Индикатор версии для провери -->
+    <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        NBtender SOS STATE RESET
+        Maria Bot v1.1.0
     </div>
      
     <div class="wrap">
@@ -795,23 +795,23 @@
                     <div style="width: 40px;"></div>
                 </header>
 
-                <div class="actions" style="margin-bottom: 20px;">
-                    <button onclick="showAddEmployeeModal()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700;">
+                <div class="actions" style="margin-bottom: 20px; max-width: 360px; margin-left: auto; margin-right: auto;">
+                    <button onclick="showAddEmployeeModal()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700; width: 100%;">
                         <span class="dot" style="background: #10b981;"></span>
                         <span>Добавить сотрудника</span>
                     </button>
 
                     <!-- Поиск и фильтры -->
-                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
+                    <div class="card" style="background: #474A51; margin-bottom: 20px; width: 100%; max-width: 360px; margin: 0 auto 20px auto;">
                         <h3 style="font-size: 16px; line-height: 1.4;">🔍 Поиск</h3>
                         <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                            <input type="text" id="employee-search" placeholder="Поиск по имени, фамилии или телефону..." 
+                            <input type="text" id="employee-search" placeholder="Поиск по имени, фамилии..." 
                                    oninput="filterEmployees()" 
-                                   style="flex: 1; padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                          background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                                   style="width: 200px; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                          background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
                             <select id="employee-status-filter" onchange="filterEmployees()" 
-                                    style="padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                           background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                                    style="width: 140px; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                           background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
                                 <option value="all">Все статусы</option>
                                 <option value="active">Активные</option>
                                 <option value="blocked">Заблокированные</option>
@@ -824,7 +824,7 @@
                     </div>
 
                     <!-- Список сотрудников -->
-                    <div class="card">
+                    <div class="card" style="width: 100%; max-width: 360px; margin: 0 auto;">
                         <h3>👥 Список сотрудников</h3>
                         <div id="employees-list">
                             <div style="text-align: center; color: var(--muted); padding: 20px;">
@@ -958,30 +958,32 @@
                     <div style="width: 40px;"></div>
                 </header>
 
-                <div class="stack" style="margin-bottom: 20px;">
+                <div class="stack" style="margin-bottom: 20px; max-width: 360px; margin-left: auto; margin-right: auto;">
                     <!-- Поиск и фильтры -->
-                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
+                    <div class="card" style="background: #474A51; margin-bottom: 20px; width: 100%;">
                         <h3 style="font-size: 16px; line-height: 1.4;">🔍 Поиск и фильтры</h3>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
                             <input type="text" id="issues-search" placeholder="Поиск по тексту..." 
                                    oninput="filterIssues()" 
-                                   style="padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                          background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
-                            <select id="issues-status-filter" onchange="filterIssues()" 
-                                    style="padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                           background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
-                                <option value="all">Все статусы</option>
-                                <option value="open">Открытые</option>
-                                <option value="in_progress">В работе</option>
-                                <option value="closed">Закрытые</option>
-                            </select>
-                            <select id="issues-type-filter" onchange="filterIssues()" 
-                                    style="padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                           background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
-                                <option value="all">Все типы</option>
-                                <option value="technical">Технические</option>
-                                <option value="personal">Личные</option>
-                            </select>
+                                   style="width: 100%; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                          background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
+                            <div style="display: flex; gap: 10px;">
+                                <select id="issues-status-filter" onchange="filterIssues()" 
+                                        style="flex: 1; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                               background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
+                                    <option value="all">Все статусы</option>
+                                    <option value="open">Открытые</option>
+                                    <option value="in_progress">В работе</option>
+                                    <option value="closed">Закрытые</option>
+                                </select>
+                                <select id="issues-type-filter" onchange="filterIssues()" 
+                                        style="flex: 1; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                               background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
+                                    <option value="all">Все типы</option>
+                                    <option value="technical">Технические</option>
+                                    <option value="personal">Личные</option>
+                                </select>
+                            </div>
                         </div>
                         <div id="issues-results-count" style="font-size: 12px; color: rgba(255, 255, 255, 0.6);">
                             <!-- Счетчик результатов поиска -->
@@ -989,7 +991,7 @@
                     </div>
 
                     <!-- Список обращений -->
-                    <div class="card">
+                    <div class="card" style="width: 100%;">
                         <h3>📋 Список обращений</h3>
                         <div id="issues-list">
                             <div style="text-align: center; color: var(--muted); padding: 20px;">
