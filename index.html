@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="nbtender-webapp-v3.1.1-js-fix-20250912">
-    <meta name="version" content="nbtender-webapp-v3.1.1-js-fix-20250912">
+    <meta name="cache-bust" content="nbtender-sick-leave-v2-final-1234567890">
+    <meta name="version" content="nbtender-sick-leave-v2-final-1234567890">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -344,7 +344,7 @@
             gap: 12px !important;
         }
         
-        /* Дополнительное правило длякнопок анонимности */
+        /* Дополнительное правило для кнопок анонимности */
         #sos-anonymity-options {
             display: grid !important;
             gap: 12px !important;
@@ -353,9 +353,9 @@
     </style>
 </head>
 <body>
-    <!-- Индикатор версии для проверки -->
-    <div style="position: fixed; top: 10px; right: 10px; background: #0d9488; color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        NBtender v3.2.3 • 12.09.25
+    <!-- Индикатор версии для провери -->
+    <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
+        NBtender SOS STATE RESET
     </div>
      
     <div class="wrap">
@@ -805,13 +805,13 @@
                     <div class="card" style="background: #474A51; margin-bottom: 20px;">
                         <h3 style="font-size: 16px; line-height: 1.4;">🔍 Поиск</h3>
                         <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                            <input type="text" id="employee-search" placeholder="Поиск по имени, фамилии..." 
+                            <input type="text" id="employee-search" placeholder="Поиск по имени, фамилии или телефону..." 
                                    oninput="filterEmployees()" 
-                                   style="flex: 1; height: var(--btn-h); padding: 0 16px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                          background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
+                                   style="flex: 1; padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                          background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                             <select id="employee-status-filter" onchange="filterEmployees()" 
-                                    style="height: var(--btn-h); padding: 0 16px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                           background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box; min-width: 140px;">
+                                    style="padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                           background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                                 <option value="all">Все статусы</option>
                                 <option value="active">Активные</option>
                                 <option value="blocked">Заблокированные</option>
@@ -962,23 +962,22 @@
                     <!-- Поиск и фильтры -->
                     <div class="card" style="background: #474A51; margin-bottom: 20px;">
                         <h3 style="font-size: 16px; line-height: 1.4;">🔍 Поиск и фильтры</h3>
-                        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px;">
                             <input type="text" id="issues-search" placeholder="Поиск по тексту..." 
                                    oninput="filterIssues()" 
-                                   style="height: var(--btn-h); padding: 0 16px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                          background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
-                            <div style="display: flex; gap: 10px;">
-                                <select id="issues-status-filter" onchange="filterIssues()" 
-                                        style="flex: 1; height: var(--btn-h); padding: 0 16px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                               background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
-                                    <option value="all">Все статусы</option>
-                                    <option value="open">Открытые</option>
-                                    <option value="in_progress">В работе</option>
-                                    <option value="closed">Закрытые</option>
-                                </select>
-                                <select id="issues-type-filter" onchange="filterIssues()" 
-                                        style="flex: 1; height: var(--btn-h); padding: 0 16px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                               background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
+                                   style="padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                          background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                            <select id="issues-status-filter" onchange="filterIssues()" 
+                                    style="padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                           background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                                <option value="all">Все статусы</option>
+                                <option value="open">Открытые</option>
+                                <option value="in_progress">В работе</option>
+                                <option value="closed">Закрытые</option>
+                            </select>
+                            <select id="issues-type-filter" onchange="filterIssues()" 
+                                    style="padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
+                                           background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                                 <option value="all">Все типы</option>
                                 <option value="technical">Технические</option>
                                 <option value="personal">Личные</option>
@@ -1344,11 +1343,9 @@
         
         async function loadAdminStats() {
             try {
-                console.log('Загружаем админ-статистику...');
                 const response = await fetch(`http://localhost:5000/api/admin/stats?initData=${encodeURIComponent(tg.initData)}`, {
                     method: 'GET'
                 });
-                console.log('Ответ от сервера:', response.status);
 
                 if (!response.ok) {
                     throw new Error('Ошибка загрузки статистики');
@@ -2917,14 +2914,8 @@
                 
             } catch (error) {
                 console.error('Ошибка:', error);
-                // Показываем ошибку прямо в loading
-                document.getElementById('loading').innerHTML = `
-                    <div style="color: #ef4444; padding: 20px; text-align: center;">
-                        <div style="font-size: 24px; margin-bottom: 10px;">❌</div>
-                        <div style="font-size: 16px; margin-bottom: 10px;">Ошибка загрузки</div>
-                        <div style="font-size: 12px; color: #999;">${error.message}</div>
-                    </div>
-                `;
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
             }
         }
 
