@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: #0d9488; color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        NBtender v3.1.8 • 12.09.25
+        NBtender v3.1.9 • 12.09.25
     </div>
      
     <div class="wrap">
@@ -1331,7 +1331,20 @@
                 document.getElementById('edit-employee-modal').style.display = 'none';
                 
                 // Показываем админ-меню
-                document.getElementById('admin-menu-modal').style.display = 'block';
+                const adminModal = document.getElementById('admin-menu-modal');
+                if (adminModal) {
+                    adminModal.style.display = 'block';
+                    console.log('Админ-меню показано');
+                } else {
+                    console.error('Элемент admin-menu-modal не найден!');
+                    return;
+                }
+                
+                // Показываем индикатор загрузки в статистике
+                const statsContent = document.getElementById('admin-stats-content');
+                if (statsContent) {
+                    statsContent.innerHTML = '<div style="text-align: center; padding: 20px;">Загружаем статистику...</div>';
+                }
                 
                 // Загружаем статистику
                 await loadAdminStats();
@@ -1344,9 +1357,11 @@
         
         async function loadAdminStats() {
             try {
+                console.log('Загружаем админ-статистику...');
                 const response = await fetch(`http://localhost:5000/api/admin/stats?initData=${encodeURIComponent(tg.initData)}`, {
                     method: 'GET'
                 });
+                console.log('Ответ от сервера:', response.status);
 
                 if (!response.ok) {
                     throw new Error('Ошибка загрузки статистики');
