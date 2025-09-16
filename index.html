@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.9.4-20250916">
-    <meta name="version" content="maria-bot-v1.9.4">
+    <meta name="cache-bust" content="maria-bot-v1.9.6-20250916">
+    <meta name="version" content="maria-bot-v1.9.6">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.9.4
+        Maria Bot v1.9.6
     </div>
      
     <div class="wrap">
@@ -818,26 +818,26 @@
                     <!-- Поиск и фильтры -->
                     <div class="card" style="background: #474A51; margin-bottom: 20px;">
                         <h3 style="font-size: 16px; line-height: 1.4;">🔍 Поиск и фильтры</h3>
-                        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+                        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px;">
                             <input type="text" id="employee-search" placeholder="Поиск по имени, фамилии..." 
                                    oninput="filterEmployees()" 
-                                   style="width: 100%; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                          background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
-                            <div style="display: flex; gap: 10px;">
+                                   style="width: 100%; height: var(--btn-h); padding: 0 15px; border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.2); 
+                                          background: rgba(255,255,255,0.1); color: white; font-size: 14px; font-weight: 500; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
+                            <div style="display: flex; gap: 12px;">
                                 <select id="employee-status-filter" onchange="filterEmployees()" 
-                                        style="flex: 1; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                               background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
-                                    <option value="all">Все статусы</option>
-                                    <option value="active">Активные</option>
-                                    <option value="blocked">Заблокированные</option>
-                                    <option value="admin">Администраторы</option>
+                                        style="flex: 1; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.2); 
+                                               background: rgba(255,255,255,0.1); color: white; font-size: 14px; font-weight: 500; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
+                                    <option value="all" style="background: var(--bg); color: white;">Все статусы</option>
+                                    <option value="active" style="background: var(--bg); color: white;">Активные</option>
+                                    <option value="blocked" style="background: var(--bg); color: white;">Заблокированные</option>
+                                    <option value="admin" style="background: var(--bg); color: white;">Администраторы</option>
                                 </select>
                                 <select id="employee-type-filter" onchange="filterEmployees()" 
-                                        style="flex: 1; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                               background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
-                                    <option value="all">Все роли</option>
-                                    <option value="admin">Администраторы</option>
-                                    <option value="user">Пользователи</option>
+                                        style="flex: 1; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.2); 
+                                               background: rgba(255,255,255,0.1); color: white; font-size: 14px; font-weight: 500; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
+                                    <option value="all" style="background: var(--bg); color: white;">Все роли</option>
+                                    <option value="admin" style="background: var(--bg); color: white;">Администраторы</option>
+                                    <option value="user" style="background: var(--bg); color: white;">Пользователи</option>
                                 </select>
                             </div>
                         </div>
@@ -1029,23 +1029,35 @@
 
         <!-- Issue Dialog Modal -->
         <div id="issue-dialog-modal" style="display: none;">
-            <div class="header">
-                <button onclick="closeIssueDialog()" style="background: none; border: none; color: white; font-size: 24px; float: left;">←</button>
-                <h2 style="text-align: center; margin: 0;">💬 Диалог с обращением</h2>
-            </div>
+            <div class="wrap">
+                <header style="margin-bottom: 20px;">
+                    <button onclick="closeIssueDialog()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
+                    <div style="flex: 1; text-align: center;">
+                        <div class="title" style="margin: 0;">💬 Диалог с обращением</div>
+                    </div>
+                    <div style="width: 40px;"></div>
+                </header>
 
-            <div id="issue-dialog-scroll" style="padding: 20px; height: calc(100vh - 140px); overflow-y: auto;">
-                <div id="issue-dialog-content">
-                    <div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">
-                        Загрузка диалога...
+                <div class="stack" style="margin-bottom: 80px;">
+                    <div class="card" style="background: #474A51; min-height: 60vh; max-height: 70vh; overflow-y: auto;">
+                        <div id="issue-dialog-content">
+                            <div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">
+                                <div style="font-size: 16px;">📈 Загрузка диалога...</div>
+                                <div style="font-size: 12px; margin-top: 8px;">Получение данных из базы</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div style="position: fixed; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.8); padding: 15px;">
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" id="admin-response-input" placeholder="Введите ответ..." onkeypress="handleEnterKey(event)" style="flex: 1; padding: 10px; border: none; border-radius: 6px; background: rgba(255,255,255,0.1); color: white;">
-                    <button onclick="sendAdminResponse()" style="background: #2ed573; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Отправить</button>
+                
+                <div style="position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div style="display: flex; gap: 10px; max-width: 100%; margin: 0 auto;">
+                        <input type="text" id="admin-response-input" placeholder="Введите ответ..." onkeypress="handleEnterKey(event)" 
+                               style="flex: 1; padding: 12px 15px; border: none; border-radius: var(--radius); background: rgba(255,255,255,0.1); color: white; font-size: 14px;">
+                        <button onclick="sendAdminResponse()" class="btn" 
+                                style="background: var(--accent); color: white; border: none; padding: 12px 20px; border-radius: var(--radius); cursor: pointer; font-weight: 600; min-width: 100px;">
+                            Отправить
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1503,13 +1515,12 @@
             employees.forEach(emp => {
                 const empDiv = document.createElement('div');
                 empDiv.style.cssText = `
-                    background: #8b5cf6;
-                    border: 1px solid #7c3aed;
+                    background: rgba(255,255,255,0.1);
+                    border: 1px solid rgba(255,255,255,0.2);
                     border-radius: var(--radius);
-                    padding: 12px 14px;
+                    padding: 15px;
                     margin-bottom: 12px;
                     transition: all 0.2s ease;
-                    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
                     width: 100%;
                     box-sizing: border-box;
                     max-width: 100%;
@@ -1518,49 +1529,49 @@
                 const statusIcon = emp.is_blocked ? '🔴' : '🟢';
                 const statusText = emp.is_blocked ? 'Заблокирован' : 'Активен';
                 const statusColor = emp.is_blocked ? '#ef4444' : '#10b981';
-                const adminBadge = emp.is_admin ? '<span style="background: #f59e0b; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; margin-left: 8px;">АДМИН</span>' : '';
+                const adminBadge = emp.is_admin ? '<span style="background: var(--accent); color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px; margin-left: 8px; font-weight: 600;">АДМИН</span>' : '';
                 const botStatus = emp.chat_id ? '✅ В боте' : '⚠️ Не авторизован';
                 const botStatusColor = emp.chat_id ? '#10b981' : '#f59e0b';
                 
                 empDiv.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; width: 100%;">
-                        <div style="flex: 1; min-width: 0; margin-right: 8px;">
-                            <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 2px; word-wrap: break-word;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; width: 100%;">
+                        <div style="flex: 1; min-width: 0; margin-right: 12px;">
+                            <div style="font-size: 15px; font-weight: 600; color: white; margin-bottom: 4px; word-wrap: break-word; line-height: 1.3;">
                                 👤 ${emp.first_name} ${emp.last_name}${adminBadge}
                             </div>
-                            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.8); margin-bottom: 2px; word-wrap: break-word;">📞 ${emp.phone}</div>
-                            <div style="font-size: 11px; color: ${botStatusColor === '#10b981' ? '#a7f3d0' : '#fed7aa'};">${botStatus}</div>
+                            <div style="font-size: 13px; color: rgba(255, 255, 255, 0.8); margin-bottom: 4px; word-wrap: break-word;">📞 ${emp.phone}</div>
+                            <div style="font-size: 12px; color: ${botStatusColor}; font-weight: 500;">${botStatus}</div>
                         </div>
                         <div style="text-align: right; flex-shrink: 0;">
-                            <div style="font-size: 11px; color: ${statusColor === '#10b981' ? '#a7f3d0' : '#fca5a5'}; font-weight: 500;">${statusIcon} ${statusText}</div>
+                            <div style="font-size: 12px; color: ${statusColor}; font-weight: 600; padding: 4px 8px; background: rgba(255,255,255,0.1); border-radius: var(--radius);">${statusIcon} ${statusText}</div>
                         </div>
                     </div>
-                    <div style="display: flex; gap: 4px; width: 100%;">
+                    <div style="display: flex; gap: 8px; width: 100%;">
                         <button onclick="toggleEmployeeBlock('${emp.phone}', ${!emp.is_blocked})" 
-                                style="padding: 4px 6px; background: ${emp.is_blocked ? 'rgba(16, 185, 129, 0.8)' : 'rgba(239, 68, 68, 0.8)'}; border: none; border-radius: 6px; color: white; font-size: 10px; cursor: pointer; transition: opacity 0.2s; flex: 1;">
-                            ${emp.is_blocked ? '✅' : '🔒'}
+                                class="btn" style="padding: 8px 12px; background: ${emp.is_blocked ? '#10b981' : '#ef4444'}; border: none; border-radius: var(--radius); color: white; font-size: 12px; cursor: pointer; transition: all 0.2s; flex: 1; font-weight: 600;">
+                            ${emp.is_blocked ? '✅ Разблокировать' : '🔒 Заблокировать'}
                         </button>
                         <button onclick="editEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}', ${emp.is_admin})" 
-                                style="padding: 4px 6px; background: rgba(245, 158, 11, 0.8); border: none; border-radius: 6px; color: white; font-size: 10px; cursor: pointer; transition: opacity 0.2s; flex: 1;">
-                            ✏️
+                                class="btn" style="padding: 8px 12px; background: #f59e0b; border: none; border-radius: var(--radius); color: white; font-size: 12px; cursor: pointer; transition: all 0.2s; flex: 1; font-weight: 600;">
+                            ✏️ Изменить
                         </button>
                         <button onclick="deleteEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}')" 
-                                style="padding: 4px 6px; background: rgba(239, 68, 68, 0.8); border: none; border-radius: 6px; color: white; font-size: 10px; cursor: pointer; transition: opacity 0.2s; flex: 1;">
-                            🗑️
+                                class="btn" style="padding: 8px 12px; background: #ef4444; border: none; border-radius: var(--radius); color: white; font-size: 12px; cursor: pointer; transition: all 0.2s; flex: 1; font-weight: 600;">
+                            🗑️ Удалить
                         </button>
                     </div>
                 `;
                 
                 // Добавляем hover эффект
                 empDiv.addEventListener('mouseenter', () => {
-                    empDiv.style.borderColor = '#a855f7';
+                    empDiv.style.borderColor = 'rgba(255,255,255,0.4)';
                     empDiv.style.transform = 'translateY(-1px)';
-                    empDiv.style.boxShadow = '0 4px 12px rgba(139, 92, 246, 0.3)';
+                    empDiv.style.background = 'rgba(255,255,255,0.15)';
                 });
                 empDiv.addEventListener('mouseleave', () => {
-                    empDiv.style.borderColor = '#7c3aed';
+                    empDiv.style.borderColor = 'rgba(255,255,255,0.2)';
                     empDiv.style.transform = 'translateY(0)';
-                    empDiv.style.boxShadow = '0 2px 8px rgba(139, 92, 246, 0.2)';
+                    empDiv.style.background = 'rgba(255,255,255,0.1)';
                 });
                 
                 container.appendChild(empDiv);
@@ -1963,11 +1974,9 @@
             const issue = data.issue;
             const responses = data.responses || [];
             
-            let html = '<div style="margin-bottom: 20px;">';
-            
             // Информация об обращении
-            const typeIcon = issue.type === 'personal' ? '💔' : '🖥';
-            const typeText = issue.type === 'personal' ? 'Личная проблема' : 'Техническая проблема';
+            const typeIcon = issue.issue_type === 'personal' ? '💔' : '🖥';
+            const typeText = issue.issue_type === 'personal' ? 'Личная проблема' : 'Техническая проблема';
             const anonymityText = issue.is_anonymous ? ` (${issue.pseudonym || 'Анонимно'})` : '';
             
             // Определяем статус
@@ -1984,19 +1993,22 @@
                 statusColor = '#2ed573';
             }
             
-            html += '<div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px;">';
+            let html = '';
+            
+            // Информационная карточка об обращении
+            html += '<div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: var(--radius); margin-bottom: 15px;">';
             html += '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">';
-            html += '<div style="font-weight: bold;">' + typeIcon + ' Обращение #' + issue.id + anonymityText + '</div>';
-            html += '<div style="font-size: 12px; color: ' + statusColor + ';">' + statusIcon + ' ' + statusText + '</div>';
+            html += '<h3 style="margin: 0; font-size: 16px; line-height: 1.4;">' + typeIcon + ' Обращение #' + issue.id + anonymityText + '</h3>';
+            html += '<div style="font-size: 12px; color: ' + statusColor + '; font-weight: 600;">' + statusIcon + ' ' + statusText + '</div>';
             html += '</div>';
-            html += '<div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 5px;">' + typeText + '</div>';
-            html += '<div style="font-size: 14px; margin-bottom: 8px;">' + issue.description + '</div>';
-            html += '<div style="font-size: 12px; color: rgba(255,255,255,0.6);">От: ' + issue.employee_name + '</div>';
-            html += '<div style="font-size: 12px; color: rgba(255,255,255,0.6);">Создано: ' + new Date(issue.created_at).toLocaleString('ru-RU') + '</div>';
+            html += '<div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 8px;">' + typeText + '</div>';
+            html += '<div style="font-size: 14px; margin-bottom: 12px; line-height: 1.4;">' + issue.description + '</div>';
+            html += '<div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 4px;">👤 От: ' + issue.employee_name + '</div>';
+            html += '<div style="font-size: 12px; color: rgba(255,255,255,0.6);">🕐 Создано: ' + new Date(issue.created_at).toLocaleString('ru-RU') + '</div>';
             
             // Если обращение закрыто, показываем предупреждение для админа
             if (issue.status === 'closed') {
-                html += '<div style="margin-top: 10px; padding: 10px; background: rgba(255, 71, 87, 0.2); border-radius: 6px; font-size: 12px; color: rgba(255,255,255,0.8);">';
+                html += '<div style="margin-top: 12px; padding: 10px; background: rgba(255, 71, 87, 0.2); border-radius: var(--radius); font-size: 12px; color: rgba(255,255,255,0.9);">';
                 html += '🔒 Это обращение закрыто. Вы можете просматривать историю, но новые ответы добавлять запрещено.';
                 html += '</div>';
             }
@@ -2005,68 +2017,75 @@
             
             // История ответов
             if (responses.length > 0) {
-                html += '<div class="dialog-messages" style="margin-bottom: 20px; max-height: 300px; overflow-y: auto;">';
-                html += '<div style="font-weight: bold; margin-bottom: 15px;">История диалога:</div>';
+                html += '<div class="dialog-messages" style="margin-bottom: 15px;">';
+                html += '<h3 style="font-size: 16px; line-height: 1.4; margin-bottom: 15px;">💬 История диалога</h3>';
                 
                 responses.forEach(response => {
                     const isAdmin = response.responder_phone === 'admin';
-                    const bgColor = isAdmin ? 'rgba(46, 213, 115, 0.2)' : 'rgba(255, 255, 255, 0.1)';
-                    const align = isAdmin ? 'margin-left: 20px;' : 'margin-right: 20px;';
+                    const messageStyle = isAdmin 
+                        ? 'background: linear-gradient(45deg, #667eea, #764ba2); color: white; margin-left: auto; text-align: right;'
+                        : 'background: rgba(255,255,255,0.1); color: white; margin-right: auto;';
                     
-                    html += '<div style="background: ' + bgColor + '; padding: 12px; border-radius: 8px; margin-bottom: 10px; ' + align + '">';
-                    html += '<div style="font-size: 14px; margin-bottom: 5px;">' + response.response_text + '</div>';
-                    html += '<div style="font-size: 11px; color: rgba(255,255,255,0.6); text-align: right;">';
+                    html += '<div style="margin: 10px 0; padding: 12px 15px; border-radius: 12px; max-width: 80%; word-wrap: break-word; ' + messageStyle + '">';
+                    html += '<div style="font-size: 14px; margin-bottom: 6px; line-height: 1.4;">' + response.response_text + '</div>';
+                    html += '<div style="font-size: 11px; opacity: 0.8;">';
                     html += (isAdmin ? '👨‍💼 Администратор' : '👤 Сотрудник') + ' • ' + new Date(response.created_at).toLocaleString('ru-RU');
                     html += '</div>';
                     html += '</div>';
                 });
                 
                 html += '</div>';
+            } else {
+                html += '<div style="text-align: center; color: rgba(255,255,255,0.6); padding: 20px; font-style: italic;">';
+                html += '💭 Пока нет ответов. Станьте первым, кто ответит на это обращение!';
+                html += '</div>';
             }
             
-            html += '</div>';
             container.innerHTML = html;
             
             // Управляем видимостью поля ввода в зависимости от статуса обращения
             const inputContainer = document.querySelector('#issue-dialog-modal div[style*="position: fixed"]');
             if (inputContainer) {
+                const input = document.getElementById('admin-response-input');
+                const button = inputContainer.querySelector('button');
+                
                 if (issue.status === 'closed') {
                     // Для закрытых обращений делаем поле ввода полупрозрачным и добавляем предупреждение
                     inputContainer.style.opacity = '0.6';
-                    const input = document.getElementById('admin-response-input');
-                    const button = inputContainer.querySelector('button');
                     if (input) {
                         input.placeholder = 'Обращение закрыто - ответы запрещены';
                         input.style.background = 'rgba(255, 71, 87, 0.2)';
+                        input.disabled = true;
                     }
                     if (button) {
                         button.style.background = '#ff4757';
-                        button.innerHTML = '⚠️ Ответить';
+                        button.innerHTML = '🔒 Закрыто';
+                        button.disabled = true;
                     }
                 } else {
                     // Для активных обращений возвращаем обычный вид
                     inputContainer.style.opacity = '1';
-                    const input = document.getElementById('admin-response-input');
-                    const button = inputContainer.querySelector('button');
                     if (input) {
                         input.placeholder = 'Введите ответ...';
                         input.style.background = 'rgba(255,255,255,0.1)';
+                        input.disabled = false;
                     }
                     if (button) {
-                        button.style.background = '#2ed573';
+                        button.style.background = 'var(--accent)';
                         button.innerHTML = 'Отправить';
+                        button.disabled = false;
                     }
                 }
             }
             
             // Прокручиваем вниз к последним сообщениям
             setTimeout(() => {
-                const scrollableContainer = document.getElementById('issue-dialog-scroll');
+                const scrollableContainer = document.querySelector('#issue-dialog-modal .card');
                 if (scrollableContainer) {
                     console.log('Прокручиваем админский диалог вниз');
                     scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
                 } else {
-                    console.log('Контейнер issue-dialog-scroll не найден');
+                    console.log('Контейнер диалога не найден');
                 }
             }, 100);
         }
