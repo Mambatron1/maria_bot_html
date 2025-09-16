@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.9.6-20250916">
-    <meta name="version" content="maria-bot-v1.9.6">
+    <meta name="cache-bust" content="maria-bot-v1.10.0-20250916">
+    <meta name="version" content="maria-bot-v1.10.0">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.9.6
+        Maria Bot v1.10.0
     </div>
      
     <div class="wrap">
@@ -1518,12 +1518,13 @@
                     background: rgba(255,255,255,0.1);
                     border: 1px solid rgba(255,255,255,0.2);
                     border-radius: var(--radius);
-                    padding: 15px;
+                    padding: 12px;
                     margin-bottom: 12px;
                     transition: all 0.2s ease;
                     width: 100%;
                     box-sizing: border-box;
                     max-width: 100%;
+                    overflow: hidden;
                 `;
                 
                 const statusIcon = emp.is_blocked ? '🔴' : '🟢';
@@ -1534,30 +1535,30 @@
                 const botStatusColor = emp.chat_id ? '#10b981' : '#f59e0b';
                 
                 empDiv.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; width: 100%;">
-                        <div style="flex: 1; min-width: 0; margin-right: 12px;">
-                            <div style="font-size: 15px; font-weight: 600; color: white; margin-bottom: 4px; word-wrap: break-word; line-height: 1.3;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; width: 100%; overflow: hidden;">
+                        <div style="flex: 1; min-width: 0; margin-right: 8px; overflow: hidden;">
+                            <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1.3;">
                                 👤 ${emp.first_name} ${emp.last_name}${adminBadge}
                             </div>
-                            <div style="font-size: 13px; color: rgba(255, 255, 255, 0.8); margin-bottom: 4px; word-wrap: break-word;">📞 ${emp.phone}</div>
-                            <div style="font-size: 12px; color: ${botStatusColor}; font-weight: 500;">${botStatus}</div>
+                            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.8); margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">📞 ${emp.phone}</div>
+                            <div style="font-size: 11px; color: ${botStatusColor}; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${botStatus}</div>
                         </div>
-                        <div style="text-align: right; flex-shrink: 0;">
-                            <div style="font-size: 12px; color: ${statusColor}; font-weight: 600; padding: 4px 8px; background: rgba(255,255,255,0.1); border-radius: var(--radius);">${statusIcon} ${statusText}</div>
+                        <div style="text-align: right; flex-shrink: 0; max-width: 100px;">
+                            <div style="font-size: 10px; color: ${statusColor}; font-weight: 600; padding: 3px 6px; background: rgba(255,255,255,0.1); border-radius: var(--radius); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${statusIcon} ${statusText}</div>
                         </div>
                     </div>
-                    <div style="display: flex; gap: 8px; width: 100%;">
+                    <div style="display: flex; gap: 6px; width: 100%;">
                         <button onclick="toggleEmployeeBlock('${emp.phone}', ${!emp.is_blocked})" 
-                                class="btn" style="padding: 8px 12px; background: ${emp.is_blocked ? '#10b981' : '#ef4444'}; border: none; border-radius: var(--radius); color: white; font-size: 12px; cursor: pointer; transition: all 0.2s; flex: 1; font-weight: 600;">
-                            ${emp.is_blocked ? '✅ Разблокировать' : '🔒 Заблокировать'}
+                                class="btn" style="padding: 6px 8px; background: ${emp.is_blocked ? '#10b981' : '#ef4444'}; border: none; border-radius: var(--radius); color: white; font-size: 11px; cursor: pointer; transition: all 0.2s; flex: 1; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            ${emp.is_blocked ? '✅' : '🔒'}
                         </button>
                         <button onclick="editEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}', ${emp.is_admin})" 
-                                class="btn" style="padding: 8px 12px; background: #f59e0b; border: none; border-radius: var(--radius); color: white; font-size: 12px; cursor: pointer; transition: all 0.2s; flex: 1; font-weight: 600;">
-                            ✏️ Изменить
+                                class="btn" style="padding: 6px 8px; background: #f59e0b; border: none; border-radius: var(--radius); color: white; font-size: 11px; cursor: pointer; transition: all 0.2s; flex: 1; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            ✏️
                         </button>
                         <button onclick="deleteEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}')" 
-                                class="btn" style="padding: 8px 12px; background: #ef4444; border: none; border-radius: var(--radius); color: white; font-size: 12px; cursor: pointer; transition: all 0.2s; flex: 1; font-weight: 600;">
-                            🗑️ Удалить
+                                class="btn" style="padding: 6px 8px; background: #ef4444; border: none; border-radius: var(--radius); color: white; font-size: 11px; cursor: pointer; transition: all 0.2s; flex: 1; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            🗑️
                         </button>
                     </div>
                 `;
@@ -2124,6 +2125,11 @@
 
                 // Добавляем сообщение в диалог локально
                 addMessageToDialog(responseText, true, false);
+                
+                // Прокручиваем к низу диалога
+                setTimeout(() => {
+                    scrollToBottom(false); // false = админский диалог
+                }, 150);
                 
                 // Очищаем поле ввода
                 input.value = '';
@@ -4176,6 +4182,28 @@
             
             if (!container) return;
             
+            // Прокручиваем основной скроллируемый контейнер
+            if (!isUserDialog) {
+                // Админский диалог
+                const scrollableCard = document.querySelector('#issue-dialog-modal .card');
+                if (scrollableCard) {
+                    scrollableCard.scrollTo({
+                        top: scrollableCard.scrollHeight,
+                        behavior: 'smooth'
+                    });
+                }
+            } else {
+                // Пользовательский диалог
+                const scrollableContainer = document.getElementById('my-issue-dialog-scroll');
+                if (scrollableContainer) {
+                    scrollableContainer.scrollTo({
+                        top: scrollableContainer.scrollHeight,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+            
+            // Прокручиваем контейнер с сообщениями
             const messagesContainer = container.querySelector('.dialog-messages') || container;
             messagesContainer.scrollTo({
                 top: messagesContainer.scrollHeight,
@@ -4340,6 +4368,11 @@
 
                 // Добавляем сообщение в диалог локально
                 addMessageToDialog(responseText, true, true);
+                
+                // Прокручиваем к низу диалога
+                setTimeout(() => {
+                    scrollToBottom(true); // true = пользовательский диалог
+                }, 150);
                 
                 // Очищаем поле ввода
                 input.value = '';
