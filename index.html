@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.8.2-20250915">
-    <meta name="version" content="maria-bot-v1.8.2">
+    <meta name="cache-bust" content="maria-bot-v1.8.5-20250915">
+    <meta name="version" content="maria-bot-v1.8.5">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.8.2
+        Maria Bot v1.8.5
     </div>
      
     <div class="wrap">
@@ -737,26 +737,34 @@
 
         <!-- SOS Menu Modal -->
         <div id="sos-menu-modal" style="display: none;">
-            <div class="header">
-                <button onclick="showSosModal()" style="background: none; border: none; color: white; font-size: 24px; float: left;">←</button>
-                <h2 style="text-align: center; margin: 0;">🚨 SOS - Мои обращения</h2>
-            </div>
-
-            <div class="info-cards">
-                <div class="info-card">
-                    <div class="card-header">
-                        <span class="card-icon">📋</span>
-                        <span class="card-title">Ваши обращения</span>
+            <div class="wrap">
+                <header style="margin-bottom: 20px;">
+                    <button onclick="showSosModal()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
+                    <div style="flex: 1; text-align: center;">
+                        <div class="title" style="margin: 0;">Мои обращения</div>
                     </div>
-                    <div class="card-content">
-                        Здесь вы можете продолжить диалоги или создать новое обращение
+                    <div style="width: 40px;"></div>
+                </header>
+
+                <div class="stack" style="margin-bottom: 20px;">
+                    <!-- Информация о разделе -->
+                    <div class="card" style="background: #065f46; margin-bottom: 20px;">
+                        <h3 style="font-size: 16px; line-height: 1.4;">📋 Ваши обращения</h3>
+                        <p style="margin: 0; color: rgba(255,255,255,0.8); font-size: 14px;">
+                            Здесь вы можете продолжить диалоги или создать новое обращение
+                        </p>
                     </div>
-                </div>
 
-
-
-                <div id="sos-issues-list" style="margin-top: 20px;">
-                    <!-- Список обращений будет загружен динамически -->
+                    <!-- Список обращений -->
+                    <div class="card" style="background: #474A51;">
+                        <h3 style="font-size: 16px; line-height: 1.4;">💬 Список обращений</h3>
+                        <div id="sos-issues-list">
+                            <div style="text-align: center; color: var(--muted); padding: 20px;">
+                                <div style="font-size: 16px;">📈 Загрузка обращений...</div>
+                                <div style="font-size: 12px; margin-top: 8px;">Получение данных из базы</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
