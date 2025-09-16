@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.7.9-20250915">
-    <meta name="version" content="maria-bot-v1.7.9">
+    <meta name="cache-bust" content="maria-bot-v1.8.2-20250915">
+    <meta name="version" content="maria-bot-v1.8.2">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.7.9
+        Maria Bot v1.8.2
     </div>
      
     <div class="wrap">
@@ -3280,14 +3280,10 @@
                 
                 if (response.ok) {
                     tg.showAlert('Юху 🎉! Готово!');
-                    // Если обращение создано, показываем чат
-                    if (result.issue_id) {
-                        setTimeout(() => {
-                            showIssueChat(result.issue_id);
-                        }, 1000);
-                    } else {
-                        showMainApp();
-                    }
+                    // После успешной отправки возвращаемся в меню "Сообщить о проблеме"
+                    setTimeout(() => {
+                        showSosModal();
+                    }, 1000);
                 } else {
                     tg.showAlert('Ошибка: ' + result.error);
                 }
