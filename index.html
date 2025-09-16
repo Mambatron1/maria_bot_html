@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.8.5-20250915">
-    <meta name="version" content="maria-bot-v1.8.5">
+    <meta name="cache-bust" content="maria-bot-v1.9.0-20250916">
+    <meta name="version" content="maria-bot-v1.9.0">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.8.5
+        Maria Bot v1.9.0
     </div>
      
     <div class="wrap">
@@ -786,7 +786,7 @@
             
             <div style="position: fixed; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.8); padding: 15px;">
                 <div style="display: flex; gap: 10px;">
-                    <input type="text" id="my-response-input" placeholder="Введите ответ..." onkeypress="handleMyResponseEnterKey(event)" style="flex: 1; padding: 10px; border: none; border-radius: 6px; background: rgba(255,255,255,0.1); color: white;">
+                    <input type="text" id="my-response-input" placeholder="Введите ответ..." onkeypress="handleMyResponseEnterKey(event)" oninput="handleTyping()" style="flex: 1; padding: 10px; border: none; border-radius: 6px; background: rgba(255,255,255,0.1); color: white;">
                     <button onclick="sendMyResponse()" style="background: #2ed573; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Отправить</button>
                 </div>
             </div>
@@ -3943,7 +3943,7 @@
                 clearInterval(dialogRefreshInterval);
             }
             
-            // Запускаем автообновление каждые 3 секунды
+            // Запускаем автообновление каждую секунду для реального времени
             dialogRefreshInterval = setInterval(async () => {
                 try {
                     // Проверяем, какой диалог открыт
@@ -3957,7 +3957,7 @@
                 } catch (error) {
                     console.error('Ошибка автообновления диалога:', error);
                 }
-            }, 3000);
+            }, 1000); // 1 секунда для реального времени
         }
         
         function stopDialogAutoRefresh() {
@@ -4012,9 +4012,12 @@
                 // Добавляем только новые сообщения
                 if (newMessagesCount > currentDialogMessagesCount) {
                     const newMessages = data.responses.slice(currentDialogMessagesCount);
-                    appendNewMessages(newMessages, isUserDialog, data.issue.employee_phone);
+                    appendNewMessages(newMessages, isUserDialog, data.issue ? data.issue.emp_phone : null);
                     currentDialogMessagesCount = newMessagesCount;
                     lastDialogData = data;
+                    
+                    // Прокручиваем к новым сообщениям
+                    scrollToBottom(isUserDialog);
                 }
                 
             } catch (error) {
@@ -4113,6 +4116,9 @@
                     border-radius: 12px;
                     max-width: 80%;
                     word-wrap: break-word;
+                    opacity: 0;
+                    transform: translateY(20px);
+                    transition: all 0.3s ease;
                     ${isFromEmployee ? 
                         'background: linear-gradient(45deg, #667eea, #764ba2); color: white; margin-left: auto; text-align: right;' : 
                         'background: rgba(255,255,255,0.1); color: white; margin-right: auto;'
@@ -4130,10 +4136,32 @@
                 `;
                 
                 messagesContainer.appendChild(messageDiv);
+                
+                // Анимация появления
+                setTimeout(() => {
+                    messageDiv.style.opacity = '1';
+                    messageDiv.style.transform = 'translateY(0)';
+                }, 100);
             });
             
-            // Прокручиваем к последнему сообщению
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            // Прокручиваем к последнему сообщению с задержкой для анимации
+            setTimeout(() => {
+                scrollToBottom(isUserDialog);
+            }, 200);
+        }
+        
+        // Плавная прокрутка к низу диалога
+        function scrollToBottom(isUserDialog) {
+            const containerId = isUserDialog ? 'my-issue-dialog-content' : 'issue-dialog-content';
+            const container = document.getElementById(containerId);
+            
+            if (!container) return;
+            
+            const messagesContainer = container.querySelector('.dialog-messages') || container;
+            messagesContainer.scrollTo({
+                top: messagesContainer.scrollHeight,
+                behavior: 'smooth'
+            });
         }
         
         async function openMyIssueDialog(issueId) {
@@ -4754,6 +4782,494 @@
             selectedLeaveType = null;
         }
 
+        // ============================================================================
+        // ФУНКЦИИ ДЛЯ РАБОТЫ С ОБРАЩЕНИЯМИ ПОЛЬЗОВАТЕЛЯ
+        // ============================================================================
+        
+        function showSosMenuModal() {
+            // Скрываем все другие модальные окна
+            hideAllModals();
+            
+            // Показываем модальное окно "Мои обращения"
+            document.getElementById('sos-menu-modal').style.display = 'block';
+            
+            // Загружаем список обращений
+            loadMyIssues();
+        }
+        
+        async function loadMyIssues() {
+            try {
+                const container = document.getElementById('sos-issues-list');
+                container.innerHTML = `
+                    <div style="text-align: center; color: var(--muted); padding: 20px;">
+                        <div style="font-size: 16px;">📈 Загрузка обращений...</div>
+                        <div style="font-size: 12px; margin-top: 8px;">Получение данных из базы</div>
+                    </div>
+                `;
+                
+                const response = await fetch(`http://localhost:5000/api/my-issues?initData=${encodeURIComponent(tg.initData)}`);
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    displayMyIssues(data.issues);
+                } else {
+                    container.innerHTML = `
+                        <div style="text-align: center; color: #ff6b6b; padding: 20px;">
+                            <div style="font-size: 16px;">❌ Ошибка загрузки</div>
+                            <div style="font-size: 12px; margin-top: 8px;">${data.error || 'Неизвестная ошибка'}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки обращений:', error);
+                const container = document.getElementById('sos-issues-list');
+                container.innerHTML = `
+                    <div style="text-align: center; color: #ff6b6b; padding: 20px;">
+                        <div style="font-size: 16px;">❌ Ошибка сети</div>
+                        <div style="font-size: 12px; margin-top: 8px;">Проверьте подключение к интернету</div>
+                    </div>
+                `;
+            }
+        }
+        
+        function displayMyIssues(issues) {
+            const container = document.getElementById('sos-issues-list');
+            
+            if (!issues || issues.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; color: var(--muted); padding: 30px;">
+                        <div style="font-size: 48px; margin-bottom: 15px;">📝</div>
+                        <div style="font-size: 16px; margin-bottom: 8px;">У вас пока нет обращений</div>
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.6);">Создайте новое обращение через меню "Нужна помощь"</div>
+                        <div style="margin-top: 20px;">
+                            <button onclick="showSosModal()" style="background: #2ed573; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">
+                                Создать обращение
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            issues.forEach(issue => {
+                const statusColor = issue.status === 'open' ? '#2ed573' : 
+                                  issue.status === 'in_progress' ? '#ffa502' : '#ff6b6b';
+                const statusText = issue.status === 'open' ? 'Открыто' : 
+                                 issue.status === 'in_progress' ? 'В работе' : 'Закрыто';
+                
+                const hasNewResponses = issue.has_new_responses;
+                const newResponsesBadge = hasNewResponses ? 
+                    `<span style="background: #ff6b6b; color: white; padding: 2px 6px; border-radius: 10px; font-size: 10px; margin-left: 8px;">НОВОЕ</span>` : '';
+                
+                html += `
+                    <div onclick="openMyIssueDialog(${issue.id})" style="
+                        background: rgba(255,255,255,0.1); 
+                        padding: 15px; 
+                        border-radius: 8px; 
+                        margin-bottom: 10px; 
+                        cursor: pointer;
+                        border-left: 4px solid ${statusColor};
+                        transition: all 0.2s ease;
+                    " onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <div style="font-weight: bold; font-size: 14px;">
+                                ${issue.type === 'technical' ? '🖥️ Техническая проблема' : '💔 Личная проблема'}
+                                ${newResponsesBadge}
+                            </div>
+                            <div style="font-size: 11px; color: rgba(255,255,255,0.6);">
+                                #${issue.id}
+                            </div>
+                        </div>
+                        <div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 8px; line-height: 1.4;">
+                            ${issue.description}
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+                            <div style="color: ${statusColor}; font-weight: bold;">
+                                ● ${statusText}
+                            </div>
+                            <div style="color: rgba(255,255,255,0.6);">
+                                ${new Date(issue.created_at).toLocaleDateString('ru-RU')}
+                            </div>
+                        </div>
+                        ${issue.admin_response_count > 0 ? `
+                            <div style="margin-top: 8px; padding: 8px; background: rgba(46, 213, 115, 0.2); border-radius: 4px; font-size: 12px;">
+                                💬 Ответов администратора: ${issue.admin_response_count}
+                                ${issue.unread_admin_responses > 0 ? `<span style="color: #ff6b6b; font-weight: bold;"> (новых: ${issue.unread_admin_responses})</span>` : ''}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function openMyIssueDialog(issueId) {
+            // Скрываем меню обращений
+            document.getElementById('sos-menu-modal').style.display = 'none';
+            
+            // Показываем диалог обращения
+            document.getElementById('my-issue-dialog-modal').style.display = 'block';
+            
+            // Загружаем диалог
+            loadMyIssueDialog(issueId);
+            
+            // Сохраняем ID текущего обращения
+            currentMyIssueId = issueId;
+        }
+        
+        async function loadMyIssueDialog(issueId) {
+            try {
+                const container = document.getElementById('my-issue-dialog-content');
+                container.innerHTML = `
+                    <div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">
+                        Загрузка диалога...
+                    </div>
+                `;
+                
+                const response = await fetch(`http://localhost:5000/api/my-issue/${issueId}/dialog?initData=${encodeURIComponent(tg.initData)}`);
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    displayMyIssueDialog(data);
+                } else {
+                    container.innerHTML = `
+                        <div style="text-align: center; color: #ff6b6b; padding: 20px;">
+                            <div style="font-size: 16px;">❌ Ошибка загрузки диалога</div>
+                            <div style="font-size: 12px; margin-top: 8px;">${data.error || 'Неизвестная ошибка'}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки диалога:', error);
+                const container = document.getElementById('my-issue-dialog-content');
+                container.innerHTML = `
+                    <div style="text-align: center; color: #ff6b6b; padding: 20px;">
+                        <div style="font-size: 16px;">❌ Ошибка сети</div>
+                        <div style="font-size: 12px; margin-top: 8px;">Проверьте подключение к интернету</div>
+                    </div>
+                `;
+            }
+        }
+        
+        function displayMyIssueDialog(data) {
+            const container = document.getElementById('my-issue-dialog-content');
+            const issue = data.issue;
+            const responses = data.responses || [];
+            
+            let html = `
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <div style="font-weight: bold; margin-bottom: 8px;">
+                        ${issue.issue_type === 'technical' ? '🖥️ Техническая проблема' : '💔 Личная проблема'} #${issue.id}
+                    </div>
+                    <div style="font-size: 14px; margin-bottom: 8px; line-height: 1.4;">
+                        ${issue.description}
+                    </div>
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.6);">
+                        Создано: ${new Date(issue.created_at).toLocaleString('ru-RU')}
+                    </div>
+                </div>
+            `;
+            
+            if (responses.length > 0) {
+                html += '<div style="margin-bottom: 20px;"><h4>История диалога:</h4></div>';
+                
+                responses.forEach(response => {
+                    const isAdmin = response.responder_phone === 'admin';
+                    const bgColor = isAdmin ? 'rgba(46, 213, 115, 0.2)' : 'rgba(255, 255, 255, 0.1)';
+                    const align = isAdmin ? 'margin-left: 20px;' : 'margin-right: 20px;';
+                    
+                    html += `
+                        <div style="background: ${bgColor}; padding: 12px; border-radius: 8px; margin-bottom: 10px; ${align}">
+                            <div style="font-size: 14px; margin-bottom: 5px;">${response.response_text}</div>
+                            <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-align: right;">
+                                ${isAdmin ? '👨‍💼 Администратор' : '👤 Вы'} • ${new Date(response.created_at).toLocaleString('ru-RU')}
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            container.innerHTML = html;
+            
+            // Отмечаем ответы как прочитанные
+            markResponsesAsRead(issue.id);
+        }
+        
+        function closeMyIssueDialog() {
+            // Останавливаем автообновление диалога
+            stopDialogAutoRefresh();
+            
+            document.getElementById('my-issue-dialog-modal').style.display = 'none';
+            document.getElementById('sos-menu-modal').style.display = 'block';
+            
+            // Сбрасываем ID текущего обращения
+            currentMyIssueId = null;
+            
+            // Перезагружаем список обращений чтобы обновить счетчики
+            loadMyIssues();
+        }
+        
+        async function sendMyResponse() {
+            const input = document.getElementById('my-response-input');
+            const responseText = input.value.trim();
+            
+            if (!responseText) {
+                tg.showAlert('Введите текст ответа');
+                return;
+            }
+            
+            if (!currentMyIssueId) {
+                tg.showAlert('Ошибка: ID обращения не найден');
+                return;
+            }
+            
+            // Показываем сообщение как "отправляется"
+            const tempMessage = {
+                response_text: responseText,
+                responder_phone: 'temp_user',
+                created_at: new Date().toISOString()
+            };
+            
+            // Добавляем временное сообщение с индикатором отправки
+            addTemporaryMessage(tempMessage, true);
+            
+            // Очищаем поле ввода сразу
+            input.value = '';
+            
+            try {
+                const response = await fetch(`http://localhost:5000/api/my-issue/${currentMyIssueId}/respond`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        initData: tg.initData,
+                        response_text: responseText
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    // Удаляем временное сообщение
+                    removeTemporaryMessage();
+                    
+                    // Принудительно обновляем диалог
+                    currentDialogMessagesCount = 0; // Сбрасываем счетчик для полного обновления
+                    await smartUpdateDialog(currentMyIssueId, true);
+                    
+                } else {
+                    // Удаляем временное сообщение и показываем ошибку
+                    removeTemporaryMessage();
+                    tg.showAlert('Ошибка отправки: ' + (result.error || 'Неизвестная ошибка'));
+                    
+                    // Возвращаем текст в поле ввода
+                    input.value = responseText;
+                }
+            } catch (error) {
+                console.error('Ошибка отправки ответа:', error);
+                
+                // Удаляем временное сообщение и показываем ошибку
+                removeTemporaryMessage();
+                tg.showAlert('Ошибка сети при отправке ответа');
+                
+                // Возвращаем текст в поле ввода
+                input.value = responseText;
+            }
+        }
+        
+        // Добавляет временное сообщение с индикатором отправки
+        function addTemporaryMessage(message, isFromUser) {
+            const container = document.getElementById('my-issue-dialog-content');
+            if (!container) return;
+            
+            let messagesContainer = container.querySelector('.dialog-messages');
+            if (!messagesContainer) {
+                messagesContainer = document.createElement('div');
+                messagesContainer.className = 'dialog-messages';
+                container.appendChild(messagesContainer);
+            }
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message temp-message';
+            messageDiv.style.cssText = `
+                margin: 10px 0;
+                padding: 12px 15px;
+                border-radius: 12px;
+                max-width: 80%;
+                word-wrap: break-word;
+                background: linear-gradient(45deg, #667eea, #764ba2);
+                color: white;
+                margin-left: auto;
+                text-align: right;
+                opacity: 0.7;
+                border: 2px dashed rgba(255,255,255,0.3);
+            `;
+            
+            messageDiv.innerHTML = `
+                <div style="font-size: 12px; opacity: 0.7; margin-bottom: 5px;">
+                    👤 Вы • Отправляется...
+                </div>
+                <div>${message.response_text}</div>
+                <div style="margin-top: 5px; font-size: 11px; opacity: 0.6;">
+                    <span class="sending-dots">●●●</span>
+                </div>
+            `;
+            
+            // Добавляем CSS для анимации отправки
+            const style = document.createElement('style');
+            style.textContent = `
+                .sending-dots {
+                    animation: sending-pulse 1s infinite;
+                }
+                @keyframes sending-pulse {
+                    0%, 100% { opacity: 0.3; }
+                    50% { opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            messagesContainer.appendChild(messageDiv);
+            scrollToBottom(true);
+        }
+        
+        // Удаляет временное сообщение
+        function removeTemporaryMessage() {
+            const tempMessage = document.querySelector('.temp-message');
+            if (tempMessage) {
+                tempMessage.style.opacity = '0';
+                tempMessage.style.transform = 'translateY(-10px)';
+                
+                setTimeout(() => {
+                    if (tempMessage.parentNode) {
+                        tempMessage.parentNode.removeChild(tempMessage);
+                    }
+                }, 300);
+            }
+        }
+        
+        function handleMyResponseEnterKey(event) {
+            if (event.key === 'Enter') {
+                sendMyResponse();
+            }
+        }
+        
+        // Индикатор набора текста
+        let typingTimeout = null;
+        
+        function handleTyping() {
+            // Показываем индикатор "печатает"
+            showTypingIndicator(true);
+            
+            // Сбрасываем предыдущий таймер
+            if (typingTimeout) {
+                clearTimeout(typingTimeout);
+            }
+            
+            // Скрываем индикатор через 2 секунды бездействия
+            typingTimeout = setTimeout(() => {
+                showTypingIndicator(false);
+            }, 2000);
+        }
+        
+        function showTypingIndicator(show) {
+            const container = document.getElementById('my-issue-dialog-content');
+            if (!container) return;
+            
+            let indicator = container.querySelector('.typing-indicator');
+            
+            if (show && !indicator) {
+                // Создаем индикатор
+                indicator = document.createElement('div');
+                indicator.className = 'typing-indicator';
+                indicator.style.cssText = `
+                    background: rgba(255,255,255,0.1);
+                    padding: 10px 15px;
+                    border-radius: 12px;
+                    margin: 10px 0;
+                    max-width: 80%;
+                    margin-right: auto;
+                    opacity: 0;
+                    transform: translateY(10px);
+                    transition: all 0.3s ease;
+                `;
+                
+                indicator.innerHTML = `
+                    <div style="font-size: 12px; opacity: 0.7; margin-bottom: 5px;">
+                        👨‍💼 Администратор печатает...
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <div class="typing-dots">
+                            <span>●</span>
+                            <span>●</span>
+                            <span>●</span>
+                        </div>
+                    </div>
+                `;
+                
+                // Добавляем CSS для анимации точек
+                const style = document.createElement('style');
+                style.textContent = `
+                    .typing-dots span {
+                        display: inline-block;
+                        margin: 0 2px;
+                        opacity: 0.4;
+                        animation: typing-pulse 1.4s infinite;
+                    }
+                    .typing-dots span:nth-child(2) {
+                        animation-delay: 0.2s;
+                    }
+                    .typing-dots span:nth-child(3) {
+                        animation-delay: 0.4s;
+                    }
+                    @keyframes typing-pulse {
+                        0%, 60%, 100% { opacity: 0.4; }
+                        30% { opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                container.appendChild(indicator);
+                
+                // Анимация появления
+                setTimeout(() => {
+                    indicator.style.opacity = '1';
+                    indicator.style.transform = 'translateY(0)';
+                }, 10);
+                
+                scrollToBottom(true);
+                
+            } else if (!show && indicator) {
+                // Скрываем индикатор
+                indicator.style.opacity = '0';
+                indicator.style.transform = 'translateY(-10px)';
+                
+                setTimeout(() => {
+                    if (indicator.parentNode) {
+                        indicator.parentNode.removeChild(indicator);
+                    }
+                }, 300);
+            }
+        }
+        
+        async function markResponsesAsRead(issueId) {
+            try {
+                await fetch(`http://localhost:5000/api/mark-responses-read/${issueId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        initData: tg.initData
+                    })
+                });
+            } catch (error) {
+                console.error('Ошибка отметки как прочитанное:', error);
+            }
+        }
+        
         // Загружаем данные пользователя при загрузке страницы
         loadUserData();
 
