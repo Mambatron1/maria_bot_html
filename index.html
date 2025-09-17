@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.11.0-20250917">
-    <meta name="version" content="maria-bot-v1.11.0">
+    <meta name="cache-bust" content="maria-bot-v1.11.1-20250917">
+    <meta name="version" content="maria-bot-v1.11.1">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.11.0
+        Maria Bot v1.11.1
     </div>
      
     <div class="wrap">
@@ -3847,26 +3847,7 @@
                         }
         }
         
-        async function showSosMenuModal() {
-            try {
-                // Останавливаем автообновление диалога
-                stopDialogAutoRefresh();
-                
-                // Скрываем все модальные окна
-                document.getElementById('app').style.display = 'none';
-                document.getElementById('sos-modal').style.display = 'none';
-                
-                // Показываем модальное окно меню SOS
-                document.getElementById('sos-menu-modal').style.display = 'block';
-                
-                // Загружаем список обращений
-                await loadMyIssues();
-                
-            } catch (error) {
-                console.error('Ошибка:', error);
-                tg.showAlert('Ошибка загрузки меню SOS');
-            }
-        }
+        // Удалено дублирующееся определение showSosMenuModal()
         
         async function loadMyIssues() {
             try {
@@ -4743,27 +4724,7 @@
             }
         }
 
-        function showSosMenuModal() {
-            // Останавливаем автообновление диалога
-            stopDialogAutoRefresh();
-            
-            // Скрываем все окна
-            document.getElementById('app').style.display = 'none';
-            document.getElementById('sos-modal').style.display = 'none';
-            document.getElementById('my-issue-dialog-modal').style.display = 'none';
-            
-            // Очищаем поле ввода ответа
-            const responseInput = document.getElementById('my-response-input');
-            if (responseInput) {
-                responseInput.value = '';
-            }
-            
-            // Показываем SOS меню "Мои обращения"
-            document.getElementById('sos-menu-modal').style.display = 'block';
-            
-            // Перезагружаем список обращений
-            loadMyIssues();
-        }
+        // Удалено второе дублирующееся определение showSosMenuModal()
         
         function showMainApp() {
             // Останавливаем автообновление диалога
