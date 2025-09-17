@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.12.8-20250917">
-    <meta name="version" content="maria-bot-v1.12.8">
+    <meta name="cache-bust" content="maria-bot-v1.12.10-20250917">
+    <meta name="version" content="maria-bot-v1.12.10">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.12.8
+        Maria Bot v1.12.10
     </div>
      
     <div class="wrap">
@@ -3438,7 +3438,20 @@
             
             // Находим выбранный тип больничного
             const selectedTypeButton = document.querySelector('#sick-leave-types .btn[style*="#ea580c"]');
-            const typeName = selectedTypeButton ? selectedTypeButton.textContent.trim() : 'Неизвестный тип';
+            let typeName = 'Неизвестный тип';
+            
+            if (selectedTypeButton) {
+                // Извлекаем текст из span внутри кнопки
+                const textSpan = selectedTypeButton.querySelector('span:last-child');
+                typeName = textSpan ? textSpan.textContent.trim() : selectedTypeButton.textContent.trim();
+            } else if (selectedLeaveType) {
+                // Если кнопка не найдена, но есть selectedLeaveType, найдем по dataset
+                const typeButton = document.querySelector(`#sick-leave-types .btn[data-type-id="${selectedLeaveType}"]`);
+                if (typeButton) {
+                    const textSpan = typeButton.querySelector('span:last-child');
+                    typeName = textSpan ? textSpan.textContent.trim() : typeButton.textContent.trim();
+                }
+            }
             
             // Форматируем даты
             const startDateFormatted = new Date(startDate).toLocaleDateString('ru-RU');
@@ -3519,7 +3532,7 @@
                 absenceOptions.dates.forEach(date => {
                     const button = document.createElement('button');
                     button.className = 'btn';
-                    button.innerHTML = `<span class="dot dot-absence"></span><span>${date.name}</span>`;
+                    button.innerHTML = `<span class="dot" style="background: #ef4444;"></span><span>${date.name}</span>`;
                     button.onclick = () => selectAbsenceDate(date.id, date.date);
                     datesContainer.appendChild(button);
                 });
@@ -3555,7 +3568,7 @@
             } else {
                 // Показываем секцию выбора времени
                 document.getElementById('absence-time-section').style.display = 'block';
-                document.getElementById('absence-times').style.display = 'grid';
+                document.getElementById('absence-times').style.display = 'block';
                 document.getElementById('absence-custom-date').style.display = 'none';
                 
                 // Заполняем времена
@@ -3564,8 +3577,8 @@
                 
                 absenceOptions.times.forEach(time => {
                     const button = document.createElement('button');
-                    button.className = 'action-button';
-                    button.innerHTML = `<span class="icon">⏰</span>${time.name.substring(2)}`;
+                    button.className = 'btn';
+                    button.innerHTML = `<span class="dot" style="background: #f59e0b;"></span><span>${time.name}</span>`;
                     button.onclick = () => selectAbsenceTime(time.id, time.start, time.end);
                     timesContainer.appendChild(button);
                 });
@@ -3583,7 +3596,7 @@
             
             // Показываем секцию выбора времени
             document.getElementById('absence-time-section').style.display = 'block';
-            document.getElementById('absence-times').style.display = 'grid';
+            document.getElementById('absence-times').style.display = 'block';
             document.getElementById('absence-custom-date').style.display = 'none';
             
             // Заполняем времена
@@ -3592,8 +3605,8 @@
             
             absenceOptions.times.forEach(time => {
                 const button = document.createElement('button');
-                button.className = 'action-button';
-                button.innerHTML = `<span class="icon">⏰</span>${time.name.substring(2)}`;
+                button.className = 'btn';
+                button.innerHTML = `<span class="dot" style="background: #f59e0b;"></span><span>${time.name}</span>`;
                 button.onclick = () => selectAbsenceTime(time.id, time.start, time.end);
                 timesContainer.appendChild(button);
             });
