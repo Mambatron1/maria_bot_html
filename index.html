@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.12.3-20250917">
-    <meta name="version" content="maria-bot-v1.12.3">
+    <meta name="cache-bust" content="maria-bot-v1.12.8-20250917">
+    <meta name="version" content="maria-bot-v1.12.8">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.12.3
+        Maria Bot v1.12.8
     </div>
      
     <div class="wrap">
@@ -471,7 +471,7 @@
                     <button onclick="showMainApp()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
                     <div style="flex: 1; text-align: center;">
                         <div class="title" style="margin: 0;">Отсутствие</div>
-            </div>
+                    </div>
                     <div style="width: 40px;"></div>
                 </header>
 
@@ -479,8 +479,7 @@
                     <div class="card" style="background: var(--danger); color: white;">
                         <h3>⚠️ Важно!</h3>
                         <p><strong>СНАЧАЛА СОГЛАСУЙ С РУКОВОДИТЕЛЕМ, ЧТОБЫ ОН ЗНАЛ, ЧТО ТЫ ОТСУТСТВУЕШЬ!</strong></p>
-                </div>
-
+                    </div>
                     <div class="card" id="absence-date-section">
                         <h3>Выберите дату</h3>
                         <p>Укажите дату вашего отсутствия</p>
@@ -491,70 +490,62 @@
                     <!-- Даты будут загружены динамически -->
                 </div>
 
-                <div class="info-card" id="absence-time-section" style="display: none;">
-                    <div class="card-header">
-                        <span class="card-icon">⏰</span>
-                        <span class="card-title">Выберите время</span>
+                <div id="absence-time-section" class="stack" style="display: none; margin-top: 20px;">
+                    <div class="card">
+                        <h3>Выберите время</h3>
+                        <p>Укажите время вашего отсутствия</p>
                     </div>
                 </div>
 
-                <div id="absence-times" class="action-buttons" style="display: none;">
+                <div id="absence-times" class="actions" style="display: none;">
                     <!-- Времена будут загружены динамически -->
                 </div>
 
-                <div id="absence-custom-date" style="display: none; margin-top: 20px;">
-                    <div class="info-card">
-                        <div class="card-header">
-                            <span class="card-icon">📅</span>
-                            <span class="card-title">Укажите дату</span>
-                        </div>
+                <div id="absence-custom-date" class="stack" style="display: none; margin-top: 20px;">
+                    <div class="card">
+                        <h3>Укажите дату</h3>
                         <div style="margin-top: 15px;">
-                            <input type="date" id="absence-date" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; margin-bottom: 15px;">
-                            
-                            <button onclick="selectAbsenceCustomDate()" style="width: 100%; padding: 15px; background: linear-gradient(45deg, #4ecdc4, #44a08d); border: none; border-radius: 8px; color: white; font-weight: bold;">
-                                ✅ Подтвердить
-                            </button>
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Дата отсутствия:</label>
+                            <input type="date" id="absence-date" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 20px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                         </div>
                     </div>
+                    <button onclick="selectAbsenceCustomDate()" class="btn" style="background: #0d9488; width: 100%;">
+                        <span class="dot" style="background: #10b981;"></span>
+                        <span>Подтвердить</span>
+                    </button>
                 </div>
 
-                <div id="absence-custom-time" style="display: none; margin-top: 20px;">
-                    <div class="info-card">
-                        <div class="card-header">
-                            <span class="card-icon">⏰</span>
-                            <span class="card-title">Укажите время</span>
-                        </div>
+                <div id="absence-custom-time" class="stack" style="display: none; margin-top: 20px;">
+                    <div class="card">
+                        <h3>Укажите время</h3>
                         <div style="margin-top: 15px;">
-                            <label style="display: block; margin-bottom: 10px; color: rgba(255,255,255,0.8);">Время начала:</label>
-                            <input type="time" id="absence-start-time" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Время начала:</label>
+                            <input type="time" id="absence-start-time" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 15px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                             
-                            <label style="display: block; margin-bottom: 10px; color: rgba(255,255,255,0.8);">Время окончания:</label>
-                            <input type="time" id="absence-end-time" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; margin-bottom: 15px;">
-                            
-                            <button onclick="submitAbsence()" style="width: 100%; padding: 15px; background: linear-gradient(45deg, #4ecdc4, #44a08d); border: none; border-radius: 8px; color: white; font-weight: bold;">
-                                ✅ Подтвердить
-                            </button>
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Время окончания:</label>
+                            <input type="time" id="absence-end-time" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 20px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
                         </div>
                     </div>
+                    <button onclick="submitAbsence()" class="btn" style="background: #0d9488; width: 100%;">
+                        <span class="dot" style="background: #10b981;"></span>
+                        <span>Подтвердить</span>
+                    </button>
                 </div>
 
-                <div id="absence-confirmation-section" style="display: none;">
-                    <div class="info-card">
-                        <div class="card-header">
-                            <span class="card-icon">✅</span>
-                            <span class="card-title">Подтверждение</span>
-                        </div>
-                        <div class="card-content" id="absence-confirmation-text">
-                            <!-- Текст подтверждения -->
-                        </div>
-                        <div style="margin-top: 15px;">
-                            <button onclick="submitAbsence()" style="width: 100%; padding: 15px; background: linear-gradient(45deg, #4ecdc4, #44a08d); border: none; border-radius: 8px; color: white; font-weight: bold; margin-bottom: 10px;">
-                                ✅ Подтвердить
-                            </button>
-                            <button onclick="showMainApp()" style="width: 100%; padding: 15px; background: rgba(255,255,255,0.2); border: none; border-radius: 8px; color: white; font-weight: bold;">
-                                ❌ Отменить
-                            </button>
-                        </div>
+                <div id="absence-confirmation-section" class="stack" style="display: none; margin-top: 20px;">
+                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
+                        <h3>Подтверждение</h3>
+                        <p id="absence-confirmation-text" style="font-size: 16px; line-height: 1.4;"><!-- Текст подтверждения --></p>
+                    </div>
+                    <div class="actions">
+                        <button onclick="confirmAbsence()" class="btn" style="background: #0d9488;">
+                            <span class="dot" style="background: #10b981;"></span>
+                            <span>Подтвердить</span>
+                        </button>
+                        <button onclick="showMainApp()" class="btn" style="background: #7f1d1d;">
+                            <span class="dot" style="background: #ef4444;"></span>
+                            <span>Отменить</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -816,51 +807,54 @@
                 </header>
 
                 <div class="stack" style="margin-bottom: 20px;">
-                    <!-- Управление сотрудниками -->
-                    <div class="card" style="background: #065f46; margin-bottom: 20px;">
-                        <h3 style="font-size: 16px; line-height: 1.4;">👥 Управление сотрудниками</h3>
-                        <div style="margin-bottom: 15px;">
-                            <button onclick="showAddEmployeeModal()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700; width: 100%; background: #10b981;">
-                                <span class="dot" style="background: #ffffff;"></span>
-                                <span>Добавить сотрудника</span>
-                            </button>
-                        </div>
+                    <div class="card">
+                        <h3>Управление сотрудниками</h3>
+                        <p>Добавление, редактирование и управление сотрудниками</p>
                     </div>
+                </div>
 
-                    <!-- Поиск и фильтры -->
-                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
-                        <h3 style="font-size: 16px; line-height: 1.4;">🔍 Поиск и фильтры</h3>
-                        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px;">
+                <div class="actions" style="margin-bottom: 20px;">
+                    <button onclick="showAddEmployeeModal()" class="btn" style="background: #0d9488;">
+                        <span class="dot" style="background: #10b981;"></span>
+                        <span>Добавить сотрудника</span>
+                    </button>
+                </div>
+
+                <div class="stack" style="margin-bottom: 20px;">
+                    <div class="card">
+                        <h3>Поиск и фильтры</h3>
+                        <div style="margin-top: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Поиск:</label>
                             <input type="text" id="employee-search" placeholder="Поиск по имени, фамилии..." 
                                    oninput="filterEmployees()" 
-                                   style="width: 100%; height: var(--btn-h); padding: 0 15px; border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.2); 
-                                          background: rgba(255,255,255,0.1); color: white; font-size: 14px; font-weight: 500; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
-                            <div style="display: flex; gap: 12px;">
-                                <select id="employee-status-filter" onchange="filterEmployees()" 
-                                        style="flex: 1; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.2); 
-                                               background: rgba(255,255,255,0.1); color: white; font-size: 14px; font-weight: 500; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
-                                    <option value="all" style="background: var(--bg); color: white;">Все статусы</option>
-                                    <option value="active" style="background: var(--bg); color: white;">Активные</option>
-                                    <option value="blocked" style="background: var(--bg); color: white;">Заблокированные</option>
-                                    <option value="admin" style="background: var(--bg); color: white;">Администраторы</option>
-                                </select>
-                                <select id="employee-type-filter" onchange="filterEmployees()" 
-                                        style="flex: 1; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.2); 
-                                               background: rgba(255,255,255,0.1); color: white; font-size: 14px; font-weight: 500; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
-                                    <option value="all" style="background: var(--bg); color: white;">Все роли</option>
-                                    <option value="admin" style="background: var(--bg); color: white;">Администраторы</option>
-                                    <option value="user" style="background: var(--bg); color: white;">Пользователи</option>
-                                </select>
-                            </div>
+                                   style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 15px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                            
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Статус:</label>
+                            <select id="employee-status-filter" onchange="filterEmployees()" 
+                                    style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 15px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                                <option value="all" style="background: var(--bg); color: white;">Все статусы</option>
+                                <option value="active" style="background: var(--bg); color: white;">Активные</option>
+                                <option value="blocked" style="background: var(--bg); color: white;">Заблокированные</option>
+                                <option value="admin" style="background: var(--bg); color: white;">Администраторы</option>
+                            </select>
+                            
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Роль:</label>
+                            <select id="employee-type-filter" onchange="filterEmployees()" 
+                                    style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 20px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                                <option value="all" style="background: var(--bg); color: white;">Все роли</option>
+                                <option value="admin" style="background: var(--bg); color: white;">Администраторы</option>
+                                <option value="user" style="background: var(--bg); color: white;">Пользователи</option>
+                            </select>
                         </div>
-                        <div id="search-results-count" style="font-size: 12px; color: rgba(255, 255, 255, 0.6);">
+                        <div id="search-results-count" style="font-size: 12px; color: rgba(255, 255, 255, 0.6); margin-top: 10px;">
                             <!-- Счетчик результатов поиска -->
                         </div>
                     </div>
+                </div>
 
-                    <!-- Список сотрудников -->
+                <div class="stack">
                     <div class="card">
-                        <h3>👥 Список сотрудников</h3>
+                        <h3>Список сотрудников</h3>
                         <div id="employees-list">
                             <div style="text-align: center; color: var(--muted); padding: 20px;">
                                 <div style="font-size: 16px;">📈 Загрузка списка сотрудников...</div>
@@ -3660,6 +3654,11 @@
             document.getElementById('absence-confirmation-section').style.display = 'block';
         }
         
+        function confirmAbsence() {
+            // Вызываем функцию отправки данных
+            submitAbsence();
+        }
+
         async function submitAbsence() {
             try {
                 // Если выбрано свое время, получаем значения из полей
