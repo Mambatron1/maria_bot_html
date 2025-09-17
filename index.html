@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.11.1-20250917">
-    <meta name="version" content="maria-bot-v1.11.1">
+    <meta name="cache-bust" content="maria-bot-v1.11.3-20250917">
+    <meta name="version" content="maria-bot-v1.11.3">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.11.1
+        Maria Bot v1.11.3
     </div>
      
     <div class="wrap">
@@ -739,7 +739,7 @@
         <div id="sos-menu-modal" style="display: none;">
             <div class="wrap">
                 <header style="margin-bottom: 20px;">
-                    <button onclick="showSosModal()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
+                    <button onclick="showMainApp()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
                     <div style="flex: 1; text-align: center;">
                         <div class="title" style="margin: 0;">Мои обращения</div>
                     </div>
@@ -4800,8 +4800,22 @@
         // ============================================================================
         
         function showSosMenuModal() {
-            // Скрываем все другие модальные окна
-            hideAllModals();
+            // Скрываем главное приложение
+            document.getElementById('app').style.display = 'none';
+            
+            // Скрываем другие модальные окна
+            const modalsToHide = [
+                'work-mode-modal', 'absence-modal', 'sos-modal', 
+                'sick-leave-modal', 'issue-chat-modal', 'admin-menu-modal',
+                'my-issue-dialog-modal', 'issue-dialog-modal'
+            ];
+            
+            modalsToHide.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.style.display = 'none';
+                }
+            });
             
             // Показываем модальное окно "Мои обращения"
             document.getElementById('sos-menu-modal').style.display = 'block';
