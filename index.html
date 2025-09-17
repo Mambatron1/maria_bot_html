@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.12.15-20250917">
-    <meta name="version" content="maria-bot-v1.12.15">
+    <meta name="cache-bust" content="maria-bot-v1.12.16-20250917">
+    <meta name="version" content="maria-bot-v1.12.16">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.12.15
+        Maria Bot v1.12.16
     </div>
      
     <div class="wrap">
@@ -3560,9 +3560,11 @@
                 absenceOptions.dates.forEach(date => {
                     const button = document.createElement('button');
                     button.className = 'btn';
-                    // Убираем эмодзи и добавляем цветные кружочки
-                    let dotColor = '#ef4444'; // красный для сегодня/завтра
-                    if (date.id === 'custom') {
+                    // Разные цвета для каждой кнопки даты
+                    let dotColor = '#ef4444'; // красный для сегодня
+                    if (date.id === 'tomorrow') {
+                        dotColor = '#f59e0b'; // оранжевый для завтра
+                    } else if (date.id === 'custom') {
                         dotColor = '#8b5cf6'; // фиолетовый для "своя дата"
                     }
                     button.innerHTML = `<span class="dot" style="background: ${dotColor};"></span><span>${date.name}</span>`;
@@ -3620,9 +3622,13 @@
                 absenceOptions.times.forEach(time => {
                     const button = document.createElement('button');
                     button.className = 'btn';
-                    // Убираем эмодзи и добавляем цветные кружочки для времени
-                    let dotColor = '#10b981'; // зеленый для утро/день/весь день
-                    if (time.id === 'custom') {
+                    // Разные цвета для каждой кнопки времени
+                    let dotColor = '#10b981'; // зеленый для утра
+                    if (time.id === 'afternoon') {
+                        dotColor = '#3b82f6'; // синий для дня
+                    } else if (time.id === 'all_day') {
+                        dotColor = '#06b6d4'; // голубой для всего дня
+                    } else if (time.id === 'custom') {
                         dotColor = '#8b5cf6'; // фиолетовый для "свое время"
                     }
                     button.innerHTML = `<span class="dot" style="background: ${dotColor};"></span><span>${time.name}</span>`;
@@ -3653,9 +3659,13 @@
             absenceOptions.times.forEach(time => {
                 const button = document.createElement('button');
                 button.className = 'btn';
-                // Убираем эмодзи и добавляем цветные кружочки для времени
-                let dotColor = '#10b981'; // зеленый для утро/день/весь день
-                if (time.id === 'custom') {
+                // Разные цвета для каждой кнопки времени
+                let dotColor = '#10b981'; // зеленый для утра
+                if (time.id === 'afternoon') {
+                    dotColor = '#3b82f6'; // синий для дня
+                } else if (time.id === 'all_day') {
+                    dotColor = '#06b6d4'; // голубой для всего дня
+                } else if (time.id === 'custom') {
                     dotColor = '#8b5cf6'; // фиолетовый для "свое время"
                 }
                 button.innerHTML = `<span class="dot" style="background: ${dotColor};"></span><span>${time.name}</span>`;
@@ -3751,6 +3761,12 @@
                 
                 if (selectedAbsenceDate === 'custom') {
                     dateValue = customAbsenceDate;
+                } else {
+                    // Для today/tomorrow берем дату из absenceOptions
+                    const dateOption = absenceOptions.dates.find(d => d.id === selectedAbsenceDate);
+                    if (dateOption) {
+                        dateValue = dateOption.date;
+                    }
                 }
                 
                 const response = await fetch('http://localhost:5000/api/absence', {
