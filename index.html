@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.11.3-20250917">
-    <meta name="version" content="maria-bot-v1.11.3">
+    <meta name="cache-bust" content="maria-bot-v1.12.0-20250917">
+    <meta name="version" content="maria-bot-v1.12.0">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.11.3
+        Maria Bot v1.12.0
     </div>
      
     <div class="wrap">
@@ -771,23 +771,35 @@
 
         <!-- My Issue Dialog Modal -->
         <div id="my-issue-dialog-modal" style="display: none;">
-            <div class="header">
-                <button onclick="closeMyIssueDialog()" style="background: none; border: none; color: white; font-size: 24px; float: left;">←</button>
-                <h2 style="text-align: center; margin: 0;">💬 Мое обращение</h2>
-            </div>
+            <div class="wrap">
+                <header style="margin-bottom: 20px;">
+                    <button onclick="closeMyIssueDialog()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
+                    <div style="flex: 1; text-align: center;">
+                        <div class="title" style="margin: 0;">💬 Мое обращение</div>
+                    </div>
+                    <div style="width: 40px;"></div>
+                </header>
 
-            <div id="my-issue-dialog-scroll" style="padding: 20px; height: calc(100vh - 140px); overflow-y: auto;">
-                <div id="my-issue-dialog-content">
-                    <div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">
-                        Загрузка диалога...
+                <div class="stack" style="margin-bottom: 80px;">
+                    <div class="card" style="background: #474A51; min-height: 60vh; max-height: 70vh; overflow-y: auto;">
+                        <div id="my-issue-dialog-content">
+                            <div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">
+                                <div style="font-size: 16px;">📈 Загрузка диалога...</div>
+                                <div style="font-size: 12px; margin-top: 8px;">Получение данных из базы</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div style="position: fixed; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.8); padding: 15px;">
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" id="my-response-input" placeholder="Введите ответ..." onkeypress="handleMyResponseEnterKey(event)" oninput="handleTyping()" style="flex: 1; padding: 10px; border: none; border-radius: 6px; background: rgba(255,255,255,0.1); color: white;">
-                    <button onclick="sendMyResponse()" style="background: #2ed573; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Отправить</button>
+                
+                <div style="position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div style="display: flex; gap: 10px; max-width: 100%; margin: 0 auto;">
+                        <input type="text" id="my-response-input" placeholder="Введите ответ..." onkeypress="handleMyResponseEnterKey(event)" oninput="handleUserTyping()" 
+                               style="flex: 1; padding: 12px 15px; border: none; border-radius: var(--radius); background: rgba(255,255,255,0.1); color: white; font-size: 14px;">
+                        <button onclick="sendMyResponse()" class="btn" 
+                                style="background: var(--accent); color: white; border: none; padding: 12px 20px; border-radius: var(--radius); cursor: pointer; font-weight: 600; min-width: 100px;">
+                            Отправить
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1051,7 +1063,7 @@
                 
                 <div style="position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
                     <div style="display: flex; gap: 10px; max-width: 100%; margin: 0 auto;">
-                        <input type="text" id="admin-response-input" placeholder="Введите ответ..." onkeypress="handleEnterKey(event)" 
+                        <input type="text" id="admin-response-input" placeholder="Введите ответ..." onkeypress="handleEnterKey(event)" oninput="handleAdminTyping()"
                                style="flex: 1; padding: 12px 15px; border: none; border-radius: var(--radius); background: rgba(255,255,255,0.1); color: white; font-size: 14px;">
                         <button onclick="sendAdminResponse()" class="btn" 
                                 style="background: var(--accent); color: white; border: none; padding: 12px 20px; border-radius: var(--radius); cursor: pointer; font-weight: 600; min-width: 100px;">
@@ -5186,22 +5198,42 @@
         // Индикатор набора текста
         let typingTimeout = null;
         
-        function handleTyping() {
-            // Показываем индикатор "печатает"
-            showTypingIndicator(true);
+        // Переменные для отслеживания печати
+        let userTypingTimeout = null;
+        let adminTypingTimeout = null;
+        
+        function handleUserTyping() {
+            // Пользователь печатает - НЕ показываем индикатор в его чате
+            // Здесь можно добавить отправку уведомления админу
+            console.log('Пользователь печатает...');
             
             // Сбрасываем предыдущий таймер
-            if (typingTimeout) {
-                clearTimeout(typingTimeout);
+            if (userTypingTimeout) {
+                clearTimeout(userTypingTimeout);
             }
             
-            // Скрываем индикатор через 2 секунды бездействия
-            typingTimeout = setTimeout(() => {
-                showTypingIndicator(false);
+            // Через 2 секунды бездействия убираем статус печати
+            userTypingTimeout = setTimeout(() => {
+                console.log('Пользователь перестал печатать');
             }, 2000);
         }
         
-        function showTypingIndicator(show) {
+        function handleAdminTyping() {
+            // Админ печатает - показываем индикатор пользователю
+            showUserTypingIndicator(true);
+            
+            // Сбрасываем предыдущий таймер
+            if (adminTypingTimeout) {
+                clearTimeout(adminTypingTimeout);
+            }
+            
+            // Скрываем индикатор через 2 секунды бездействия
+            adminTypingTimeout = setTimeout(() => {
+                showUserTypingIndicator(false);
+            }, 2000);
+        }
+        
+        function showUserTypingIndicator(show) {
             const container = document.getElementById('my-issue-dialog-content');
             if (!container) return;
             
@@ -5313,6 +5345,65 @@
             window.addEventListener('resize', applyCompact, { passive: true });
             applyCompact();
         })();
+        
+        // Функция для показа индикатора "пользователь печатает" в чате админа
+        function showAdminTypingIndicator(show) {
+            const container = document.getElementById('issue-dialog-content');
+            if (!container) return;
+            
+            let indicator = container.querySelector('.admin-typing-indicator');
+            
+            if (show && !indicator) {
+                // Создаем индикатор
+                indicator = document.createElement('div');
+                indicator.className = 'admin-typing-indicator';
+                indicator.style.cssText = `
+                    background: rgba(255,255,255,0.1);
+                    padding: 10px 15px;
+                    border-radius: 12px;
+                    margin: 10px 0;
+                    max-width: 80%;
+                    margin-left: auto;
+                    opacity: 0;
+                    transform: translateY(10px);
+                    transition: all 0.3s ease;
+                `;
+                
+                indicator.innerHTML = `
+                    <div style="font-size: 12px; opacity: 0.7; margin-bottom: 5px; text-align: right;">
+                        👤 Пользователь печатает...
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: flex-end;">
+                        <div class="typing-dots">
+                            <span>●</span>
+                            <span>●</span>
+                            <span>●</span>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(indicator);
+                
+                // Анимация появления
+                setTimeout(() => {
+                    indicator.style.opacity = '1';
+                    indicator.style.transform = 'translateY(0)';
+                }, 10);
+                
+                scrollToBottom(true);
+                
+            } else if (!show && indicator) {
+                // Скрываем индикатор
+                indicator.style.opacity = '0';
+                indicator.style.transform = 'translateY(-10px)';
+                
+                setTimeout(() => {
+                    if (indicator.parentNode) {
+                        indicator.parentNode.removeChild(indicator);
+                    }
+                }, 300);
+            }
+        }
     </script>
 </body>
 </html>
