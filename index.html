@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.12.0-20250917">
-    <meta name="version" content="maria-bot-v1.12.0">
+    <meta name="cache-bust" content="maria-bot-v1.12.3-20250917">
+    <meta name="version" content="maria-bot-v1.12.3">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.12.0
+        Maria Bot v1.12.3
     </div>
      
     <div class="wrap">
@@ -3418,9 +3418,14 @@
         
         
         async function submitSickLeave() {
+            console.log('🔍 submitSickLeave() вызвана');
+            console.log('🔍 selectedLeaveType:', selectedLeaveType);
+            
             const leaveNumber = document.getElementById('sick-leave-number').value.trim();
             const startDate = document.getElementById('sick-leave-start-date').value;
             const endDate = document.getElementById('sick-leave-end-date').value;
+            
+            console.log('🔍 Данные формы:', { leaveNumber, startDate, endDate });
             
             if (!leaveNumber) {
                 tg.showAlert('Пожалуйста, введи номер ЭЛН');
@@ -3455,10 +3460,14 @@
         }
         
         async function confirmSickLeave() {
+            console.log('🔍 confirmSickLeave() вызвана');
+            console.log('🔍 selectedLeaveType:', selectedLeaveType);
             try {
                 const leaveNumber = document.getElementById('sick-leave-number').value.trim();
                 const startDate = document.getElementById('sick-leave-start-date').value;
                 const endDate = document.getElementById('sick-leave-end-date').value;
+                
+                console.log('🔍 Данные больничного:', { leaveNumber, startDate, endDate });
                 
                 const response = await fetch('http://localhost:5000/api/sick-leave', {
                     method: 'POST',
@@ -3814,8 +3823,18 @@
             document.getElementById('custom-period').style.display = 'none';
             document.getElementById('confirmation-section').style.display = 'block';
         }
+        
+        function confirmWorkMode() {
+            console.log('🔍 confirmWorkMode() вызвана');
+            console.log('🔍 selectedMode:', selectedMode);
+            console.log('🔍 selectedPeriod:', selectedPeriod);
+            
+            // Вызываем функцию отправки данных
+            submitWorkMode();
+        }
 
         async function submitWorkMode() {
+            console.log('🔍 submitWorkMode() начата');
             try {
                 let startDate = null;
                 let endDate = null;
@@ -4066,27 +4085,29 @@
             
             if (isUserDialog) {
                 // Пользовательский диалог
-                const bgColor = isFromCurrentUser ? 'rgba(255, 255, 255, 0.1)' : 'rgba(46, 213, 115, 0.2)';
-                const align = isFromCurrentUser ? 'margin-right: 20px;' : 'margin-left: 20px;';
+                const bgColor = isFromCurrentUser ? 'linear-gradient(45deg, #667eea, #764ba2)' : '#2ed573';
+                const textColor = 'white';
+                const align = isFromCurrentUser ? 'margin-left: auto; margin-right: 0;' : 'margin-right: auto; margin-left: 0;';
                 const senderText = isFromCurrentUser ? '👤 Вы' : '👨‍💼 Администратор';
                 
-                messageDiv.style.cssText = `background: ${bgColor}; padding: 12px; border-radius: 8px; margin-bottom: 10px; ${align}`;
+                messageDiv.style.cssText = `background: ${bgColor}; color: ${textColor}; padding: 12px 15px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; word-wrap: break-word; ${align}`;
                 messageDiv.innerHTML = `
                     <div style="font-size: 14px; margin-bottom: 5px;">${messageText}</div>
-                    <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-align: right;">
+                    <div style="font-size: 11px; opacity: 0.7; text-align: right;">
                         ${senderText} • ${currentTime}
                     </div>
                 `;
             } else {
                 // Админский диалог
-                const bgColor = isFromCurrentUser ? 'rgba(46, 213, 115, 0.2)' : 'rgba(255, 255, 255, 0.1)';
-                const align = isFromCurrentUser ? 'margin-left: 20px;' : 'margin-right: 20px;';
+                const bgColor = isFromCurrentUser ? '#2ed573' : 'linear-gradient(45deg, #667eea, #764ba2)';
+                const textColor = 'white';
+                const align = isFromCurrentUser ? 'margin-left: auto; margin-right: 0;' : 'margin-right: auto; margin-left: 0;';
                 const senderText = isFromCurrentUser ? '👨‍💼 Администратор' : '👤 Сотрудник';
                 
-                messageDiv.style.cssText = `background: ${bgColor}; padding: 12px; border-radius: 8px; margin-bottom: 10px; ${align}`;
+                messageDiv.style.cssText = `background: ${bgColor}; color: ${textColor}; padding: 12px 15px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; word-wrap: break-word; ${align}`;
                 messageDiv.innerHTML = `
                     <div style="font-size: 14px; margin-bottom: 5px;">${messageText}</div>
-                    <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-align: right;">
+                    <div style="font-size: 11px; opacity: 0.7; text-align: right;">
                         ${senderText} • ${currentTime}
                     </div>
                 `;
@@ -5064,18 +5085,19 @@
                 return;
             }
             
-            // Показываем сообщение как "отправляется"
-            const tempMessage = {
-                response_text: responseText,
-                responder_phone: 'temp_user',
-                created_at: new Date().toISOString()
-            };
+            // Добавляем сообщение в диалог локально
+            addMessageToDialog(responseText, true, true);
             
-            // Добавляем временное сообщение с индикатором отправки
-            addTemporaryMessage(tempMessage, true);
+            // Прокручиваем к низу диалога
+            setTimeout(() => {
+                scrollToBottom(true); // true = пользовательский диалог
+            }, 150);
             
-            // Очищаем поле ввода сразу
+            // Очищаем поле ввода
             input.value = '';
+            
+            // Увеличиваем счетчик сообщений (добавили новое сообщение)
+            currentDialogMessagesCount++;
             
             try {
                 const response = await fetch(`http://localhost:5000/api/my-issue/${currentMyIssueId}/respond`, {
@@ -5091,31 +5113,21 @@
                 
                 const result = await response.json();
                 
-                if (response.ok && result.success) {
-                    // Удаляем временное сообщение
-                    removeTemporaryMessage();
-                    
-                    // Принудительно обновляем диалог
-                    currentDialogMessagesCount = 0; // Сбрасываем счетчик для полного обновления
-                    await smartUpdateDialog(currentMyIssueId, true);
-                    
-                } else {
-                    // Удаляем временное сообщение и показываем ошибку
-                    removeTemporaryMessage();
+                if (!response.ok || !result.success) {
+                    // Если отправка не удалась, показываем ошибку
                     tg.showAlert('Ошибка отправки: ' + (result.error || 'Неизвестная ошибка'));
                     
-                    // Возвращаем текст в поле ввода
-                    input.value = responseText;
+                    // Перезагружаем диалог для корректного состояния
+                    currentDialogMessagesCount = 0;
+                    await smartUpdateDialog(currentMyIssueId, true);
                 }
             } catch (error) {
                 console.error('Ошибка отправки ответа:', error);
-                
-                // Удаляем временное сообщение и показываем ошибку
-                removeTemporaryMessage();
                 tg.showAlert('Ошибка сети при отправке ответа');
                 
-                // Возвращаем текст в поле ввода
-                input.value = responseText;
+                // Перезагружаем диалог для корректного состояния
+                currentDialogMessagesCount = 0;
+                await smartUpdateDialog(currentMyIssueId, true);
             }
         }
         
