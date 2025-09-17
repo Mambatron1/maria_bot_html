@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.12.14-20250917">
-    <meta name="version" content="maria-bot-v1.12.14">
+    <meta name="cache-bust" content="maria-bot-v1.12.15-20250917">
+    <meta name="version" content="maria-bot-v1.12.15">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.12.14
+        Maria Bot v1.12.15
     </div>
      
     <div class="wrap">
@@ -3560,8 +3560,13 @@
                 absenceOptions.dates.forEach(date => {
                     const button = document.createElement('button');
                     button.className = 'btn';
-                    button.innerHTML = `<span class="dot" style="background: #ef4444;"></span><span>${date.name}</span>`;
-                    button.onclick = () => selectAbsenceDate(date.id, date.date);
+                    // Убираем эмодзи и добавляем цветные кружочки
+                    let dotColor = '#ef4444'; // красный для сегодня/завтра
+                    if (date.id === 'custom') {
+                        dotColor = '#8b5cf6'; // фиолетовый для "своя дата"
+                    }
+                    button.innerHTML = `<span class="dot" style="background: ${dotColor};"></span><span>${date.name}</span>`;
+                    button.onclick = () => selectAbsenceDate(date.id, date.date, button);
                     datesContainer.appendChild(button);
                 });
                 
@@ -3585,8 +3590,17 @@
             }
         }
         
-        function selectAbsenceDate(dateId, dateValue) {
+        function selectAbsenceDate(dateId, dateValue, selectedButton) {
             selectedAbsenceDate = dateId;
+            
+            // Убираем подсветку со всех кнопок дат (как в режиме работы)
+            const allDateButtons = document.querySelectorAll('#absence-dates .btn');
+            allDateButtons.forEach(btn => {
+                btn.style.background = 'var(--navy-700)';
+            });
+            
+            // Подсвечиваем выбранную кнопку оранжевым (как в режиме работы)
+            selectedButton.style.background = '#ea580c';
             
             if (dateId === 'custom') {
                 // Показываем поле для ввода даты
@@ -3596,7 +3610,7 @@
             } else {
                 // Показываем секцию выбора времени
                 document.getElementById('absence-time-section').style.display = 'block';
-                document.getElementById('absence-times').style.display = 'block';
+                document.getElementById('absence-times').style.display = 'grid';
                 document.getElementById('absence-custom-date').style.display = 'none';
                 
                 // Заполняем времена
@@ -3606,8 +3620,13 @@
                 absenceOptions.times.forEach(time => {
                     const button = document.createElement('button');
                     button.className = 'btn';
-                    button.innerHTML = `<span class="dot" style="background: #f59e0b;"></span><span>${time.name}</span>`;
-                    button.onclick = () => selectAbsenceTime(time.id, time.start, time.end);
+                    // Убираем эмодзи и добавляем цветные кружочки для времени
+                    let dotColor = '#10b981'; // зеленый для утро/день/весь день
+                    if (time.id === 'custom') {
+                        dotColor = '#8b5cf6'; // фиолетовый для "свое время"
+                    }
+                    button.innerHTML = `<span class="dot" style="background: ${dotColor};"></span><span>${time.name}</span>`;
+                    button.onclick = () => selectAbsenceTime(time.id, time.start, time.end, button);
                     timesContainer.appendChild(button);
                 });
             }
@@ -3624,7 +3643,7 @@
             
             // Показываем секцию выбора времени
             document.getElementById('absence-time-section').style.display = 'block';
-            document.getElementById('absence-times').style.display = 'block';
+            document.getElementById('absence-times').style.display = 'grid';
             document.getElementById('absence-custom-date').style.display = 'none';
             
             // Заполняем времена
@@ -3634,14 +3653,28 @@
             absenceOptions.times.forEach(time => {
                 const button = document.createElement('button');
                 button.className = 'btn';
-                button.innerHTML = `<span class="dot" style="background: #f59e0b;"></span><span>${time.name}</span>`;
-                button.onclick = () => selectAbsenceTime(time.id, time.start, time.end);
+                // Убираем эмодзи и добавляем цветные кружочки для времени
+                let dotColor = '#10b981'; // зеленый для утро/день/весь день
+                if (time.id === 'custom') {
+                    dotColor = '#8b5cf6'; // фиолетовый для "свое время"
+                }
+                button.innerHTML = `<span class="dot" style="background: ${dotColor};"></span><span>${time.name}</span>`;
+                button.onclick = () => selectAbsenceTime(time.id, time.start, time.end, button);
                 timesContainer.appendChild(button);
             });
         }
         
-        function selectAbsenceTime(timeId, startTime, endTime) {
+        function selectAbsenceTime(timeId, startTime, endTime, selectedButton) {
             selectedAbsenceTime = timeId;
+            
+            // Убираем подсветку со всех кнопок времени (как в режиме работы)
+            const allTimeButtons = document.querySelectorAll('#absence-times .btn');
+            allTimeButtons.forEach(btn => {
+                btn.style.background = 'var(--navy-700)';
+            });
+            
+            // Подсвечиваем выбранную кнопку оранжевым (как в режиме работы)
+            selectedButton.style.background = '#ea580c';
             
             if (timeId === 'custom') {
                 // Показываем поля для ввода времени
