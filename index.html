@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.12.27-20250918">
-    <meta name="version" content="maria-bot-v1.12.27">
+    <meta name="cache-bust" content="maria-bot-v1.12.28-20250918">
+    <meta name="version" content="maria-bot-v1.12.28">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.12.27
+        Maria Bot v1.12.28
     </div>
      
     <div class="wrap">
@@ -471,7 +471,7 @@
                     <button onclick="showMainApp()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
                     <div style="flex: 1; text-align: center;">
                         <div class="title" style="margin: 0;">Отсутствие</div>
-                    </div>
+            </div>
                     <div style="width: 40px;"></div>
                 </header>
 
@@ -479,7 +479,7 @@
                     <div class="card" style="background: var(--danger); color: white;">
                         <h3>⚠️ Важно!</h3>
                         <p><strong>СНАЧАЛА СОГЛАСУЙ С РУКОВОДИТЕЛЕМ, ЧТОБЫ ОН ЗНАЛ, ЧТО ТЫ ОТСУТСТВУЕШЬ!</strong></p>
-                    </div>
+                </div>
                     <div class="card" id="absence-date-section">
                         <h3>Выберите дату</h3>
                         <p>Укажите дату вашего отсутствия</p>
@@ -536,16 +536,16 @@
                     <div class="card" style="background: #474A51; margin-bottom: 20px;">
                         <h3>Подтверждение</h3>
                         <p id="absence-confirmation-text" style="font-size: 16px; line-height: 1.4;"><!-- Текст подтверждения --></p>
-                    </div>
+                        </div>
                     <div class="actions">
                         <button onclick="confirmAbsence()" class="btn" style="background: #0d9488;">
                             <span class="dot" style="background: #10b981;"></span>
                             <span>Подтвердить</span>
-                        </button>
+                            </button>
                         <button onclick="showMainApp()" class="btn" style="background: #7f1d1d;">
                             <span class="dot" style="background: #ef4444;"></span>
                             <span>Отменить</span>
-                        </button>
+                            </button>
                     </div>
                 </div>
             </div>
@@ -733,7 +733,7 @@
                     <button onclick="showMainApp()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
                     <div style="flex: 1; text-align: center;">
                         <div class="title" style="margin: 0;">Мои обращения</div>
-                    </div>
+            </div>
                     <div style="width: 40px;"></div>
                 </header>
 
@@ -742,9 +742,9 @@
                     <div class="card" style="background: #065f46; margin-bottom: 20px;">
                         <h3 style="font-size: 16px; line-height: 1.4;">📋 Ваши обращения</h3>
                         <p style="margin: 0; color: rgba(255,255,255,0.8); font-size: 14px;">
-                            Здесь вы можете продолжить диалоги или создать новое обращение
+                        Здесь вы можете продолжить диалоги или создать новое обращение
                         </p>
-                    </div>
+                </div>
 
                     <!-- Список обращений -->
                     <div class="card" style="background: #474A51;">
@@ -767,21 +767,21 @@
                     <button onclick="closeMyIssueDialog()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
                     <div style="flex: 1; text-align: center;">
                         <div class="title" style="margin: 0;">💬 Мое обращение</div>
-                    </div>
+            </div>
                     <div style="width: 40px;"></div>
                 </header>
 
                 <div class="stack" style="margin-bottom: 80px;">
                     <div class="card" style="background: #474A51; min-height: 60vh; max-height: 70vh; overflow-y: auto;">
-                        <div id="my-issue-dialog-content">
-                            <div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">
+                <div id="my-issue-dialog-content">
+                    <div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">
                                 <div style="font-size: 16px;">📈 Загрузка диалога...</div>
                                 <div style="font-size: 12px; margin-top: 8px;">Получение данных из базы</div>
                             </div>
-                        </div>
                     </div>
                 </div>
-                
+            </div>
+            
                 <div style="position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
                     <div style="display: flex; gap: 10px; max-width: 100%; margin: 0 auto;">
                         <input type="text" id="my-response-input" placeholder="Введите ответ..." onkeypress="handleMyResponseEnterKey(event)" oninput="handleUserTyping()" 
@@ -849,8 +849,8 @@
                         <div id="search-results-count" style="font-size: 12px; color: rgba(255, 255, 255, 0.6); margin-top: 10px;">
                             <!-- Счетчик результатов поиска -->
                         </div>
+                        </div>
                     </div>
-                </div>
 
                 <div class="stack">
                     <div class="card">
@@ -997,21 +997,21 @@
                                    style="width: 100%; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
                                           background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
                             <div style="display: flex; gap: 10px;">
-                                <select id="issues-status-filter" onchange="filterIssues()" 
+                            <select id="issues-status-filter" onchange="filterIssues()" 
                                         style="flex: 1; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
                                                background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
-                                    <option value="all">Все статусы</option>
-                                    <option value="open">Открытые</option>
-                                    <option value="in_progress">В работе</option>
-                                    <option value="closed">Закрытые</option>
-                                </select>
-                                <select id="issues-type-filter" onchange="filterIssues()" 
+                                <option value="all">Все статусы</option>
+                                <option value="open">Открытые</option>
+                                <option value="in_progress">В работе</option>
+                                <option value="closed">Закрытые</option>
+                            </select>
+                            <select id="issues-type-filter" onchange="filterIssues()" 
                                         style="flex: 1; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
                                                background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
-                                    <option value="all">Все типы</option>
-                                    <option value="technical">Технические</option>
-                                    <option value="personal">Личные</option>
-                                </select>
+                                <option value="all">Все типы</option>
+                                <option value="technical">Технические</option>
+                                <option value="personal">Личные</option>
+                            </select>
                             </div>
                         </div>
                         <div id="issues-results-count" style="font-size: 12px; color: rgba(255, 255, 255, 0.6);">
@@ -1040,21 +1040,21 @@
                     <button onclick="closeIssueDialog()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
                     <div style="flex: 1; text-align: center;">
                         <div class="title" style="margin: 0;">💬 Диалог с обращением</div>
-                    </div>
+            </div>
                     <div style="width: 40px;"></div>
                 </header>
 
                 <div class="stack" style="margin-bottom: 80px;">
                     <div class="card" style="background: #474A51; min-height: 60vh; max-height: 70vh; overflow-y: auto;">
-                        <div id="issue-dialog-content">
-                            <div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">
+                <div id="issue-dialog-content">
+                    <div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">
                                 <div style="font-size: 16px;">📈 Загрузка диалога...</div>
                                 <div style="font-size: 12px; margin-top: 8px;">Получение данных из базы</div>
                             </div>
-                        </div>
                     </div>
                 </div>
-                
+            </div>
+            
                 <div style="position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
                     <div style="display: flex; gap: 10px; max-width: 100%; margin: 0 auto;">
                         <input type="text" id="admin-response-input" placeholder="Введите ответ..." onkeypress="handleEnterKey(event)" oninput="handleAdminTyping()"
@@ -3320,9 +3320,9 @@
                 if (response.ok) {
                     tg.showAlert('Юху 🎉! Готово!');
                     // После успешной отправки возвращаемся в меню "Сообщить о проблеме"
-                    setTimeout(() => {
+                        setTimeout(() => {
                         showSosModal();
-                    }, 1000);
+                        }, 1000);
                 } else {
                     tg.showAlert('Ошибка: ' + result.error);
                 }
@@ -3492,7 +3492,7 @@
             // Возвращаемся в главное меню
             showMainApp();
         }
-
+        
         async function confirmSickLeave() {
             console.log('🔍 confirmSickLeave() вызвана');
             console.log('🔍 selectedLeaveType:', selectedLeaveType);
@@ -3742,7 +3742,7 @@
             // Вызываем функцию отправки данных
             submitAbsence();
         }
-
+        
         async function submitAbsence() {
             try {
                 // Если выбрано свое время, получаем значения из полей
@@ -4185,8 +4185,8 @@
                     
                     // Обновляем правильные переменные
                     if (isUserDialog) {
-                        currentDialogMessagesCount = newMessagesCount;
-                        lastDialogData = data;
+                    currentDialogMessagesCount = newMessagesCount;
+                    lastDialogData = data;
                     } else {
                         adminDialogMessagesCount = newMessagesCount;
                         adminLastDialogData = data;
@@ -5456,7 +5456,7 @@
                 console.error('Ошибка отметки как прочитанное:', error);
             }
         }
-        
+
         // Загружаем данные пользователя при загрузке страницы
         loadUserData();
 
