@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.12.19-20250917">
-    <meta name="version" content="maria-bot-v1.12.19">
+    <meta name="cache-bust" content="maria-bot-v1.12.22-20250918">
+    <meta name="version" content="maria-bot-v1.12.22">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -355,7 +355,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.12.19
+        Maria Bot v1.12.22
     </div>
      
     <div class="wrap">
@@ -785,7 +785,7 @@
                 <div style="position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
                     <div style="display: flex; gap: 10px; max-width: 100%; margin: 0 auto;">
                         <input type="text" id="my-response-input" placeholder="Введите ответ..." onkeypress="handleMyResponseEnterKey(event)" oninput="handleUserTyping()" 
-                               style="flex: 1; padding: 12px 15px; border: none; border-radius: var(--radius); background: rgba(255,255,255,0.1); color: white; font-size: 14px;">
+                               style="flex: 1; padding: 12px 15px; border: none; border-radius: var(--radius); background: var(--navy-800); color: white; font-size: 14px; border: 1px solid rgba(255,255,255,0.2);">
                         <button onclick="sendMyResponse()" class="btn" 
                                 style="background: var(--accent); color: white; border: none; padding: 12px 20px; border-radius: var(--radius); cursor: pointer; font-weight: 600; min-width: 100px;">
                             Отправить
@@ -1058,7 +1058,7 @@
                 <div style="position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
                     <div style="display: flex; gap: 10px; max-width: 100%; margin: 0 auto;">
                         <input type="text" id="admin-response-input" placeholder="Введите ответ..." onkeypress="handleEnterKey(event)" oninput="handleAdminTyping()"
-                               style="flex: 1; padding: 12px 15px; border: none; border-radius: var(--radius); background: rgba(255,255,255,0.1); color: white; font-size: 14px;">
+                               style="flex: 1; padding: 12px 15px; border: none; border-radius: var(--radius); background: var(--navy-800); color: white; font-size: 14px; border: 1px solid rgba(255,255,255,0.2);">
                         <button onclick="sendAdminResponse()" class="btn" 
                                 style="background: var(--accent); color: white; border: none; padding: 12px 20px; border-radius: var(--radius); cursor: pointer; font-weight: 600; min-width: 100px;">
                             Отправить
@@ -4502,50 +4502,6 @@
             }, 100);
         }
         
-        async function sendMyResponse() {
-            try {
-                const input = document.getElementById('my-response-input');
-                const responseText = input.value.trim();
-                
-                if (!responseText) {
-                    tg.showAlert('Введите текст ответа');
-                    return;
-                }
-                
-                const response = await fetch(`http://localhost:5000/api/my-issue/${currentMyIssueId}/respond`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        initData: tg.initData,
-                        response_text: responseText
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Ошибка отправки ответа');
-                }
-
-                // Добавляем сообщение в диалог локально
-                addMessageToDialog(responseText, true, true);
-                
-                // Прокручиваем к низу диалога
-                setTimeout(() => {
-                    scrollToBottom(true); // true = пользовательский диалог
-                }, 150);
-                
-                // Очищаем поле ввода
-                input.value = '';
-                
-                // Увеличиваем счетчик сообщений (добавили новое сообщение)
-                currentDialogMessagesCount++;
-                
-            } catch (error) {
-                console.error('Ошибка отправки ответа:', error);
-                tg.showAlert('Ошибка отправки ответа');
-            }
-        }
         
         function handleMyResponseEnterKey(event) {
             if (event.key === 'Enter') {
@@ -5232,21 +5188,8 @@
                 return;
             }
             
-            // Добавляем сообщение в диалог локально
-            addMessageToDialog(responseText, true, true);
-            
-            // Прокручиваем к низу диалога
-            setTimeout(() => {
-                scrollToBottom(true); // true = пользовательский диалог
-            }, 150);
-            
-            // Очищаем поле ввода
-            input.value = '';
-            
-            // Увеличиваем счетчик сообщений (добавили новое сообщение)
-            currentDialogMessagesCount++;
-            
             try {
+                // Отправляем сообщение на сервер
                 const response = await fetch(`http://localhost:5000/api/my-issue/${currentMyIssueId}/respond`, {
                     method: 'POST',
                     headers: {
@@ -5263,18 +5206,26 @@
                 if (!response.ok || !result.success) {
                     // Если отправка не удалась, показываем ошибку
                     tg.showAlert('Ошибка отправки: ' + (result.error || 'Неизвестная ошибка'));
-                    
-                    // Перезагружаем диалог для корректного состояния
-                    currentDialogMessagesCount = 0;
-                    await smartUpdateDialog(currentMyIssueId, true);
+                    return;
                 }
+                
+                // Только после успешной отправки добавляем сообщение локально
+                addMessageToDialog(responseText, true, true);
+                
+                // Прокручиваем к низу диалога
+                setTimeout(() => {
+                    scrollToBottom(true); // true = пользовательский диалог
+                }, 150);
+                
+                // Очищаем поле ввода
+                input.value = '';
+                
+                // Увеличиваем счетчик сообщений (добавили новое сообщение)
+                currentDialogMessagesCount++;
+                
             } catch (error) {
                 console.error('Ошибка отправки ответа:', error);
                 tg.showAlert('Ошибка сети при отправке ответа');
-                
-                // Перезагружаем диалог для корректного состояния
-                currentDialogMessagesCount = 0;
-                await smartUpdateDialog(currentMyIssueId, true);
             }
         }
         
