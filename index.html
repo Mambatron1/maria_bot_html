@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.12.32-20250918">
-    <meta name="version" content="maria-bot-v1.12.32">
+    <meta name="cache-bust" content="maria-bot-v1.12.33-20250918">
+    <meta name="version" content="maria-bot-v1.12.33">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -367,7 +367,7 @@
 <body>
     <!-- Индикатор версии для проверки -->
     <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.12.32
+        Maria Bot v1.12.33
     </div>
     
      
@@ -4102,7 +4102,7 @@
                 } catch (error) {
                     console.error('❌ Ошибка автообновления диалога:', error);
                 }
-            }, 2000); // Каждые 2 секунды
+            }, 1000); // Каждую секунду для быстрого отклика
             
             console.log('✅ Автообновление запущено');
         }
@@ -4164,8 +4164,13 @@
                     return;
                 }
                 
-                // Просто перерисовываем весь диалог при изменении количества сообщений
-                // Это проще и надежнее, чем пытаться добавлять только новые сообщения
+                // Обновляем диалог, сохраняя фокус на поле ввода
+                const activeElement = document.activeElement;
+                const inputId = isUserDialog ? 'my-response-input' : 'admin-response-input';
+                const wasInputFocused = activeElement && activeElement.id === inputId;
+                const inputValue = wasInputFocused ? activeElement.value : '';
+                
+                // Перерисовываем диалог
                 if (isUserDialog) {
                     displayMyIssueDialog(data);
                     currentDialogMessagesCount = newMessagesCount;
@@ -4174,6 +4179,17 @@
                     displayIssueDialog(data);
                     adminDialogMessagesCount = newMessagesCount;
                     adminLastDialogData = data;
+                }
+                
+                // Восстанавливаем фокус и значение поля ввода
+                if (wasInputFocused) {
+                    setTimeout(() => {
+                        const input = document.getElementById(inputId);
+                        if (input) {
+                            input.value = inputValue;
+                            input.focus();
+                        }
+                    }, 50);
                 }
                 
                 // Прокручиваем к новым сообщениям
