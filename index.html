@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v2.0.3-20251009">
-    <meta name="version" content="maria-bot-v2.0.3-transaction-fix">
+    <meta name="cache-bust" content="maria-bot-v2.0.5-20251009">
+    <meta name="version" content="maria-bot-v2.0.5-colors-status-fix">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -127,7 +127,7 @@
 <body class="m-0 bg-nb-bg text-nb-ink min-h-screen font-sans">
     <!-- Индикатор версии для проверки -->
     <div class="fixed top-2.5 right-2.5 bg-nb-accent text-white px-2 py-1 rounded-lg text-[10px] z-[9999]">
-        Maria Bot v2.0.3-transaction-fix
+        Maria Bot v2.0.5-colors-status-fix
     </div>
     
      
@@ -1560,8 +1560,8 @@
                 
                 // Фильтр по статусу
                 let matchesStatus = true;
-                if (statusFilter === 'open') {
-                    matchesStatus = issue.status === 'open';
+                if (statusFilter === 'open' || statusFilter === 'active') {
+                    matchesStatus = issue.status === 'active';
                 } else if (statusFilter === 'in_progress') {
                     matchesStatus = issue.status === 'in_progress';
                 } else if (statusFilter === 'closed') {
@@ -1616,9 +1616,9 @@
                     box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
                 `;
                 
-                let statusIcon = '🟡';
-                let statusText = 'Открыто';
-                let statusColor = '#f59e0b';
+                let statusIcon = '🟢';
+                let statusText = 'Активно';
+                let statusColor = '#10b981';
                 
                 if (issue.status === 'closed') {
                     statusIcon = '🔴';
@@ -1631,6 +1631,10 @@
                 } else if (issue.status === 'resolved') {
                     statusIcon = '🟢';
                     statusText = 'Решено';
+                    statusColor = '#10b981';
+                } else if (issue.status === 'active') {
+                    statusIcon = '🟢';
+                    statusText = 'Активно';
                     statusColor = '#10b981';
                 }
                 
@@ -1750,9 +1754,9 @@
                 const data = await response.json();
                 displayIssueDialog(data);
                 
-                // Инициализируем счетчик сообщений для умного обновления
-                currentDialogMessagesCount = data.responses ? data.responses.length : 0;
-                lastDialogData = data;
+                // Инициализируем счетчик сообщений для умного обновления (админский диалог)
+                adminDialogMessagesCount = data.responses ? data.responses.length : 0;
+                adminLastDialogData = data;
                 
             } catch (error) {
                 console.error('Ошибка загрузки диалога:', error);
@@ -1814,8 +1818,8 @@
                 responses.forEach(response => {
                     const isAdmin = response.responder_phone === 'admin';
                     const messageStyle = isAdmin 
-                        ? 'background: linear-gradient(45deg, #667eea, #764ba2); color: white; margin-left: auto; text-align: right;'
-                        : 'background: rgba(255,255,255,0.1); color: white; margin-right: auto;';
+                        ? 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-left: auto; text-align: right; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);'
+                        : 'background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; margin-right: auto; box-shadow: 0 2px 8px rgba(56, 239, 125, 0.3);';
                     
                     html += '<div style="margin: 10px 0; padding: 12px 15px; border-radius: 12px; max-width: 80%; word-wrap: break-word; ' + messageStyle + '">';
                     html += '<div style="font-size: 14px; margin-bottom: 6px; line-height: 1.4;">' + response.response_text + '</div>';
@@ -3897,19 +3901,23 @@
         // Умное обновление диалога - добавляет только новые сообщения
         async function smartUpdateDialog(issueId, isUserDialog = true) {
             try {
+                const dialogType = isUserDialog ? '👤 Пользовательский' : '👨‍💼 Админский';
+                
                 const apiUrl = isUserDialog 
-                    ? `/api/my-issue/${issueId}/dialog?initData=${encodeURIComponent(tg.initData)}`
-                    : `/api/admin/issue/${issueId}/dialog?initData=${encodeURIComponent(tg.initData)}`;
+                    ? `http://localhost:5000/api/my-issue/${issueId}/dialog?initData=${encodeURIComponent(tg.initData)}`
+                    : `http://localhost:5000/api/admin/issue/${issueId}/dialog?initData=${encodeURIComponent(tg.initData)}`;
                 
                 const response = await fetch(apiUrl, { method: 'GET' });
                 
                 if (!response.ok) {
+                    console.log(`⚠️ ${dialogType} диалог #${issueId}: HTTP ${response.status}`);
                     return;
                 }
                 
                 const data = await response.json();
                 
                 if (!data.success) {
+                    console.log(`⚠️ ${dialogType} диалог #${issueId}: success=false`);
                     return;
                 }
                 
@@ -3919,6 +3927,8 @@
                 // Используем правильные переменные для каждого типа диалога
                 const currentCount = isUserDialog ? currentDialogMessagesCount : adminDialogMessagesCount;
                 const lastData = isUserDialog ? lastDialogData : adminLastDialogData;
+                
+                console.log(`🔄 ${dialogType} диалог #${issueId}: текущих=${currentCount}, новых=${newMessagesCount}`);
                 
                 if (newMessagesCount === currentCount) {
                     // Нет новых сообщений, не обновляем
@@ -3946,6 +3956,8 @@
                 const inputValue = wasInputFocused ? activeElement.value : '';
                 
                 // Перерисовываем диалог
+                console.log(`✅ ${dialogType} диалог #${issueId}: обновление ${newMessagesCount - currentCount} новых сообщений`);
+                
                 if (isUserDialog) {
                     displayMyIssueDialog(data);
                     currentDialogMessagesCount = newMessagesCount;
@@ -3998,29 +4010,39 @@
             
             if (isUserDialog) {
                 // Пользовательский диалог
-                const bgColor = isFromCurrentUser ? 'linear-gradient(45deg, #667eea, #764ba2)' : '#2ed573';
+                const bgColor = isFromCurrentUser 
+                    ? 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)' 
+                    : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                const boxShadow = isFromCurrentUser 
+                    ? '0 2px 8px rgba(56, 239, 125, 0.3)' 
+                    : '0 2px 8px rgba(102, 126, 234, 0.3)';
                 const textColor = 'white';
                 const align = isFromCurrentUser ? 'margin-left: auto; margin-right: 0;' : 'margin-right: auto; margin-left: 0;';
                 const senderText = isFromCurrentUser ? '👤 Вы' : '👨‍💼 Администратор';
                 
-                messageDiv.style.cssText = `background: ${bgColor}; color: ${textColor}; padding: 12px 15px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; word-wrap: break-word; ${align}`;
+                messageDiv.style.cssText = `background: ${bgColor}; color: ${textColor}; padding: 12px 15px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; word-wrap: break-word; ${align} box-shadow: ${boxShadow};`;
                 messageDiv.innerHTML = `
-                    <div style="font-size: 14px; margin-bottom: 5px;">${messageText}</div>
-                    <div style="font-size: 11px; opacity: 0.7; text-align: right;">
+                    <div style="font-size: 14px; margin-bottom: 5px; line-height: 1.4;">${messageText}</div>
+                    <div style="font-size: 11px; opacity: 0.8; text-align: right;">
                         ${senderText} • ${currentTime}
                     </div>
                 `;
             } else {
                 // Админский диалог
-                const bgColor = isFromCurrentUser ? '#2ed573' : 'linear-gradient(45deg, #667eea, #764ba2)';
+                const bgColor = isFromCurrentUser 
+                    ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' 
+                    : 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)';
+                const boxShadow = isFromCurrentUser 
+                    ? '0 2px 8px rgba(102, 126, 234, 0.3)' 
+                    : '0 2px 8px rgba(56, 239, 125, 0.3)';
                 const textColor = 'white';
                 const align = isFromCurrentUser ? 'margin-left: auto; margin-right: 0;' : 'margin-right: auto; margin-left: 0;';
                 const senderText = isFromCurrentUser ? '👨‍💼 Администратор' : '👤 Сотрудник';
                 
-                messageDiv.style.cssText = `background: ${bgColor}; color: ${textColor}; padding: 12px 15px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; word-wrap: break-word; ${align}`;
+                messageDiv.style.cssText = `background: ${bgColor}; color: ${textColor}; padding: 12px 15px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; word-wrap: break-word; ${align} box-shadow: ${boxShadow};`;
                 messageDiv.innerHTML = `
-                    <div style="font-size: 14px; margin-bottom: 5px;">${messageText}</div>
-                    <div style="font-size: 11px; opacity: 0.7; text-align: right;">
+                    <div style="font-size: 14px; margin-bottom: 5px; line-height: 1.4;">${messageText}</div>
+                    <div style="font-size: 11px; opacity: 0.8; text-align: right;">
                         ${senderText} • ${currentTime}
                     </div>
                 `;
@@ -4202,12 +4224,13 @@
                 
                 responses.forEach(response => {
                     const isAdmin = response.responder_phone === 'admin';
-                    const bgColor = isAdmin ? 'rgba(46, 213, 115, 0.2)' : 'rgba(255, 255, 255, 0.1)';
-                    const align = isAdmin ? 'margin-left: 20px;' : 'margin-right: 20px;';
+                    const messageStyle = isAdmin 
+                        ? 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-left: 20px; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);'
+                        : 'background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; margin-right: 20px; box-shadow: 0 2px 8px rgba(56, 239, 125, 0.3);';
                     
-                    html += '<div style="background: ' + bgColor + '; padding: 12px; border-radius: 8px; margin-bottom: 10px; ' + align + '">';
-                    html += '<div style="font-size: 14px; margin-bottom: 5px;">' + response.response_text + '</div>';
-                    html += '<div style="font-size: 11px; color: rgba(255,255,255,0.6); text-align: right;">';
+                    html += '<div style="' + messageStyle + ' padding: 12px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; word-wrap: break-word;">';
+                    html += '<div style="font-size: 14px; margin-bottom: 5px; line-height: 1.4;">' + response.response_text + '</div>';
+                    html += '<div style="font-size: 11px; opacity: 0.8; text-align: right;">';
                     html += (isAdmin ? '👨‍💼 Администратор' : '👤 Вы') + ' • ' + new Date(response.created_at).toLocaleString('ru-RU');
                     html += '</div>';
                     html += '</div>';
@@ -4745,9 +4768,9 @@
             
             let html = '';
             issues.forEach(issue => {
-                const statusColor = issue.status === 'open' ? '#2ed573' : 
+                const statusColor = issue.status === 'active' ? '#2ed573' : 
                                   issue.status === 'in_progress' ? '#ffa502' : '#ff6b6b';
-                const statusText = issue.status === 'open' ? 'Открыто' : 
+                const statusText = issue.status === 'active' ? 'Активно' : 
                                  issue.status === 'in_progress' ? 'В работе' : 'Закрыто';
                 
                 const hasNewResponses = issue.has_new_responses;
