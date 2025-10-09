@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.14.0-20251009">
-    <meta name="version" content="maria-bot-v1.14.0">
+    <meta name="cache-bust" content="maria-bot-v1.15.0-20251009">
+    <meta name="version" content="maria-bot-v1.15.0">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -85,7 +85,16 @@
         })();
     </script>
     <style>
-        /* Минимальные стили для элементов, не покрытых Tailwind */
+        /* CSS переменные для старых немигрированных модалей */
+        :root {
+            --bg: #eff6ff;
+            --ink: #0f172a;
+            --muted: #64748b;
+            --text: #f1f5f9;
+            --accent: #4338ca;
+            --radius: 14px;
+            --btn-h: 52px;
+        }
         
         /* Цветные точки-индикаторы на кнопках */
         .dot { 
@@ -94,6 +103,12 @@
             height: 8px; 
             border-radius: 50%;
         }
+        
+        .dot-holiday { background: #f59e0b; }
+        .dot-mode { background: #10b981; }
+        .dot-absence { background: #ef4444; }
+        .dot-sick { background: #8b5cf6; }
+        .dot-crocotime { background: #eab308; }
 
         /* Принудительный цвет для всех полей ввода */
         input[type="text"], 
@@ -118,12 +133,79 @@
             bottom: 0;
             overflow-y: auto;
         }
+        
+        /* Дополнительные стили для старых модальных окон */
+        .wrap { 
+            max-width: 440px; 
+            margin: 0 auto;
+            padding: 16px; 
+            box-sizing: border-box; 
+            min-height: 100vh;
+        }
+        
+        .card { 
+            background: #474A51; 
+            color: #f1f5f9; 
+            border-radius: var(--radius); 
+            padding: 12px 14px; 
+            box-shadow: 0 6px 18px rgba(2, 6, 23, .12);
+        }
+        
+        .card h3 { 
+            margin: 0 0 4px; 
+            font-size: 14px; 
+            font-weight: 800; 
+            letter-spacing: .2px; 
+        }
+        
+        .card p { 
+            margin: 0; 
+            font-size: 13px; 
+            color: #cbd5e1; 
+        }
+        
+        .stack { 
+            display: grid; 
+            gap: 10px; 
+            margin: 8px 0 16px; 
+        }
+        
+        .actions { 
+            display: grid; 
+            gap: 12px;
+            justify-items: center;
+        }
+        
+        .title { 
+            font-weight: 700; 
+            font-size: 17px; 
+        }
+        
+        .back-button {
+            background: none;
+            border: none;
+            color: var(--ink);
+            font-size: 24px;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: var(--radius);
+            transition: all 0.2s ease;
+        }
+        
+        .back-button:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        .back-button:active {
+            background: rgba(0, 0, 0, 0.1);
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body class="m-0 bg-nb-bg text-nb-ink min-h-screen font-sans">
     <!-- Индикатор версии для проверки -->
     <div class="fixed top-2.5 right-2.5 bg-nb-accent text-white px-2 py-1 rounded-lg text-[10px] z-[9999]">
-        Maria Bot v1.14.0
+        Maria Bot v1.15.0
     </div>
     
      
@@ -165,32 +247,33 @@
 
             <!-- Action Buttons -->
             <div class="grid gap-3 justify-items-center">
-                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90" onclick="handleAction('vacation')">
+                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-navy-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:bg-nb-navy-600 shadow-nb" onclick="handleAction('vacation')">
                     <span class="dot dot-holiday"></span>
                     <span>Мой отпуск</span>
                 </button>
-                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90" onclick="handleAction('work_mode')">
+                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-navy-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:bg-nb-navy-600 shadow-nb" onclick="handleAction('work_mode')">
                     <span class="dot dot-mode"></span>
                     <span>Режим работы</span>
                 </button>
-                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90" onclick="handleAction('absence')">
+                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-navy-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:bg-nb-navy-600 shadow-nb" onclick="handleAction('absence')">
                     <span class="dot dot-absence"></span>
                     <span>Отсутствие</span>
                 </button>
-                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90" onclick="handleAction('sick_leave')">
+                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-navy-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:bg-nb-navy-600 shadow-nb" onclick="handleAction('sick_leave')">
                     <span class="dot dot-sick"></span>
                     <span>Больничный</span>
                 </button>
-                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90" onclick="handleAction('crocotime')">
+                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-navy-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:bg-nb-navy-600 shadow-nb" onclick="handleAction('crocotime')">
                     <span class="dot dot-crocotime"></span>
                     <span>Мой Crocotime</span>
                 </button>
-                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90" onclick="handleAction('sos')">
+                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-navy-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:bg-nb-navy-600 shadow-nb" onclick="handleAction('sos')">
                     <span class="dot dot-absence"></span>
                     <span>Нужна помощь</span>
                 </button>
-                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90" id="admin-btn" onclick="handleAction('admin')" style="display: none;">
-                    Меню администратора
+                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-navy-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:bg-nb-navy-600 shadow-nb" id="admin-btn" onclick="handleAction('admin')" style="display: none;">
+                    <span class="dot" style="background: #3b82f6;"></span>
+                    <span>Меню администратора</span>
                 </button>
             </div>
             <div class="footer">@NBtender_bot</div>
@@ -1096,19 +1179,19 @@
                 </div>
 
                 <div class="grid gap-3 justify-items-center">
-                    <button onclick="showEmployeesManagement()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
+                    <button onclick="showEmployeesManagement()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-navy-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:bg-nb-navy-600 shadow-nb">
                         <span class="dot" style="background: #10b981;"></span>
                         <span>Управление сотрудниками</span>
                     </button>
-                    <button onclick="showIssuesManagement()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
+                    <button onclick="showIssuesManagement()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-navy-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:bg-nb-navy-600 shadow-nb">
                         <span class="dot" style="background: #f59e0b;"></span>
                         <span>Управление обращениями</span>
                     </button>
-                    <button onclick="sendStatsToChannel()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
+                    <button onclick="sendStatsToChannel()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-navy-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:bg-nb-navy-600 shadow-nb">
                         <span class="dot" style="background: #3b82f6;"></span>
                         <span>Отправить статистику в канал</span>
                     </button>
-                    <button onclick="showMessagingMenu()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
+                    <button onclick="showMessagingMenu()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-navy-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:bg-nb-navy-600 shadow-nb">
                         <span class="dot" style="background: #ef4444;"></span>
                         <span>Сообщение сотрудникам</span>
                     </button>
@@ -2825,6 +2908,10 @@
         // Переменные для обращений
         let allIssues = [];
         let filteredIssues = [];
+        
+        // Tailwind классы для кнопок
+        const BTN_CLASSES = 'h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-navy-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 shadow-nb hover:bg-nb-navy-600 active:scale-[0.97]';
+        const BTN_SELECTED_CLASS = '!bg-orange-600';
 
         async function handleAction(action) {
             try {
@@ -2939,7 +3026,7 @@
                 
                 sosOptions.issue_types.forEach((type, index) => {
                     const button = document.createElement('button');
-                    button.className = 'btn';
+                    button.className = BTN_CLASSES;
                     const colors = ['#ef4444', '#f59e0b', '#10b981', '#8b5cf6', '#3b82f6'];
                     const color = colors[index % colors.length];
                     // Убираем эмодзи и переименовываем
@@ -2958,11 +3045,11 @@
                 sosPseudonym = null;
                 sosDescription = null;
                 
-                // Сбрасываем выделение всех кнопок
+                // Сбрасываем выделение всех кнопок - удаляем класс выделения
                 setTimeout(() => {
-                    const allButtons = document.querySelectorAll('#sos-issue-types .btn, #sos-anonymity-options .btn');
+                    const allButtons = document.querySelectorAll('#sos-issue-types button, #sos-anonymity-options button');
                     allButtons.forEach(btn => {
-                        btn.style.background = 'var(--navy-700)';
+                        btn.classList.remove(BTN_SELECTED_CLASS.replace('!', ''));
                     });
                 }, 100);
                 
@@ -2987,14 +3074,14 @@
             selectedIssueType = typeId;
             
             // Сбрасываем стили всех кнопок типов проблем
-            const typeButtons = document.querySelectorAll('#sos-issue-types .btn');
+            const typeButtons = document.querySelectorAll('#sos-issue-types button');
             typeButtons.forEach(btn => {
-                btn.style.background = 'var(--navy-700)';
+                btn.classList.remove('!bg-orange-600');
             });
             
             // Подсвечиваем выбранную кнопку
             if (selectedButton) {
-                selectedButton.style.background = '#ea580c';
+                selectedButton.classList.add('!bg-orange-600');
             }
             
             // Показываем секцию выбора анонимности
@@ -3007,7 +3094,7 @@
             
             sosOptions.anonymity_options.forEach((option, index) => {
                 const button = document.createElement('button');
-                button.className = 'btn';
+                button.className = BTN_CLASSES;
                 const colors = ['#10b981', '#f59e0b', '#8b5cf6'];
                 const color = colors[index % colors.length];
                 // Убираем эмодзи и переименовываем
@@ -3025,14 +3112,14 @@
             selectedAnonymity = anonymityId;
             
             // Сбрасываем стили всех кнопок анонимности
-            const anonymityButtons = document.querySelectorAll('#sos-anonymity-options .btn');
+            const anonymityButtons = document.querySelectorAll('#sos-anonymity-options button');
             anonymityButtons.forEach(btn => {
-                btn.style.background = 'var(--navy-700)';
+                btn.classList.remove('!bg-orange-600');
             });
             
             // Подсвечиваем выбранную кнопку
             if (selectedButton) {
-                selectedButton.style.background = '#ea580c';
+                selectedButton.classList.add('!bg-orange-600');
             }
             
             if (anonymityId === 'anonymous') {
@@ -3076,7 +3163,7 @@
             }
             
             // Находим выбранный тип проблемы
-            const selectedTypeButton = document.querySelector('#sos-issue-types .btn[style*="#ea580c"]');
+            const selectedTypeButton = document.querySelector('#sos-issue-types button.bg-orange-600');
             let typeName = 'Неизвестный тип';
             if (selectedTypeButton) {
                 // Извлекаем только текст, исключая dot
@@ -3085,7 +3172,7 @@
             }
             
             // Находим выбранный способ обращения
-            const selectedAnonymityButton = document.querySelector('#sos-anonymity-options .btn[style*="#ea580c"]');
+            const selectedAnonymityButton = document.querySelector('#sos-anonymity-options button.bg-orange-600');
             let anonymityName = 'Неизвестно';
             if (selectedAnonymityButton) {
                 // Извлекаем только текст, исключая dot
@@ -3167,7 +3254,7 @@
                 
                 sickLeaveOptions.leave_types.forEach((type, index) => {
                     const button = document.createElement('button');
-                    button.className = 'btn';
+                    button.className = BTN_CLASSES;
                     const colors = ['#8b5cf6', '#f59e0b', '#ef4444', '#10b981', '#3b82f6'];
                     const color = colors[index % colors.length];
                     // Убираем эмодзи и переименовываем
@@ -3199,14 +3286,14 @@
             selectedLeaveType = typeId;
             
             // Сбрасываем стили всех кнопок типов больничного
-            const typeButtons = document.querySelectorAll('#sick-leave-types .btn');
+            const typeButtons = document.querySelectorAll('#sick-leave-types button');
             typeButtons.forEach(btn => {
-                btn.style.background = 'var(--navy-700)';
+                btn.classList.remove('!bg-orange-600');
             });
             
             // Подсвечиваем выбранную кнопку
             if (selectedButton) {
-                selectedButton.style.background = '#ea580c';
+                selectedButton.classList.add('!bg-orange-600');
             }
             
             // Показываем форму
@@ -3245,7 +3332,7 @@
             }
             
             // Находим выбранный тип больничного
-            const selectedTypeButton = document.querySelector('#sick-leave-types .btn[style*="#ea580c"]');
+            const selectedTypeButton = document.querySelector('#sick-leave-types button.bg-orange-600');
             let typeName = 'Неизвестный тип';
             
             if (selectedTypeButton) {
@@ -3254,7 +3341,7 @@
                 typeName = textSpan ? textSpan.textContent.trim() : selectedTypeButton.textContent.trim();
             } else if (selectedLeaveType) {
                 // Если кнопка не найдена, но есть selectedLeaveType, найдем по dataset
-                const typeButton = document.querySelector(`#sick-leave-types .btn[data-type-id="${selectedLeaveType}"]`);
+                const typeButton = document.querySelector(`#sick-leave-types button[data-type-id="${selectedLeaveType}"]`);
                 if (typeButton) {
                     const textSpan = typeButton.querySelector('span:last-child');
                     typeName = textSpan ? textSpan.textContent.trim() : typeButton.textContent.trim();
@@ -3288,9 +3375,9 @@
             document.getElementById('sick-leave-confirmation-section').style.display = 'none';
             
             // Сбрасываем стили кнопок типов
-            const typeButtons = document.querySelectorAll('#sick-leave-types .btn');
+            const typeButtons = document.querySelectorAll('#sick-leave-types button');
             typeButtons.forEach(btn => {
-                btn.style.background = 'var(--navy-700)';
+                btn.classList.remove('!bg-orange-600');
             });
         }
 
@@ -3367,7 +3454,7 @@
                 
                 absenceOptions.dates.forEach(date => {
                     const button = document.createElement('button');
-                    button.className = 'btn';
+                    button.className = BTN_CLASSES;
                     // Разные цвета для каждой кнопки даты
                     let dotColor = '#ef4444'; // красный для сегодня
                     if (date.id === 'tomorrow') {
@@ -3403,14 +3490,14 @@
         function selectAbsenceDate(dateId, dateValue, selectedButton) {
             selectedAbsenceDate = dateId;
             
-            // Убираем подсветку со всех кнопок дат (как в режиме работы)
-            const allDateButtons = document.querySelectorAll('#absence-dates .btn');
+            // Убираем подсветку со всех кнопок дат
+            const allDateButtons = document.querySelectorAll('#absence-dates button');
             allDateButtons.forEach(btn => {
-                btn.style.background = 'var(--navy-700)';
+                btn.classList.remove('!bg-orange-600');
             });
             
-            // Подсвечиваем выбранную кнопку оранжевым (как в режиме работы)
-            selectedButton.style.background = '#ea580c';
+            // Подсвечиваем выбранную кнопку оранжевым
+            selectedButton.classList.add('!bg-orange-600');
             
             if (dateId === 'custom') {
                 // Показываем поле для ввода даты
@@ -3429,7 +3516,7 @@
                 
                 absenceOptions.times.forEach(time => {
                     const button = document.createElement('button');
-                    button.className = 'btn';
+                    button.className = BTN_CLASSES;
                     // Разные цвета для каждой кнопки времени
                     let dotColor = '#10b981'; // зеленый для утра
                     if (time.id === 'afternoon') {
@@ -3466,7 +3553,7 @@
             
             absenceOptions.times.forEach(time => {
                 const button = document.createElement('button');
-                button.className = 'btn';
+                button.className = BTN_CLASSES;
                 // Разные цвета для каждой кнопки времени
                 let dotColor = '#10b981'; // зеленый для утра
                 if (time.id === 'afternoon') {
@@ -3485,14 +3572,14 @@
         function selectAbsenceTime(timeId, startTime, endTime, selectedButton) {
             selectedAbsenceTime = timeId;
             
-            // Убираем подсветку со всех кнопок времени (как в режиме работы)
-            const allTimeButtons = document.querySelectorAll('#absence-times .btn');
+            // Убираем подсветку со всех кнопок времени
+            const allTimeButtons = document.querySelectorAll('#absence-times button');
             allTimeButtons.forEach(btn => {
-                btn.style.background = 'var(--navy-700)';
+                btn.classList.remove('!bg-orange-600');
             });
             
-            // Подсвечиваем выбранную кнопку оранжевым (как в режиме работы)
-            selectedButton.style.background = '#ea580c';
+            // Подсвечиваем выбранную кнопку оранжевым
+            selectedButton.classList.add('!bg-orange-600');
             
             if (timeId === 'custom') {
                 // Показываем поля для ввода времени
@@ -3633,7 +3720,7 @@
                 
                 workModeOptions.modes.forEach((mode, index) => {
                     const button = document.createElement('button');
-                    button.className = 'btn';
+                    button.className = BTN_CLASSES;
                     const colors = ['#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#3b82f6'];
                     const color = colors[index % colors.length];
                     // Убираем эмодзи и переименовываем
@@ -3656,13 +3743,13 @@
             selectedMode = mode;
             
             // Убираем подсветку со всех кнопок режимов
-            const allModeButtons = document.querySelectorAll('#work-modes .btn');
+            const allModeButtons = document.querySelectorAll('#work-modes button');
             allModeButtons.forEach(btn => {
-                btn.style.background = 'var(--navy-700)';
+                btn.classList.remove('!bg-orange-600');
             });
             
             // Подсвечиваем выбранную кнопку
-            selectedButton.style.background = '#ea580c';
+            selectedButton.classList.add('!bg-orange-600');
             
             // Показываем секцию выбора периода
             document.getElementById('period-section').style.display = 'block';
@@ -3674,7 +3761,7 @@
             
             workModeOptions.periods.forEach((period, index) => {
                 const button = document.createElement('button');
-                button.className = 'btn';
+                button.className = BTN_CLASSES;
                 const colors = ['#f59e0b', '#10b981', '#8b5cf6', '#3b82f6', '#ef4444'];
                 const color = colors[index % colors.length];
                 // Убираем эмодзи из названия
@@ -3690,14 +3777,14 @@
             selectedPeriod = period;
             
             // Убираем подсветку со всех кнопок периодов
-            const allPeriodButtons = document.querySelectorAll('#work-periods .btn');
+            const allPeriodButtons = document.querySelectorAll('#work-periods button');
             allPeriodButtons.forEach(btn => {
-                btn.style.background = 'var(--navy-700)';
+                btn.classList.remove('!bg-orange-600');
             });
             
             // Подсвечиваем выбранную кнопку
             if (selectedButton) {
-                selectedButton.style.background = '#ea580c';
+                selectedButton.classList.add('!bg-orange-600');
             }
             
             if (period === 'custom') {
