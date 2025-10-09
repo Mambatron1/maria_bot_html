@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.15.0-20251009">
-    <meta name="version" content="maria-bot-v1.15.0">
+    <meta name="cache-bust" content="maria-bot-v2.0.0-20251009">
+    <meta name="version" content="maria-bot-v2.0.0-tailwind">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -85,17 +85,6 @@
         })();
     </script>
     <style>
-        /* CSS переменные для старых немигрированных модалей */
-        :root {
-            --bg: #eff6ff;
-            --ink: #0f172a;
-            --muted: #64748b;
-            --text: #f1f5f9;
-            --accent: #4338ca;
-            --radius: 14px;
-            --btn-h: 52px;
-        }
-        
         /* Цветные точки-индикаторы на кнопках */
         .dot { 
             display: inline-block; 
@@ -133,79 +122,12 @@
             bottom: 0;
             overflow-y: auto;
         }
-        
-        /* Дополнительные стили для старых модальных окон */
-        .wrap { 
-            max-width: 440px; 
-            margin: 0 auto;
-            padding: 16px; 
-            box-sizing: border-box; 
-            min-height: 100vh;
-        }
-        
-        .card { 
-            background: #474A51; 
-            color: #f1f5f9; 
-            border-radius: var(--radius); 
-            padding: 12px 14px; 
-            box-shadow: 0 6px 18px rgba(2, 6, 23, .12);
-        }
-        
-        .card h3 { 
-            margin: 0 0 4px; 
-            font-size: 14px; 
-            font-weight: 800; 
-            letter-spacing: .2px; 
-        }
-        
-        .card p { 
-            margin: 0; 
-            font-size: 13px; 
-            color: #cbd5e1; 
-        }
-        
-        .stack { 
-            display: grid; 
-            gap: 10px; 
-            margin: 8px 0 16px; 
-        }
-        
-        .actions { 
-            display: grid; 
-            gap: 12px;
-            justify-items: center;
-        }
-        
-        .title { 
-            font-weight: 700; 
-            font-size: 17px; 
-        }
-        
-        .back-button {
-            background: none;
-            border: none;
-            color: var(--ink);
-            font-size: 24px;
-            padding: 8px;
-            cursor: pointer;
-            border-radius: var(--radius);
-            transition: all 0.2s ease;
-        }
-        
-        .back-button:hover {
-            background: rgba(0, 0, 0, 0.05);
-        }
-        
-        .back-button:active {
-            background: rgba(0, 0, 0, 0.1);
-            transform: scale(0.95);
-        }
     </style>
 </head>
 <body class="m-0 bg-nb-bg text-nb-ink min-h-screen font-sans">
     <!-- Индикатор версии для проверки -->
     <div class="fixed top-2.5 right-2.5 bg-nb-accent text-white px-2 py-1 rounded-lg text-[10px] z-[9999]">
-        Maria Bot v1.15.0
+        Maria Bot v2.0.0-tailwind
     </div>
     
      
@@ -686,69 +608,70 @@
         </div>
 
         <!-- Employees Management Modal -->
-        <div id="employees-management-modal" style="display: none;">
-            <div class="wrap">
-                <header style="margin-bottom: 20px;">
-                    <button onclick="showAdminMenuModal()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
-                    <div style="flex: 1; text-align: center;">
-                        <div class="title" style="margin: 0;">Управление сотрудниками</div>
+        <div id="employees-management-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="showAdminMenuModal()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">Управление сотрудниками</div>
                     </div>
-                    <div style="width: 40px;"></div>
+                    <div class="w-10"></div>
                 </header>
 
-                <div class="stack" style="margin-bottom: 20px;">
-                    <div class="card">
-                        <h3>Управление сотрудниками</h3>
-                        <p>Добавление, редактирование и управление сотрудниками</p>
+                <div class="grid gap-2.5 mb-5">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Управление сотрудниками</h3>
+                        <p class="text-[13px] text-slate-200">Добавление, редактирование и управление сотрудниками</p>
                     </div>
                 </div>
 
-                <div class="actions" style="margin-bottom: 20px;">
-                    <button onclick="showAddEmployeeModal()" class="btn" style="background: #0d9488;">
+                <div class="grid gap-3 justify-items-center mb-5">
+                    <button onclick="showAddEmployeeModal()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-teal-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90 shadow-nb">
                         <span class="dot" style="background: #10b981;"></span>
                         <span>Добавить сотрудника</span>
                     </button>
                 </div>
 
-                <div class="stack" style="margin-bottom: 20px;">
-                    <div class="card">
-                        <h3>Поиск и фильтры</h3>
-                        <div style="margin-top: 15px;">
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Поиск:</label>
+                <div class="grid gap-2.5 mb-5">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Поиск и фильтры</h3>
+                        <div class="mt-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Поиск:</label>
                             <input type="text" id="employee-search" placeholder="Поиск по имени, фамилии..." 
                                    oninput="filterEmployees()" 
-                                   style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 15px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                                   class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 text-[15px] font-bold">
                             
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Статус:</label>
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Статус:</label>
                             <select id="employee-status-filter" onchange="filterEmployees()" 
-                                    style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 15px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
-                                <option value="all" style="background: var(--bg); color: white;">Все статусы</option>
-                                <option value="active" style="background: var(--bg); color: white;">Активные</option>
-                                <option value="blocked" style="background: var(--bg); color: white;">Заблокированные</option>
-                                <option value="admin" style="background: var(--bg); color: white;">Администраторы</option>
+                                    class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 text-[15px] font-bold">
+                                <option value="all" class="bg-nb-bg text-white">Все статусы</option>
+                                <option value="active" class="bg-nb-bg text-white">Активные</option>
+                                <option value="blocked" class="bg-nb-bg text-white">Заблокированные</option>
+                                <option value="admin" class="bg-nb-bg text-white">Администраторы</option>
                             </select>
                             
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Роль:</label>
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Роль:</label>
                             <select id="employee-type-filter" onchange="filterEmployees()" 
-                                    style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 20px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
-                                <option value="all" style="background: var(--bg); color: white;">Все роли</option>
-                                <option value="admin" style="background: var(--bg); color: white;">Администраторы</option>
-                                <option value="user" style="background: var(--bg); color: white;">Пользователи</option>
+                                    class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-5 text-[15px] font-bold">
+                                <option value="all" class="bg-nb-bg text-white">Все роли</option>
+                                <option value="admin" class="bg-nb-bg text-white">Администраторы</option>
+                                <option value="user" class="bg-nb-bg text-white">Пользователи</option>
                             </select>
                         </div>
-                        <div id="search-results-count" style="font-size: 12px; color: rgba(255, 255, 255, 0.6); margin-top: 10px;">
+                        <div id="search-results-count" class="text-xs text-white/60 mt-2">
                             <!-- Счетчик результатов поиска -->
                         </div>
-                        </div>
                     </div>
+                </div>
 
-                <div class="stack">
-                    <div class="card">
-                        <h3>Список сотрудников</h3>
+                <div class="grid gap-2.5">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-2">Список сотрудников</h3>
                         <div id="employees-list">
-                            <div style="text-align: center; color: var(--muted); padding: 20px;">
-                                <div style="font-size: 16px;">📈 Загрузка списка сотрудников...</div>
-                                <div style="font-size: 12px; margin-top: 8px;">Получение данных из базы</div>
+                            <div class="text-center text-nb-muted p-5">
+                                <div class="text-base">📈 Загрузка списка сотрудников...</div>
+                                <div class="text-xs mt-2">Получение данных из базы</div>
                             </div>
                         </div>
                     </div>
@@ -757,53 +680,54 @@
         </div>
 
         <!-- Add Employee Modal -->
-        <div id="add-employee-modal" style="display: none;">
-            <div class="wrap">
-                <header style="margin-bottom: 20px;">
-                    <button onclick="showEmployeesManagement()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
-                    <div style="flex: 1; text-align: center;">
-                        <div class="title" style="margin: 0;">Добавить сотрудника</div>
+        <div id="add-employee-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="showEmployeesManagement()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">Добавить сотрудника</div>
                     </div>
-                    <div style="width: 40px;"></div>
+                    <div class="w-10"></div>
                 </header>
 
-                <div class="stack" style="margin-bottom: 20px;">
-                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
-                        <h3 style="font-size: 16px; line-height: 1.4;">ℹ️ Информация</h3>
-                        <p style="font-size: 16px; line-height: 1.4; color: rgba(255, 255, 255, 0.8);">Добавьте нового сотрудника в систему. После добавления он сможет авторизоваться в боте по номеру телефона.</p>
+                <div class="grid gap-2.5 mb-5">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb mb-5">
+                        <h3 class="text-base leading-relaxed font-bold">ℹ️ Информация</h3>
+                        <p class="text-base leading-relaxed text-white/80">Добавьте нового сотрудника в систему. После добавления он сможет авторизоваться в боте по номеру телефона.</p>
                     </div>
 
-                    <div class="card">
-                        <h3>Форма добавления</h3>
-                        <div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Номер телефона:</label>
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-2">Форма добавления</h3>
+                        <div class="mb-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Номер телефона:</label>
                             <input type="tel" id="add-phone" placeholder="+7XXXXXXXXXX" 
-                                   style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin-bottom: 15px;">
+                                   class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 text-[15px] font-bold">
                         </div>
 
-                        <div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Имя:</label>
+                        <div class="mb-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Имя:</label>
                             <input type="text" id="add-first-name" placeholder="Введите имя" 
-                                   style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin-bottom: 15px;">
+                                   class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 text-[15px] font-bold">
                         </div>
 
-                        <div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Фамилия:</label>
+                        <div class="mb-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Фамилия:</label>
                             <input type="text" id="add-last-name" placeholder="Введите фамилию" 
-                                   style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin-bottom: 20px;">
+                                   class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-5 text-[15px] font-bold">
                         </div>
 
-                        <div style="margin-bottom: 20px;">
-                            <label style="display: flex; align-items: center; color: var(--text); cursor: pointer;">
-                                <input type="checkbox" id="add-is-admin" style="margin-right: 10px; transform: scale(1.2);">
-                                <span style="font-weight: bold;">Права администратора</span>
+                        <div class="mb-5">
+                            <label class="flex items-center text-slate-50 cursor-pointer">
+                                <input type="checkbox" id="add-is-admin" class="mr-2.5 scale-110">
+                                <span class="font-bold">Права администратора</span>
                             </label>
                         </div>
                     </div>
                 </div>
 
-                <div class="actions">
-                    <button onclick="addEmployee()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700; background: #0d9488;">
+                <div class="grid gap-3 justify-items-center">
+                    <button onclick="addEmployee()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-teal-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90 shadow-nb">
                         <span class="dot" style="background: #10b981;"></span>
                         <span>Добавить сотрудника</span>
                     </button>
@@ -812,53 +736,54 @@
         </div>
 
         <!-- Edit Employee Modal -->
-        <div id="edit-employee-modal" style="display: none;">
-            <div class="wrap">
-                <header style="margin-bottom: 20px;">
-                    <button onclick="showEmployeesManagement()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
-                    <div style="flex: 1; text-align: center;">
-                        <div class="title" style="margin: 0;">Редактировать сотрудника</div>
+        <div id="edit-employee-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="showEmployeesManagement()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">Редактировать сотрудника</div>
                     </div>
-                    <div style="width: 40px;"></div>
+                    <div class="w-10"></div>
                 </header>
 
-                <div class="stack" style="margin-bottom: 20px;">
-                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
-                        <h3 style="font-size: 16px; line-height: 1.4;">⚠️ Внимание</h3>
-                        <p style="font-size: 16px; line-height: 1.4; color: rgba(255, 255, 255, 0.8);">Изменение данных сотрудника повлияет на его доступ к системе</p>
+                <div class="grid gap-2.5 mb-5">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb mb-5">
+                        <h3 class="text-base leading-relaxed font-bold">⚠️ Внимание</h3>
+                        <p class="text-base leading-relaxed text-white/80">Изменение данных сотрудника повлияет на его доступ к системе</p>
                     </div>
 
-                    <div class="card">
-                        <h3>Форма редактирования</h3>
-                        <div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Номер телефона:</label>
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-2">Форма редактирования</h3>
+                        <div class="mb-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Номер телефона:</label>
                             <input type="tel" id="edit-phone" readonly 
-                                   style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #6b7280; background: #6b7280; color: rgba(255,255,255,0.7); font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin-bottom: 15px;">
+                                   class="w-full p-3 rounded-nb border border-gray-500 bg-gray-500 text-white/70 mb-4 text-[15px] font-bold">
                         </div>
 
-                        <div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Имя:</label>
+                        <div class="mb-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Имя:</label>
                             <input type="text" id="edit-first-name" placeholder="Введите имя" 
-                                   style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin-bottom: 15px;">
+                                   class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 text-[15px] font-bold">
                         </div>
 
-                        <div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Фамилия:</label>
+                        <div class="mb-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Фамилия:</label>
                             <input type="text" id="edit-last-name" placeholder="Введите фамилию" 
-                                   style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin-bottom: 20px;">
+                                   class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-5 text-[15px] font-bold">
                         </div>
 
-                        <div style="margin-bottom: 20px;">
-                            <label style="display: flex; align-items: center; color: var(--text); cursor: pointer;">
-                                <input type="checkbox" id="edit-is-admin" style="margin-right: 10px; transform: scale(1.2);">
-                                <span style="font-weight: bold;">Права администратора</span>
+                        <div class="mb-5">
+                            <label class="flex items-center text-slate-50 cursor-pointer">
+                                <input type="checkbox" id="edit-is-admin" class="mr-2.5 scale-110">
+                                <span class="font-bold">Права администратора</span>
                             </label>
                         </div>
                     </div>
                 </div>
 
-                <div class="actions">
-                    <button onclick="saveEmployeeChanges()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700; background: #f59e0b;">
+                <div class="grid gap-3 justify-items-center">
+                    <button onclick="saveEmployeeChanges()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-orange-600 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90 shadow-nb">
                         <span class="dot" style="background: #fbbf24;"></span>
                         <span>Сохранить изменения</span>
                     </button>
@@ -867,55 +792,53 @@
         </div>
 
         <!-- Issues Management Modal -->
-        <div id="issues-management-modal" style="display: none;">
-            <div class="wrap">
-                <header style="margin-bottom: 20px;">
-                    <button onclick="showAdminMenuModal()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
-                    <div style="flex: 1; text-align: center;">
-                        <div class="title" style="margin: 0;">Управление обращениями</div>
+        <div id="issues-management-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="showAdminMenuModal()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">Управление обращениями</div>
                     </div>
-                    <div style="width: 40px;"></div>
+                    <div class="w-10"></div>
                 </header>
 
-                <div class="stack" style="margin-bottom: 20px;">
+                <div class="grid gap-2.5 mb-5">
                     <!-- Поиск и фильтры -->
-                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
-                        <h3 style="font-size: 16px; line-height: 1.4;">🔍 Поиск и фильтры</h3>
-                        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb mb-5">
+                        <h3 class="text-base leading-relaxed font-bold mb-4">🔍 Поиск и фильтры</h3>
+                        <div class="flex flex-col gap-2.5 mb-4">
                             <input type="text" id="issues-search" placeholder="Поиск по тексту..." 
                                    oninput="filterIssues()" 
-                                   style="width: 100%; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                          background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
-                            <div style="display: flex; gap: 10px;">
+                                   class="w-full h-[52px] px-3 rounded-nb border border-stone-400 bg-stone-400 text-white text-[15px] font-bold box-border">
+                            <div class="flex gap-2.5">
                             <select id="issues-status-filter" onchange="filterIssues()" 
-                                        style="flex: 1; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                               background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
+                                        class="flex-1 h-[52px] px-3 rounded-nb border border-stone-400 bg-stone-400 text-white text-[15px] font-bold box-border">
                                 <option value="all">Все статусы</option>
                                 <option value="open">Открытые</option>
                                 <option value="in_progress">В работе</option>
                                 <option value="closed">Закрытые</option>
                             </select>
                             <select id="issues-type-filter" onchange="filterIssues()" 
-                                        style="flex: 1; height: var(--btn-h); padding: 0 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                               background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-sizing: border-box;">
+                                        class="flex-1 h-[52px] px-3 rounded-nb border border-stone-400 bg-stone-400 text-white text-[15px] font-bold box-border">
                                 <option value="all">Все типы</option>
                                 <option value="technical">Технические</option>
                                 <option value="personal">Личные</option>
                             </select>
                             </div>
                         </div>
-                        <div id="issues-results-count" style="font-size: 12px; color: rgba(255, 255, 255, 0.6);">
+                        <div id="issues-results-count" class="text-xs text-white/60">
                             <!-- Счетчик результатов поиска -->
                         </div>
                     </div>
 
                     <!-- Список обращений -->
-                    <div class="card">
-                        <h3>📋 Список обращений</h3>
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-2">📋 Список обращений</h3>
                         <div id="issues-list">
-                            <div style="text-align: center; color: var(--muted); padding: 20px;">
-                                <div style="font-size: 16px;">📈 Загрузка списка обращений...</div>
-                                <div style="font-size: 12px; margin-top: 8px;">Получение данных из базы</div>
+                            <div class="text-center text-nb-muted p-5">
+                                <div class="text-base">📈 Загрузка списка обращений...</div>
+                                <div class="text-xs mt-2">Получение данных из базы</div>
                             </div>
                         </div>
                     </div>
@@ -924,33 +847,34 @@
         </div>
 
         <!-- Issue Dialog Modal -->
-        <div id="issue-dialog-modal" style="display: none;">
-            <div class="wrap">
-                <header style="margin-bottom: 20px;">
-                    <button onclick="closeIssueDialog()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
-                    <div style="flex: 1; text-align: center;">
-                        <div class="title" style="margin: 0;">💬 Диалог с обращением</div>
-            </div>
-                    <div style="width: 40px;"></div>
+        <div id="issue-dialog-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="closeIssueDialog()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">💬 Диалог с обращением</div>
+                    </div>
+                    <div class="w-10"></div>
                 </header>
 
-                <div class="stack" style="margin-bottom: 80px;">
-                    <div class="card" style="background: #474A51; min-height: 60vh; max-height: 70vh; overflow-y: auto;">
-                <div id="issue-dialog-content">
-                    <div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">
-                                <div style="font-size: 16px;">📈 Загрузка диалога...</div>
-                                <div style="font-size: 12px; margin-top: 8px;">Получение данных из базы</div>
+                <div class="grid gap-2.5 mb-20">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb min-h-[60vh] max-h-[70vh] overflow-y-auto">
+                        <div id="issue-dialog-content">
+                            <div class="text-center text-white/70 p-5">
+                                <div class="text-base">📈 Загрузка диалога...</div>
+                                <div class="text-xs mt-2">Получение данных из базы</div>
                             </div>
+                        </div>
                     </div>
                 </div>
-            </div>
             
-                <div style="position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <div style="display: flex; gap: 10px; max-width: 100%; margin: 0 auto;">
+                <div class="fixed bottom-0 left-0 right-0 bg-nb-bg p-4 border-t border-white/10">
+                    <div class="flex gap-2.5 max-w-full mx-auto">
                         <input type="text" id="admin-response-input" placeholder="Введите ответ..." onkeypress="handleEnterKey(event)" oninput="handleAdminTyping()"
-                               style="flex: 1; padding: 12px 15px; border: none; border-radius: var(--radius); background: #1e293b; color: white; font-size: 14px; border: 1px solid rgba(255,255,255,0.2);">
-                        <button onclick="sendAdminResponse()" class="btn" 
-                                style="background: var(--accent); color: white; border: none; padding: 12px 20px; border-radius: var(--radius); cursor: pointer; font-weight: 600; min-width: 100px;">
+                               class="flex-1 p-3 border-none rounded-nb bg-slate-800 text-white text-sm border border-white/20">
+                        <button onclick="sendAdminResponse()" 
+                                class="bg-nb-accent text-white border-none px-5 py-3 rounded-nb cursor-pointer font-semibold min-w-[100px]">
                             Отправить
                         </button>
                     </div>
@@ -959,22 +883,23 @@
         </div>
 
         <!-- Messaging Menu Modal -->
-        <div id="messaging-menu-modal" style="display: none;">
-            <div class="wrap">
-                <header style="margin-bottom: 20px;">
-                    <button onclick="showAdminMenuModal()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
-                    <div style="flex: 1; text-align: center;">
-                        <div class="title" style="margin: 0;">Сообщение сотрудникам</div>
+        <div id="messaging-menu-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="showAdminMenuModal()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">Сообщение сотрудникам</div>
                     </div>
-                    <div style="width: 40px;"></div>
+                    <div class="w-10"></div>
                 </header>
 
-                <div class="actions">
-                    <button onclick="showBroadcastMessage()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700;">
+                <div class="grid gap-3 justify-items-center">
+                    <button onclick="showBroadcastMessage()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-navy-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:bg-nb-navy-600 shadow-nb">
                         <span class="dot" style="background: #ef4444;"></span>
                         <span>Сообщение всем</span>
                     </button>
-                    <button onclick="showEmployeeMessageMenu()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700;">
+                    <button onclick="showEmployeeMessageMenu()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-navy-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:bg-nb-navy-600 shadow-nb">
                         <span class="dot" style="background: #3b82f6;"></span>
                         <span>Сообщение сотруднику</span>
                     </button>
@@ -983,64 +908,48 @@
         </div>
 
         <!-- Broadcast Message Modal -->
-        <div id="broadcast-modal" style="display: none;">
-            <div class="wrap">
-                <header style="margin-bottom: 20px;">
-                    <button onclick="showMessagingMenu()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
-                    <div style="flex: 1; text-align: center;">
-                        <div class="title" style="margin: 0;">Сообщение всем</div>
+        <div id="broadcast-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="showMessagingMenu()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">Сообщение всем</div>
                     </div>
-                    <div style="width: 40px;"></div>
+                    <div class="w-10"></div>
                 </header>
 
-                <div class="stack" style="margin-bottom: 20px;">
-                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
-                        <h3 style="font-size: 16px; line-height: 1.4;">⚠️ Внимание</h3>
-                        <p style="font-size: 16px; line-height: 1.4; color: rgba(255, 255, 255, 0.8);">Сообщение будет отправлено всем сотрудникам, зарегистрированным в системе</p>
+                <div class="grid gap-2.5 mb-5">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb mb-5">
+                        <h3 class="text-base leading-relaxed font-bold">⚠️ Внимание</h3>
+                        <p class="text-base leading-relaxed text-white/80">Сообщение будет отправлено всем сотрудникам, зарегистрированным в системе</p>
                     </div>
 
-                    <div class="card">
-                        <h3>Текст сообщения</h3>
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-2">Текст сообщения</h3>
                         <textarea id="broadcast-message" placeholder="Введите сообщение для рассылки..." 
-                                  style="width: calc(100% - 24px); height: 120px; padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; resize: vertical; margin-bottom: 15px;"></textarea>
+                                  class="w-full h-[120px] p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 resize-y text-[15px] font-bold"></textarea>
                         
-                        <div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.9); font-size: 14px; font-weight: 600;">📎 Прикрепить файл (необязательно)</label>
-                            <div style="position: relative; width: calc(100% - 24px);">
+                        <div class="mb-4">
+                            <label class="block mb-2 text-white/90 text-sm font-semibold">📎 Прикрепить файл (необязательно)</label>
+                            <div class="relative w-full">
                                 <input type="file" id="broadcast-file" accept="*/*" 
-                                       style="position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2;"
+                                       class="absolute w-full h-full opacity-0 cursor-pointer z-[2]"
                                        onchange="updateBroadcastFileInfo()">
-                                <div id="broadcast-file-button" style="
-                                    width: 100%; 
-                                    padding: 12px; 
-                                    border-radius: var(--radius); 
-                                    border: 2px dashed rgba(255, 255, 255, 0.3); 
-                                    background: rgba(255, 255, 255, 0.05); 
-                                    color: rgba(255, 255, 255, 0.7); 
-                                    font-size: 14px; 
-                                    font-weight: 600; 
-                                    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-                                    text-align: center;
-                                    cursor: pointer;
-                                    transition: all 0.2s ease;
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-                                    gap: 8px;
-                                ">
+                                <div id="broadcast-file-button" class="w-full p-3 rounded-nb border-2 border-dashed border-white/30 bg-white/5 text-white/70 text-sm font-semibold text-center cursor-pointer transition-all duration-200 flex items-center justify-center gap-2">
                                     <span>📎</span>
                                     <span id="broadcast-file-button-text">Выбрать файл</span>
                                 </div>
                             </div>
-                            <div id="broadcast-file-info" style="margin-top: 8px; font-size: 12px; color: rgba(255, 255, 255, 0.7); display: none;">
+                            <div id="broadcast-file-info" class="mt-2 text-xs text-white/70 hidden">
                                 <!-- Информация о выбранном файле -->
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="actions">
-                    <button onclick="sendBroadcastMessage()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700; background: #0d9488;">
+                <div class="grid gap-3 justify-items-center">
+                    <button onclick="sendBroadcastMessage()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-teal-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90 shadow-nb">
                         <span class="dot" style="background: #10b981;"></span>
                         <span>Отправить всем</span>
                     </button>
@@ -1049,32 +958,32 @@
         </div>
 
         <!-- Employee Message Modal -->
-        <div id="employee-message-modal" style="display: none;">
-            <div class="wrap">
-                <header style="margin-bottom: 20px;">
-                    <button onclick="showMessagingMenu()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
-                    <div style="flex: 1; text-align: center;">
-                        <div class="title" style="margin: 0;">Сообщение сотруднику</div>
+        <div id="employee-message-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="showMessagingMenu()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">Сообщение сотруднику</div>
                     </div>
-                    <div style="width: 40px;"></div>
+                    <div class="w-10"></div>
                 </header>
 
-                <div class="stack" style="margin-bottom: 20px;">
-                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
-                        <h3 style="font-size: 16px; line-height: 1.4;">👤 Выбор сотрудника</h3>
-                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <div class="grid gap-2.5 mb-5">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb mb-5">
+                        <h3 class="text-base leading-relaxed font-bold mb-4">👤 Выбор сотрудника</h3>
+                        <div class="flex gap-2.5 mb-4">
                             <input type="text" id="employee-message-search" placeholder="Поиск по имени, фамилии..." 
                                    oninput="filterEmployeesForMessage()" 
-                                   style="flex: 1; padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; 
-                                          background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                                   class="flex-1 p-3 rounded-nb border border-stone-400 bg-stone-400 text-white text-[15px] font-bold">
                         </div>
                     </div>
 
-                    <div class="card">
-                        <h3>👥 Список сотрудников</h3>
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-2">👥 Список сотрудников</h3>
                         <div id="employee-message-list">
-                            <div style="text-align: center; color: var(--muted); padding: 20px;">
-                                <div style="font-size: 16px;">📈 Загрузка списка сотрудников...</div>
+                            <div class="text-center text-nb-muted p-5">
+                                <div class="text-base">📈 Загрузка списка сотрудников...</div>
                             </div>
                         </div>
                     </div>
@@ -1083,64 +992,48 @@
         </div>
 
         <!-- Send Message to Employee Modal -->
-        <div id="send-employee-message-modal" style="display: none;">
-            <div class="wrap">
-                <header style="margin-bottom: 20px;">
-                    <button onclick="showEmployeeMessageMenu()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
-                    <div style="flex: 1; text-align: center;">
-                        <div class="title" style="margin: 0;" id="employee-message-title">Сообщение сотруднику</div>
+        <div id="send-employee-message-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="showEmployeeMessageMenu()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0" id="employee-message-title">Сообщение сотруднику</div>
                     </div>
-                    <div style="width: 40px;"></div>
+                    <div class="w-10"></div>
                 </header>
 
-                <div class="stack" style="margin-bottom: 20px;">
-                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
-                        <h3 style="font-size: 16px; line-height: 1.4;">💬 Получатель</h3>
-                        <p style="font-size: 16px; line-height: 1.4; color: rgba(255, 255, 255, 0.8);" id="selected-employee-info">Выбранный сотрудник</p>
+                <div class="grid gap-2.5 mb-5">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb mb-5">
+                        <h3 class="text-base leading-relaxed font-bold">💬 Получатель</h3>
+                        <p class="text-base leading-relaxed text-white/80" id="selected-employee-info">Выбранный сотрудник</p>
                     </div>
 
-                    <div class="card">
-                        <h3>Текст сообщения</h3>
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-2">Текст сообщения</h3>
                         <textarea id="employee-message-text" placeholder="Введите сообщение для сотрудника..." 
-                                  style="width: calc(100% - 24px); height: 120px; padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; resize: vertical; margin-bottom: 15px;"></textarea>
+                                  class="w-full h-[120px] p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 resize-y text-[15px] font-bold"></textarea>
                         
-                        <div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.9); font-size: 14px; font-weight: 600;">📎 Прикрепить файл (необязательно)</label>
-                            <div style="position: relative; width: calc(100% - 24px);">
+                        <div class="mb-4">
+                            <label class="block mb-2 text-white/90 text-sm font-semibold">📎 Прикрепить файл (необязательно)</label>
+                            <div class="relative w-full">
                                 <input type="file" id="employee-message-file" accept="*/*" 
-                                       style="position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2;"
+                                       class="absolute w-full h-full opacity-0 cursor-pointer z-[2]"
                                        onchange="updateEmployeeFileInfo()">
-                                <div id="employee-file-button" style="
-                                    width: 100%; 
-                                    padding: 12px; 
-                                    border-radius: var(--radius); 
-                                    border: 2px dashed rgba(255, 255, 255, 0.3); 
-                                    background: rgba(255, 255, 255, 0.05); 
-                                    color: rgba(255, 255, 255, 0.7); 
-                                    font-size: 14px; 
-                                    font-weight: 600; 
-                                    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-                                    text-align: center;
-                                    cursor: pointer;
-                                    transition: all 0.2s ease;
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-                                    gap: 8px;
-                                ">
+                                <div id="employee-file-button" class="w-full p-3 rounded-nb border-2 border-dashed border-white/30 bg-white/5 text-white/70 text-sm font-semibold text-center cursor-pointer transition-all duration-200 flex items-center justify-center gap-2">
                                     <span>📎</span>
                                     <span id="file-button-text">Выбрать файл</span>
                                 </div>
                             </div>
-                            <div id="employee-file-info" style="margin-top: 8px; font-size: 12px; color: rgba(255, 255, 255, 0.7); display: none;">
+                            <div id="employee-file-info" class="mt-2 text-xs text-white/70 hidden">
                                 <!-- Информация о выбранном файле -->
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="actions">
-                    <button onclick="sendEmployeeMessage()" class="btn" style="height: var(--btn-h); font-size: 15px; font-weight: 700; background: #0d9488;">
+                <div class="grid gap-3 justify-items-center">
+                    <button onclick="sendEmployeeMessage()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-teal-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90 shadow-nb">
                         <span class="dot" style="background: #10b981;"></span>
                         <span>Отправить сообщение</span>
                     </button>
@@ -1446,15 +1339,15 @@
                     </div>
                     <div style="display: flex; gap: 6px; width: 100%;">
                         <button onclick="toggleEmployeeBlock('${emp.phone}', ${!emp.is_blocked})" 
-                                class="btn" style="padding: 6px 8px; background: ${emp.is_blocked ? '#10b981' : '#ef4444'}; border: none; border-radius: var(--radius); color: white; font-size: 11px; cursor: pointer; transition: all 0.2s; flex: 1; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                class="px-2 py-1.5 border-none rounded-nb text-white text-[11px] cursor-pointer transition-all duration-200 flex-1 font-semibold min-w-0 overflow-hidden text-ellipsis whitespace-nowrap ${emp.is_blocked ? 'bg-green-600' : 'bg-red-600'}">
                             ${emp.is_blocked ? '✅' : '🔒'}
                         </button>
                         <button onclick="editEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}', ${emp.is_admin})" 
-                                class="btn" style="padding: 6px 8px; background: #f59e0b; border: none; border-radius: var(--radius); color: white; font-size: 11px; cursor: pointer; transition: all 0.2s; flex: 1; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                class="px-2 py-1.5 bg-orange-600 border-none rounded-nb text-white text-[11px] cursor-pointer transition-all duration-200 flex-1 font-semibold min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
                             ✏️
                         </button>
                         <button onclick="deleteEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}')" 
-                                class="btn" style="padding: 6px 8px; background: #ef4444; border: none; border-radius: var(--radius); color: white; font-size: 11px; cursor: pointer; transition: all 0.2s; flex: 1; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                class="px-2 py-1.5 bg-red-600 border-none rounded-nb text-white text-[11px] cursor-pointer transition-all duration-200 flex-1 font-semibold min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
                             🗑️
                         </button>
                     </div>
