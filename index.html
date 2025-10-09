@@ -7,12 +7,47 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v1.12.33-20250918">
-    <meta name="version" content="maria-bot-v1.12.33">
+    <meta name="cache-bust" content="maria-bot-v1.14.0-20251009">
+    <meta name="version" content="maria-bot-v1.14.0">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Кастомная конфигурация Tailwind с вашими цветами
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nb-bg': '#eff6ff',
+                        'nb-ink': '#0f172a',
+                        'nb-muted': '#64748b',
+                        'nb-graphite': '#474A51',
+                        'nb-navy': {
+                            600: '#274b7a',
+                            700: '#1e3a5f',
+                        },
+                        'nb-accent': '#4338ca',
+                        'nb-danger': '#ef4444',
+                    },
+                    borderRadius: {
+                        'nb': '14px',
+                    },
+                    boxShadow: {
+                        'nb': '0 6px 18px rgba(2, 6, 23, .12)',
+                        'nb-strong': '0 10px 26px rgba(2, 6, 23, .18)',
+                    },
+                    spacing: {
+                        'nb-pad': '16px',
+                    }
+                }
+            }
+        }
+    </script>
+    
     <script>
         // Принудительная очистка всех видов кеша
         (function() {
@@ -50,246 +85,29 @@
         })();
     </script>
     <style>
-        :root {
-            --bg: #eff6ff;
-            --ink: #0f172a;
-            --muted: #64748b;
-            --graphite-700: #474A51;
-            --navy-700: #1e3a5f;
-            --navy-600: #274b7a;
-            --accent: #4338ca;
-            --danger: #ef4444;
-
-            --fs-base: 16px;
-            --btn-h: 52px;
-            --radius: 14px;
-            --pad: 16px;
-            --dot: 8px;
-
-            --shadow: 0 6px 18px rgba(2, 6, 23, .12);
-            --shadow-strong: 0 10px 26px rgba(2, 6, 23, .18);
-        }
- 
-        body {
-            margin: 0; 
-            font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; 
-            background: #eff6ff; 
-            color: var(--ink); 
-            font-size: var(--fs-base); 
-            min-height: 100vh;
-        }
-  
-        .wrap { 
-            max-width: 440px; 
-            margin: 0 auto;
-            padding: var(--pad) var(--pad) var(--pad); 
-            box-sizing: border-box; 
-            min-height: 100vh;
-        }
-
-        header { 
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
-            margin-bottom: 8px; 
-        }
-
-        .avatar {
-            width: 44px; 
-            height: 44px; 
-            border-radius: 50%;
-            background: #d1d5db; 
-            overflow: hidden; 
-        }
-
-        .title { 
-            font-weight: 700; 
-            font-size: 17px; 
-        }
-
-        .subtitle { 
-            font-size: 12px; 
-            color: var(--muted); 
-        }
-
-        .stack { 
-            display: grid; 
-            gap: 10px; 
-            margin: 8px 0 16px; 
-        }
-
-        .card { 
-            background: var(--graphite-700); 
-            color: #f1f5f9; 
-            border-radius: var(--radius); 
-            padding: 12px 14px; 
-            box-shadow: var(--shadow); 
-        }
-
-        .card h3 { 
-            margin: 0 0 4px; 
-            font-size: 14px; 
-            font-weight: 800; 
-            letter-spacing: .2px; 
-        }
-
-        .card p { 
-            margin: 0; 
-            font-size: 13px; 
-            color: #cbd5e1; 
-        }
-
-        .actions { 
-            display: grid; 
-            gap: 12px; 
-        }
-
-        .btn { 
-            position: relative; 
-            height: var(--btn-h); 
-            display: inline-flex; 
-            align-items: center;
-            justify-content: center; 
-            gap: 8px;
-            border: 0; 
-            border-radius: var(--radius); 
-            background: var(--navy-700); 
-            color: #eef2ff; 
-            font-size: 15px; 
-            font-weight: 700; 
-            box-shadow: var(--shadow); 
-            cursor: pointer; 
-            padding: 0 16px; 
-            text-align: center;
-            min-width: 280px;
-            max-width: 350px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .btn:after { 
-            content:""; 
-            position:absolute; 
-            inset:0; 
-            border-radius: inherit; 
-            pointer-events:none;
-            background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,0) 40%); 
-        }
-
-        .btn:hover { 
-            background: var(--navy-600); 
-            box-shadow: var(--shadow-strong); 
-        }
-
-        .btn:active { 
-            transform: translateY(1px); 
-        }
-
+        /* Минимальные стили для элементов, не покрытых Tailwind */
+        
+        /* Цветные точки-индикаторы на кнопках */
         .dot { 
-            display:inline-block; 
-            width: var(--dot); 
-            height: var(--dot); 
+            display: inline-block; 
+            width: 8px; 
+            height: 8px; 
             border-radius: 50%;
         }
 
-        .dot-holiday{ background:#f59e0b; }
-        .dot-mode{ background:#10b981; }
-        .dot-absence{ background:#ef4444; }
-        .dot-sick{ background:#8b5cf6; }
-        .dot-crocotime{ background:#eab308; }
-
-        .btn-accent { 
-            background: var(--accent); 
+        /* Принудительный цвет для всех полей ввода */
+        input[type="text"], 
+        input[type="date"], 
+        input[type="time"], 
+        textarea,
+        #my-response-input, 
+        #admin-response-input, 
+        #chat-message-input {
+            color: white !important;
+            background: #1e293b !important;
         }
 
-        /* SOS кнопка в общем стиле - как все остальные */
-
-        .footer { 
-            text-align:center; 
-            margin-top: 10px; 
-            color:#94a3b8; 
-            font-size:12px; 
-        }
-
-        .compact .wrap { 
-            padding: var(--pad) var(--pad) 96px; 
-        }
-
-        .compact .card { 
-            padding: 12px 14px; 
-        }
-
-        .compact .btn { 
-            height: var(--btn-h); 
-            font-size: 15px; 
-        }
-
-        .compact .title { 
-            font-size: 17px; 
-        }
-
-        .compact header { 
-            gap: 12px; 
-        }
-
-        .compact .avatar { 
-            width: 44px; 
-            height: 44px; 
-        }
-
-        /* Modal styles for back buttons */
-        .back-button {
-            background: none;
-            border: none;
-            color: var(--ink);
-            font-size: 24px;
-            padding: 8px;
-            cursor: pointer;
-            border-radius: var(--radius);
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-        }
-
-        .back-button:hover {
-            background: rgba(0, 0, 0, 0.05);
-        }
-
-        .back-button:active {
-            background: rgba(0, 0, 0, 0.1);
-            transform: scale(0.95);
-        }
-
-        .modal-header {
-            display: flex;
-            align-items: center;
-            padding: 16px;
-            background: var(--bg);
-            border-bottom: 1px solid #e5e7eb;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .modal-title {
-            flex: 1;
-            text-align: center;
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--ink);
-            margin: 0;
-        }
-
-        .modal-content {
-            background: var(--bg);
-            min-height: 100vh;
-            padding-bottom: 100px;
-        }
-
-        /* Главное меню - голубой фон на весь экран */
+        /* Главное приложение - фиксированное позиционирование */
         #app {
             background: #eff6ff;
             min-height: 100vh;
@@ -300,78 +118,16 @@
             bottom: 0;
             overflow-y: auto;
         }
-
-        /* Модальные окна - голубой фон и фиксированная структура */
-        #work-mode-modal,
-        #absence-modal,
-        #sick-leave-modal,
-        #admin-menu-modal,
-        #sos-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: #eff6ff;
-            z-index: 1000;
-            overflow-y: auto;
-        }
-
-        /* Все модальные окна имеют одинаковую структуру */
-        #work-mode-modal .wrap,
-        #absence-modal .wrap,
-        #sick-leave-modal .wrap,
-        #admin-menu-modal .wrap,
-        #sos-modal .wrap {
-            max-width: 440px;
-            margin: 0 auto;
-            padding: var(--pad) var(--pad) var(--pad);
-            box-sizing: border-box;
-            min-height: 100vh;
-        }
-
-        /* Все кнопки одинаковой ширины - уже в основном правиле .btn */
-        
-        /* Контейнеры кнопок - центрированные */
-        .actions {
-            display: grid;
-            gap: 12px;
-            justify-items: center;
-        }
-        
-        /* Стандартный отступ для кнопок анонимности в SOS */
-        #sos-anonymity-options.actions {
-            gap: 12px !important;
-        }
-        
-        /* Дополнительное правило для кнопок анонимности */
-        #sos-anonymity-options {
-            display: grid !important;
-            gap: 12px !important;
-            justify-items: center !important;
-        }
-        
-        /* ПРИНУДИТЕЛЬНО УСТАНАВЛИВАЕМ ЦВЕТ ТЕКСТА ДЛЯ ВСЕХ ПОЛЕЙ ВВОДА */
-        input[type="text"], input[type="date"], input[type="time"], textarea {
-            color: white !important;
-            background: #1e293b !important;
-        }
-        
-        /* Специально для полей ввода в чатах */
-        #my-response-input, #admin-response-input, #chat-message-input {
-            color: white !important;
-            background: #1e293b !important;
-        }
     </style>
 </head>
-<body>
+<body class="m-0 bg-nb-bg text-nb-ink min-h-screen font-sans">
     <!-- Индикатор версии для проверки -->
-    <div style="position: fixed; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 8px; border-radius: 8px; font-size: 10px; z-index: 9999;">
-        Maria Bot v1.12.33
+    <div class="fixed top-2.5 right-2.5 bg-nb-accent text-white px-2 py-1 rounded-lg text-[10px] z-[9999]">
+        Maria Bot v1.14.0
     </div>
     
      
-    <div class="wrap">
+    <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
         <div id="loading" class="loading">
             <div class="spinner"></div>
             <p>Загружаем ваш профиль...</p>
@@ -382,180 +138,214 @@
         </div>
 
         <div id="app" style="display: none;">
-            <header>
-                <div class="avatar" id="avatar"></div>
+            <!-- Header -->
+            <header class="flex items-center gap-3 mb-2">
+                <div class="w-11 h-11 rounded-full bg-gray-300 overflow-hidden" id="avatar"></div>
                 <div>
-                    <div class="title">Привет, <span id="name">Aleksei</span></div>
-                    <div class="subtitle">Пользователь</div>
+                    <div class="font-bold text-[17px]">Привет, <span id="name">Aleksei</span></div>
+                    <div class="text-xs text-nb-muted">Пользователь</div>
             </div>
             </header>
 
-            <div class="stack">
-                <div class="card" style="background: #065f46;"><h3>Сегодня</h3><p id="today-status">Удалённая работа</p></div>
-                <div class="card" style="background: #ea580c;"><h3>Следующий отпуск</h3><p id="next-vacation">Отпуск не запланирован</p></div>
-                <div class="card" style="background: #3730a3;"><h3>В этот день</h3><p id="today-message">Добро пожаловать в Maria Bot!</p></div>
+            <!-- Cards Stack -->
+            <div class="grid gap-2.5 my-2 mb-4">
+                <div class="bg-emerald-800 text-slate-50 rounded-nb p-3 shadow-nb">
+                    <h3 class="text-sm font-extrabold tracking-wide mb-1">Сегодня</h3>
+                    <p id="today-status" class="text-[13px] text-slate-200">Удалённая работа</p>
                 </div>
+                <div class="bg-orange-600 text-slate-50 rounded-nb p-3 shadow-nb">
+                    <h3 class="text-sm font-extrabold tracking-wide mb-1">Следующий отпуск</h3>
+                    <p id="next-vacation" class="text-[13px] text-slate-200">Отпуск не запланирован</p>
+                </div>
+                <div class="bg-indigo-800 text-slate-50 rounded-nb p-3 shadow-nb">
+                    <h3 class="text-sm font-extrabold tracking-wide mb-1">В этот день</h3>
+                    <p id="today-message" class="text-[13px] text-slate-200">Добро пожаловать в Maria Bot!</p>
+                </div>
+            </div>
 
-            <div class="actions">
-                <button class="btn" onclick="handleAction('vacation')"><span class="dot dot-holiday"></span><span>Мой отпуск</span></button>
-                <button class="btn" onclick="handleAction('work_mode')"><span class="dot dot-mode"></span><span>Режим работы</span></button>
-                <button class="btn" onclick="handleAction('absence')"><span class="dot dot-absence"></span><span>Отсутствие</span></button>
-                <button class="btn" onclick="handleAction('sick_leave')"><span class="dot dot-sick"></span><span>Больничный</span></button>
-                <button class="btn" onclick="handleAction('crocotime')"><span class="dot dot-crocotime"></span><span>Мой Crocotime</span></button>
-                <button class="btn" onclick="handleAction('sos')"><span class="dot dot-absence"></span><span>Нужна помощь</span></button>
-                <button class="btn btn-accent" id="admin-btn" onclick="handleAction('admin')" style="display: none;">Меню администратора</button>
-                    </div>
+            <!-- Action Buttons -->
+            <div class="grid gap-3 justify-items-center">
+                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90" onclick="handleAction('vacation')">
+                    <span class="dot dot-holiday"></span>
+                    <span>Мой отпуск</span>
+                </button>
+                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90" onclick="handleAction('work_mode')">
+                    <span class="dot dot-mode"></span>
+                    <span>Режим работы</span>
+                </button>
+                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90" onclick="handleAction('absence')">
+                    <span class="dot dot-absence"></span>
+                    <span>Отсутствие</span>
+                </button>
+                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90" onclick="handleAction('sick_leave')">
+                    <span class="dot dot-sick"></span>
+                    <span>Больничный</span>
+                </button>
+                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90" onclick="handleAction('crocotime')">
+                    <span class="dot dot-crocotime"></span>
+                    <span>Мой Crocotime</span>
+                </button>
+                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90" onclick="handleAction('sos')">
+                    <span class="dot dot-absence"></span>
+                    <span>Нужна помощь</span>
+                </button>
+                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90" id="admin-btn" onclick="handleAction('admin')" style="display: none;">
+                    Меню администратора
+                </button>
+            </div>
             <div class="footer">@NBtender_bot</div>
         </div>
 
         <!-- Work Mode Modal -->
-        <div id="work-mode-modal" style="display: none;">
-            <div class="wrap">
-                <header style="margin-bottom: 20px;">
-                    <button onclick="showMainApp()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
-                    <div style="flex: 1; text-align: center;">
-                        <div class="title" style="margin: 0;">Режим работы</div>
-            </div>
-                    <div style="width: 40px;"></div>
+        <div id="work-mode-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="showMainApp()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">Режим работы</div>
+                    </div>
+                    <div class="w-10"></div>
                 </header>
 
-                <div class="stack" style="margin-bottom: 20px;">
-                    <div class="card">
-                        <h3>Выбери режим работы</h3>
-                        <p>Установи твой текущий режим работы</p>
+                <div class="grid gap-2.5 mb-5">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Выбери режим работы</h3>
+                        <p class="text-[13px] text-slate-200">Установи твой текущий режим работы</p>
                     </div>
                 </div>
 
-                <div id="work-modes" class="actions">
+                <div id="work-modes" class="grid gap-3 justify-items-center">
                     <!-- Режимы работы будут загружены динамически -->
                 </div>
 
-                <div id="period-section" class="stack" style="display: none; margin-top: 20px;">
-                    <div class="card">
-                        <h3>Выбери период</h3>
-                        <p>Укажи период действия режима</p>
+                <div id="period-section" class="grid gap-2.5 mt-5" style="display: none;">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Выбери период</h3>
+                        <p class="text-[13px] text-slate-200">Укажи период действия режима</p>
                     </div>
                 </div>
 
-                <div id="work-periods" class="actions" style="display: none;">
+                <div id="work-periods" class="grid gap-3 justify-items-center" style="display: none;">
                     <!-- Периоды будут загружены динамически -->
                 </div>
 
-                <div id="custom-period" class="stack" style="display: none; margin-top: 20px;">
-                    <div class="card">
-                        <h3>Укажи период</h3>
-                        <div style="margin-top: 15px;">
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Дата начала:</label>
-                            <input type="date" id="start-date" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 15px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                <div id="custom-period" class="grid gap-2.5 mt-5" style="display: none;">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Укажи период</h3>
+                        <div class="mt-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Дата начала:</label>
+                            <input type="date" id="start-date" class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 text-[15px] font-bold">
                             
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Дата окончания:</label>
-                            <input type="date" id="end-date" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 20px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Дата окончания:</label>
+                            <input type="date" id="end-date" class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-5 text-[15px] font-bold">
                         </div>
                     </div>
-                    <button onclick="submitWorkMode()" class="btn" style="background: #0d9488; width: 100%;">
+                    <button onclick="submitWorkMode()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-teal-600 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                         <span class="dot" style="background: #10b981;"></span>
                         <span>Подтвердить</span>
                     </button>
                 </div>
 
-                <div id="confirmation-section" class="stack" style="display: none; margin-top: 20px;">
-                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
-                        <h3>Подтверждение</h3>
-                        <p id="confirmation-text" style="font-size: 16px; line-height: 1.4;"><!-- Текст подтверждения --></p>
-                        </div>
-                    <div class="actions">
-                        <button onclick="confirmWorkMode()" class="btn" style="background: #0d9488;">
+                <div id="confirmation-section" class="grid gap-2.5 mt-5" style="display: none;">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb mb-5">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Подтверждение</h3>
+                        <p id="confirmation-text" class="text-base leading-relaxed text-slate-200"><!-- Текст подтверждения --></p>
+                    </div>
+                    <div class="grid gap-3 justify-items-center">
+                        <button onclick="confirmWorkMode()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-teal-600 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #10b981;"></span>
                             <span>Подтвердить</span>
-                            </button>
-                        <button onclick="showMainApp()" class="btn" style="background: #7f1d1d;">
+                        </button>
+                        <button onclick="showMainApp()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-red-900 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #ef4444;"></span>
                             <span>Отменить</span>
-                            </button>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Absence Modal -->
-        <div id="absence-modal" style="display: none;">
-            <div class="wrap">
-                <header style="margin-bottom: 20px;">
-                    <button onclick="showMainApp()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
-                    <div style="flex: 1; text-align: center;">
-                        <div class="title" style="margin: 0;">Отсутствие</div>
+        <div id="absence-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="showMainApp()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">Отсутствие</div>
             </div>
-                    <div style="width: 40px;"></div>
+                    <div class="w-10"></div>
                 </header>
 
-                <div class="stack" style="margin-bottom: 20px;">
-                    <div class="card" style="background: var(--danger); color: white;">
-                        <h3>⚠️ Важно!</h3>
-                        <p><strong>СНАЧАЛА СОГЛАСУЙ С РУКОВОДИТЕЛЕМ, ЧТОБЫ ОН ЗНАЛ, ЧТО ТЫ ОТСУТСТВУЕШЬ!</strong></p>
+                <div class="grid gap-2.5 mb-5">
+                    <div class="bg-nb-danger text-white rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">⚠️ Важно!</h3>
+                        <p class="text-[13px]"><strong>СНАЧАЛА СОГЛАСУЙ С РУКОВОДИТЕЛЕМ, ЧТОБЫ ОН ЗНАЛ, ЧТО ТЫ ОТСУТСТВУЕШЬ!</strong></p>
                 </div>
-                    <div class="card" id="absence-date-section">
-                        <h3>Выберите дату</h3>
-                        <p>Укажите дату вашего отсутствия</p>
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb" id="absence-date-section">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Выберите дату</h3>
+                        <p class="text-[13px] text-slate-200">Укажите дату вашего отсутствия</p>
                     </div>
                 </div>
 
-                <div id="absence-dates" class="actions">
+                <div id="absence-dates" class="grid gap-3 justify-items-center">
                     <!-- Даты будут загружены динамически -->
                 </div>
 
-                <div id="absence-time-section" class="stack" style="display: none; margin-top: 20px;">
-                    <div class="card">
-                        <h3>Выберите время</h3>
-                        <p>Укажите время вашего отсутствия</p>
+                <div id="absence-time-section" class="grid gap-2.5 mt-5" style="display: none;">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Выберите время</h3>
+                        <p class="text-[13px] text-slate-200">Укажите время вашего отсутствия</p>
                     </div>
                 </div>
 
-                <div id="absence-times" class="actions" style="display: none;">
+                <div id="absence-times" class="grid gap-3 justify-items-center" style="display: none;">
                     <!-- Времена будут загружены динамически -->
                 </div>
 
-                <div id="absence-custom-date" class="stack" style="display: none; margin-top: 20px;">
-                    <div class="card">
-                        <h3>Укажите дату</h3>
-                        <div style="margin-top: 15px;">
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Дата отсутствия:</label>
-                            <input type="date" id="absence-date" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 20px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                <div id="absence-custom-date" class="grid gap-2.5 mt-5" style="display: none;">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Укажите дату</h3>
+                        <div class="mt-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Дата отсутствия:</label>
+                            <input type="date" id="absence-date" class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-5 text-[15px] font-bold">
                         </div>
                     </div>
-                    <button onclick="selectAbsenceCustomDate()" class="btn" style="background: #0d9488; width: 100%;">
+                    <button onclick="selectAbsenceCustomDate()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-teal-600 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                         <span class="dot" style="background: #10b981;"></span>
                         <span>Подтвердить</span>
                     </button>
                 </div>
 
-                <div id="absence-custom-time" class="stack" style="display: none; margin-top: 20px;">
-                    <div class="card">
-                        <h3>Укажите время</h3>
-                        <div style="margin-top: 15px;">
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Время начала:</label>
-                            <input type="time" id="absence-start-time" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 15px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                <div id="absence-custom-time" class="grid gap-2.5 mt-5" style="display: none;">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Укажите время</h3>
+                        <div class="mt-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Время начала:</label>
+                            <input type="time" id="absence-start-time" class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 text-[15px] font-bold">
                             
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Время окончания:</label>
-                            <input type="time" id="absence-end-time" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 20px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Время окончания:</label>
+                            <input type="time" id="absence-end-time" class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-5 text-[15px] font-bold">
                         </div>
                     </div>
-                    <button onclick="submitAbsence()" class="btn" style="background: #0d9488; width: 100%;">
+                    <button onclick="submitAbsence()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-teal-600 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                         <span class="dot" style="background: #10b981;"></span>
                         <span>Подтвердить</span>
                     </button>
                 </div>
 
-                <div id="absence-confirmation-section" class="stack" style="display: none; margin-top: 20px;">
-                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
-                        <h3>Подтверждение</h3>
-                        <p id="absence-confirmation-text" style="font-size: 16px; line-height: 1.4;"><!-- Текст подтверждения --></p>
+                <div id="absence-confirmation-section" class="grid gap-2.5 mt-5" style="display: none;">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb mb-5">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Подтверждение</h3>
+                        <p id="absence-confirmation-text" class="text-base leading-relaxed text-slate-200"><!-- Текст подтверждения --></p>
                         </div>
-                    <div class="actions">
-                        <button onclick="confirmAbsence()" class="btn" style="background: #0d9488;">
+                    <div class="grid gap-3 justify-items-center">
+                        <button onclick="confirmAbsence()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-teal-600 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #10b981;"></span>
                             <span>Подтвердить</span>
                             </button>
-                        <button onclick="showMainApp()" class="btn" style="background: #7f1d1d;">
+                        <button onclick="showMainApp()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-red-900 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #ef4444;"></span>
                             <span>Отменить</span>
                             </button>
@@ -565,99 +355,100 @@
         </div>
 
         <!-- SOS Modal -->
-        <div id="sos-modal" style="display: none;">
-            <div class="wrap">
-                <header style="margin-bottom: 20px;">
-                    <button onclick="showMainApp()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
-                    <div style="flex: 1; text-align: center;">
-                        <div class="title" style="margin: 0;">Нужна помощь</div>
+        <div id="sos-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="showMainApp()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">Нужна помощь</div>
                     </div>
-                    <div style="width: 40px;"></div>
+                    <div class="w-10"></div>
                 </header>
 
-                <div class="stack" style="margin-bottom: 20px;">
-                    <div class="card">
-                        <h3>Выбери тип проблемы</h3>
-                        <p>Укажи, с чем связана твоя проблема</p>
+                <div class="grid gap-2.5 mb-5">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Выбери тип проблемы</h3>
+                        <p class="text-[13px] text-slate-200">Укажи, с чем связана твоя проблема</p>
                     </div>
                 </div>
 
-                <div id="sos-issue-types" class="actions">
+                <div id="sos-issue-types" class="grid gap-3 justify-items-center">
                     <!-- Типы проблем будут загружены динамически -->
                 </div>
 
                 <!-- Кнопка "Мои обращения" -->
-                <div class="actions" style="margin-top: 20px;">
-                    <button onclick="showSosMenuModal()" class="btn" style="background: #667eea;">
+                <div class="grid gap-3 justify-items-center mt-5">
+                    <button onclick="showSosMenuModal()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-indigo-600 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                         <span class="dot" style="background: #764ba2;"></span>
                         <span>Мои обращения</span>
                     </button>
                 </div>
 
-                <div id="sos-anonymity-section" class="stack" style="display: none; margin-top: 20px;">
-                    <div class="card">
-                        <h3>Как ты хочешь обратиться?</h3>
-                        <p>Выбери способ обращения</p>
+                <div id="sos-anonymity-section" class="grid gap-2.5 mt-5" style="display: none;">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Как ты хочешь обратиться?</h3>
+                        <p class="text-[13px] text-slate-200">Выбери способ обращения</p>
                     </div>
                 </div>
 
-                <div id="sos-anonymity-options" class="actions" style="display: none; margin-top: 20px;">
+                <div id="sos-anonymity-options" class="grid gap-3 justify-items-center mt-5" style="display: none;">
                     <!-- Опции анонимности будут загружены динамически -->
                 </div>
 
-                <div id="sos-pseudonym-section" class="stack" style="display: none; margin-top: 20px;">
-                    <div class="card">
-                        <h3>Укажи псевдоним</h3>
-                        <div style="margin-top: 15px;">
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Псевдоним:</label>
-                            <input type="text" id="sos-pseudonym" placeholder="Введи псевдоним" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 15px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                <div id="sos-pseudonym-section" class="grid gap-2.5 mt-5" style="display: none;">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Укажи псевдоним</h3>
+                        <div class="mt-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Псевдоним:</label>
+                            <input type="text" id="sos-pseudonym" placeholder="Введи псевдоним" class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 text-[15px] font-bold">
                         </div>
                     </div>
                     
-                    <div class="actions">
-                        <button onclick="selectSosPseudonym()" class="btn" style="background: #0d9488;">
+                    <div class="grid gap-3 justify-items-center">
+                        <button onclick="selectSosPseudonym()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-teal-600 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #10b981;"></span>
                             <span>Продолжить</span>
                         </button>
-                        <button onclick="showMainApp()" class="btn" style="background: #7f1d1d;">
+                        <button onclick="showMainApp()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-red-900 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #ef4444;"></span>
                             <span>Отменить</span>
                         </button>
                     </div>
                 </div>
 
-                <div id="sos-description-section" class="stack" style="display: none; margin-top: 20px;">
-                    <div class="card">
-                        <h3>Опиши проблему</h3>
-                        <div style="margin-top: 15px;">
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Описание проблемы:</label>
-                            <textarea id="sos-description" placeholder="Подробно опиши твою проблему (минимум 10 символов)" style="width: calc(100% - 24px); height: 120px; padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 15px; resize: vertical; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;"></textarea>
+                <div id="sos-description-section" class="grid gap-2.5 mt-5" style="display: none;">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Опиши проблему</h3>
+                        <div class="mt-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Описание проблемы:</label>
+                            <textarea id="sos-description" placeholder="Подробно опиши твою проблему (минимум 10 символов)" class="w-full h-[120px] p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 resize-y text-[15px] font-bold"></textarea>
                         </div>
                     </div>
                     
-                    <div class="actions">
-                        <button onclick="submitSos()" class="btn" style="background: #0d9488;">
+                    <div class="grid gap-3 justify-items-center">
+                        <button onclick="submitSos()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-teal-600 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #10b981;"></span>
                             <span>Подтвердить</span>
                         </button>
-                        <button onclick="showMainApp()" class="btn" style="background: #7f1d1d;">
+                        <button onclick="showMainApp()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-red-900 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #ef4444;"></span>
                             <span>Отменить</span>
                         </button>
                     </div>
                 </div>
 
-                <div id="sos-confirmation-section" class="stack" style="display: none; margin-top: 20px;">
-                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
-                        <h3>Подтверждение</h3>
-                        <p id="sos-confirmation-text" style="font-size: 16px; line-height: 1.4;"><!-- Текст подтверждения --></p>
+                <div id="sos-confirmation-section" class="grid gap-2.5 mt-5" style="display: none;">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb mb-5">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Подтверждение</h3>
+                        <p id="sos-confirmation-text" class="text-base leading-relaxed text-slate-200"><!-- Текст подтверждения --></p>
                     </div>
-                    <div class="actions">
-                        <button onclick="confirmSos()" class="btn" style="background: #0d9488;">
+                    <div class="grid gap-3 justify-items-center">
+                        <button onclick="confirmSos()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-teal-600 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #10b981;"></span>
                             <span>Отправить</span>
                         </button>
-                        <button onclick="showMainApp()" class="btn" style="background: #7f1d1d;">
+                        <button onclick="showMainApp()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-red-900 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #ef4444;"></span>
                             <span>Отменить</span>
                         </button>
@@ -667,70 +458,71 @@
         </div>
 
         <!-- Sick Leave Modal -->
-        <div id="sick-leave-modal" style="display: none;">
-            <div class="wrap">
-                <header style="margin-bottom: 20px;">
-                    <button onclick="showMainApp()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
-                    <div style="flex: 1; text-align: center;">
-                        <div class="title" style="margin: 0;">Больничный лист</div>
+        <div id="sick-leave-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="showMainApp()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">Больничный лист</div>
                     </div>
-                    <div style="width: 40px;"></div>
+                    <div class="w-10"></div>
                 </header>
 
-                <div class="stack" style="margin-bottom: 20px;">
-                    <div class="card" style="background: #8b5cf6; color: white;">
-                        <h3>Мне очень жаль, что ты заболел(а)</h3>
-                        <p>Давай внесем данные по больничному листу (ЭЛН)</p>
+                <div class="grid gap-2.5 mb-5">
+                    <div class="bg-violet-600 text-white rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Мне очень жаль, что ты заболел(а)</h3>
+                        <p class="text-[13px]">Давай внесем данные по больничному листу (ЭЛН)</p>
                     </div>
 
-                    <div class="card">
-                        <h3>Выбери тип больничного</h3>
-                        <p>Укажи тип твоего больничного листа</p>
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Выбери тип больничного</h3>
+                        <p class="text-[13px] text-slate-200">Укажи тип твоего больничного листа</p>
                     </div>
                 </div>
 
-                <div id="sick-leave-types" class="actions">
+                <div id="sick-leave-types" class="grid gap-3 justify-items-center">
                     <!-- Типы больничного будут загружены динамически -->
                 </div>
 
-                <div id="sick-leave-form-section" class="stack" style="display: none; margin-top: 20px;">
-                    <div class="card">
-                        <h3>Данные больничного</h3>
-                        <div style="margin-top: 15px;">
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Номер ЭЛН:</label>
-                            <input type="text" id="sick-leave-number" placeholder="Введите номер электронного листка нетрудоспособности" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 15px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                <div id="sick-leave-form-section" class="grid gap-2.5 mt-5" style="display: none;">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Данные больничного</h3>
+                        <div class="mt-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Номер ЭЛН:</label>
+                            <input type="text" id="sick-leave-number" placeholder="Введите номер электронного листка нетрудоспособности" class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 text-[15px] font-bold">
                             
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Дата начала:</label>
-                            <input type="date" id="sick-leave-start-date" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 15px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Дата начала:</label>
+                            <input type="date" id="sick-leave-start-date" class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 text-[15px] font-bold">
                             
-                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">Дата окончания:</label>
-                            <input type="date" id="sick-leave-end-date" style="width: calc(100% - 24px); padding: 12px; border-radius: var(--radius); border: 1px solid #a8a29e; background: #a8a29e; color: white; margin-bottom: 20px; font-size: 15px; font-weight: 700; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Дата окончания:</label>
+                            <input type="date" id="sick-leave-end-date" class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-5 text-[15px] font-bold">
                         </div>
                     </div>
                     
-                    <div class="actions">
-                        <button onclick="submitSickLeave()" class="btn" style="background: #0d9488;">
+                    <div class="grid gap-3 justify-items-center">
+                        <button onclick="submitSickLeave()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-teal-600 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #10b981;"></span>
                             <span>Подтвердить</span>
                         </button>
-                        <button onclick="showMainApp()" class="btn" style="background: #7f1d1d;">
+                        <button onclick="showMainApp()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-red-900 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #ef4444;"></span>
                             <span>Отменить</span>
                         </button>
                     </div>
                 </div>
 
-                <div id="sick-leave-confirmation-section" class="stack" style="display: none; margin-top: 20px;">
-                    <div class="card" style="background: #474A51; margin-bottom: 20px;">
-                        <h3>Подтверждение</h3>
-                        <p id="sick-leave-confirmation-text" style="font-size: 16px; line-height: 1.4;"><!-- Текст подтверждения --></p>
+                <div id="sick-leave-confirmation-section" class="grid gap-2.5 mt-5" style="display: none;">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb mb-5">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Подтверждение</h3>
+                        <p id="sick-leave-confirmation-text" class="text-base leading-relaxed text-slate-200"><!-- Текст подтверждения --></p>
                     </div>
-                    <div class="actions">
-                        <button onclick="confirmSickLeave()" class="btn" style="background: #0d9488;">
+                    <div class="grid gap-3 justify-items-center">
+                        <button onclick="confirmSickLeave()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-teal-600 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #10b981;"></span>
                             <span>Подтвердить</span>
                         </button>
-                        <button onclick="cancelSickLeave()" class="btn" style="background: #7f1d1d;">
+                        <button onclick="cancelSickLeave()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-red-900 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #ef4444;"></span>
                             <span>Отменить</span>
                         </button>
@@ -740,32 +532,33 @@
         </div>
 
         <!-- SOS Menu Modal -->
-        <div id="sos-menu-modal" style="display: none;">
-            <div class="wrap">
-                <header style="margin-bottom: 20px;">
-                    <button onclick="showMainApp()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
-                    <div style="flex: 1; text-align: center;">
-                        <div class="title" style="margin: 0;">Мои обращения</div>
+        <div id="sos-menu-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="showMainApp()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">Мои обращения</div>
             </div>
-                    <div style="width: 40px;"></div>
+                    <div class="w-10"></div>
                 </header>
 
-                <div class="stack" style="margin-bottom: 20px;">
+                <div class="grid gap-2.5 mb-5">
                     <!-- Информация о разделе -->
-                    <div class="card" style="background: #065f46; margin-bottom: 20px;">
-                        <h3 style="font-size: 16px; line-height: 1.4;">📋 Ваши обращения</h3>
-                        <p style="margin: 0; color: rgba(255,255,255,0.8); font-size: 14px;">
+                    <div class="bg-emerald-800 text-white rounded-nb p-3 shadow-nb mb-5">
+                        <h3 class="text-base leading-relaxed font-bold">📋 Ваши обращения</h3>
+                        <p class="m-0 text-white/80 text-sm">
                         Здесь вы можете продолжить диалоги или создать новое обращение
                         </p>
                 </div>
 
                     <!-- Список обращений -->
-                    <div class="card" style="background: #474A51;">
-                        <h3 style="font-size: 16px; line-height: 1.4;">💬 Список обращений</h3>
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-base leading-relaxed font-bold mb-2">💬 Список обращений</h3>
                         <div id="sos-issues-list">
-                            <div style="text-align: center; color: var(--muted); padding: 20px;">
-                                <div style="font-size: 16px;">📈 Загрузка обращений...</div>
-                                <div style="font-size: 12px; margin-top: 8px;">Получение данных из базы</div>
+                            <div class="text-center text-nb-muted p-5">
+                                <div class="text-base">📈 Загрузка обращений...</div>
+                                <div class="text-xs mt-2">Получение данных из базы</div>
                             </div>
                         </div>
                     </div>
@@ -774,33 +567,34 @@
         </div>
 
         <!-- My Issue Dialog Modal -->
-        <div id="my-issue-dialog-modal" style="display: none;">
-            <div class="wrap">
-                <header style="margin-bottom: 20px;">
-                    <button onclick="closeMyIssueDialog()" class="back-button" style="background: none; border: none; color: var(--ink); font-size: 24px; padding: 8px; cursor: pointer; border-radius: var(--radius);">←</button>
-                    <div style="flex: 1; text-align: center;">
-                        <div class="title" style="margin: 0;">💬 Мое обращение</div>
+        <div id="my-issue-dialog-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="closeMyIssueDialog()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">💬 Мое обращение</div>
             </div>
-                    <div style="width: 40px;"></div>
+                    <div class="w-10"></div>
                 </header>
 
-                <div class="stack" style="margin-bottom: 80px;">
-                    <div class="card" style="background: #474A51; min-height: 60vh; max-height: 70vh; overflow-y: auto;">
+                <div class="grid gap-2.5 mb-20">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb min-h-[60vh] max-h-[70vh] overflow-y-auto">
                 <div id="my-issue-dialog-content">
-                    <div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">
-                                <div style="font-size: 16px;">📈 Загрузка диалога...</div>
-                                <div style="font-size: 12px; margin-top: 8px;">Получение данных из базы</div>
+                    <div class="text-center text-white/70 p-5">
+                                <div class="text-base">📈 Загрузка диалога...</div>
+                                <div class="text-xs mt-2">Получение данных из базы</div>
                             </div>
                     </div>
                 </div>
             </div>
             
-                <div style="position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <div style="display: flex; gap: 10px; max-width: 100%; margin: 0 auto;">
+                <div class="fixed bottom-0 left-0 right-0 bg-nb-bg p-4 border-t border-white/10">
+                    <div class="flex gap-2.5 max-w-full mx-auto">
                         <input type="text" id="my-response-input" placeholder="Введите ответ..." onkeypress="handleMyResponseEnterKey(event)" oninput="handleUserTyping()" 
-                               style="flex: 1; padding: 12px 15px; border: none; border-radius: var(--radius); background: #1e293b; color: white; font-size: 14px; border: 1px solid rgba(255,255,255,0.2);">
-                        <button onclick="sendMyResponse()" class="btn" 
-                                style="background: var(--accent); color: white; border: none; padding: 12px 20px; border-radius: var(--radius); cursor: pointer; font-weight: 600; min-width: 100px;">
+                               class="flex-1 p-3 border-none rounded-nb bg-slate-800 text-white text-sm border border-white/20">
+                        <button onclick="sendMyResponse()" 
+                                class="bg-nb-accent text-white border-none px-5 py-3 rounded-nb cursor-pointer font-semibold min-w-[100px] hover:opacity-90 active:scale-95 transition-all duration-200">
                             Отправить
                         </button>
                     </div>
@@ -1272,48 +1066,49 @@
         </div>
 
         <!-- Admin Menu Modal -->
-        <div id="admin-menu-modal" style="display: none;">
-            <div class="wrap">
-                <header>
-                    <button onclick="showMainApp()" class="back-button">←</button>
+        <div id="admin-menu-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center gap-3 mb-2">
+                    <button onclick="showMainApp()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
                     <div>
-                        <div class="title">👑 Меню администратора</div>
-                        <div class="subtitle">Управление системой</div>
+                        <div class="font-bold text-[17px]">👑 Меню администратора</div>
+                        <div class="text-xs text-nb-muted">Управление системой</div>
             </div>
                 </header>
 
-                <div class="stack">
-                    <div class="card">
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-                            <h3 style="margin: 0;">📊 Общая статистика системы</h3>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <div style="font-size: 12px; color: var(--muted);">Обновлено: <span id="stats-update-time">загрузка...</span></div>
-                                <button onclick="loadAdminStats()" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); color: #3b82f6; border-radius: 6px; padding: 4px 8px; font-size: 12px; cursor: pointer;">🔄</button>
+                <div class="grid gap-2.5 my-2 mb-4">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-extrabold tracking-wide m-0">📊 Общая статистика системы</h3>
+                            <div class="flex items-center gap-2.5">
+                                <div class="text-xs text-nb-muted">Обновлено: <span id="stats-update-time">загрузка...</span></div>
+                                <button onclick="loadAdminStats()" class="bg-blue-500/10 border border-blue-500/20 text-blue-500 rounded-md px-2 py-1 text-xs cursor-pointer hover:bg-blue-500/20 transition-all">🔄</button>
                             </div>
                         </div>
                         <div id="admin-stats-content">
-                            <div style="text-align: center; padding: 20px; color: var(--muted);">
-                                <div style="font-size: 16px;">📈 Загрузка статистики...</div>
-                                <div style="font-size: 12px; margin-top: 8px;">Получение данных из базы</div>
+                            <div class="text-center p-5 text-nb-muted">
+                                <div class="text-base">📈 Загрузка статистики...</div>
+                                <div class="text-xs mt-2">Получение данных из базы</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="actions">
-                    <button onclick="showEmployeesManagement()" class="btn">
+                <div class="grid gap-3 justify-items-center">
+                    <button onclick="showEmployeesManagement()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                         <span class="dot" style="background: #10b981;"></span>
                         <span>Управление сотрудниками</span>
                     </button>
-                    <button onclick="showIssuesManagement()" class="btn">
+                    <button onclick="showIssuesManagement()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                         <span class="dot" style="background: #f59e0b;"></span>
                         <span>Управление обращениями</span>
                     </button>
-                    <button onclick="sendStatsToChannel()" class="btn">
+                    <button onclick="sendStatsToChannel()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                         <span class="dot" style="background: #3b82f6;"></span>
                         <span>Отправить статистику в канал</span>
                     </button>
-                    <button onclick="showMessagingMenu()" class="btn">
+                    <button onclick="showMessagingMenu()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                         <span class="dot" style="background: #ef4444;"></span>
                         <span>Сообщение сотрудникам</span>
                     </button>
