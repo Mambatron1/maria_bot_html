@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v2.3.5-20251010">
-    <meta name="version" content="maria-bot-v2.3.5-autoscroll-modal-fix">
+    <meta name="cache-bust" content="maria-bot-v2.4.0-20251010">
+    <meta name="version" content="maria-bot-v2.4.0-crocotime">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -141,7 +141,7 @@
 <body class="m-0 bg-nb-bg text-nb-ink min-h-screen font-sans">
     <!-- Индикатор версии для проверки -->
     <div class="fixed top-2.5 right-2.5 bg-nb-accent text-white px-2 py-1 rounded-lg text-[10px] z-[9999]">
-        Maria Bot v2.3.5-autoscroll-modal-fix
+        Maria Bot v2.4.0-crocotime
     </div>
     
      
@@ -544,6 +544,65 @@
                         <button onclick="cancelSickLeave()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-red-900 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #ef4444;"></span>
                             <span>Отменить</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crocotime Modal -->
+        <div id="crocotime-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="closeCrocotimeModal()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">📊 Мой Crocotime</div>
+                    </div>
+                    <div class="w-10"></div>
+                </header>
+
+                <div class="grid gap-2.5 mb-5">
+                    <div class="bg-gradient-to-br from-yellow-500 to-amber-600 text-white rounded-nb p-4 shadow-nb">
+                        <h3 class="text-base leading-relaxed font-bold mb-2">🎉 Приветик, дорогуша!</h3>
+                        <p class="m-0 text-white/90 text-sm">
+                        Благодаря этому разделу ты сможешь посмотреть свою статистику в CrocoTime и восхититься своей продуктивностью! 📊✨
+                        </p>
+                    </div>
+
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Выбери период</h3>
+                        <p class="text-[13px] text-slate-200">Вжууууух!🦆 Посмотри статистику за нужный период</p>
+                    </div>
+                </div>
+
+                <div id="crocotime-periods" class="grid gap-4 justify-items-center">
+                    <button onclick="loadCrocotimeStats('today')" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-gradient-to-r from-blue-600 to-blue-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90 shadow-nb">
+                        <span class="text-xl">📅</span>
+                        <span>Сегодняшний день</span>
+                    </button>
+                    <button onclick="loadCrocotimeStats('week')" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-gradient-to-r from-green-600 to-green-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90 shadow-nb">
+                        <span class="text-xl">📊</span>
+                        <span>Текущая неделя</span>
+                    </button>
+                    <button onclick="loadCrocotimeStats('month')" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-gradient-to-r from-purple-600 to-purple-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90 shadow-nb">
+                        <span class="text-xl">📈</span>
+                        <span>Текущий месяц</span>
+                    </button>
+                </div>
+
+                <!-- Результаты статистики -->
+                <div id="crocotime-stats-section" class="grid gap-2.5 mt-5" style="display: none;">
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-4 shadow-nb">
+                        <h3 id="crocotime-stats-title" class="text-base font-extrabold tracking-wide mb-3">📊 Статистика</h3>
+                        <div id="crocotime-stats-content" class="text-slate-200 text-sm leading-relaxed">
+                            <!-- Статистика будет загружена динамически -->
+                        </div>
+                    </div>
+                    
+                    <div class="grid gap-3 justify-items-center">
+                        <button onclick="hideCrocotimeStats()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-slate-600 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
+                            <span>◀️ Назад к выбору периода</span>
                         </button>
                     </div>
                 </div>
@@ -1398,12 +1457,12 @@
                                 <div style="font-weight: bold; font-size: 15px; color: white; line-height: 1.3; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
                                     <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${emp.first_name} ${emp.last_name}</span>
                                     ${adminBadge}
-                                </div>
+                            </div>
                                 <div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 3px;">
                                     📞 ${emp.phone}
-                                </div>
-                            </div>
                         </div>
+                        </div>
+                    </div>
                         <div style="${statusBadgeColor} padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; color: white; box-shadow: 0 2px 6px rgba(0,0,0,0.2); white-space: nowrap; flex-shrink: 0;">
                             ${statusIcon} ${statusText}
                         </div>
@@ -2962,7 +3021,7 @@
                 }
                 
                 if (action === 'crocotime') {
-                    tg.showAlert('Функция "Мой Crocotime" в разработке');
+                    await showCrocotimeModal();
                     return;
                 }
                 
@@ -3453,6 +3512,174 @@
                 tg.showAlert('Произошла ошибка при сохранении');
             }
         }
+        
+        // ==================== CROCOTIME FUNCTIONS ====================
+        
+        async function showCrocotimeModal() {
+            // Скрываем все окна
+            document.querySelectorAll('.fixed.inset-0').forEach(modal => {
+                modal.style.display = 'none';
+            });
+            
+            // Показываем модальное окно Crocotime
+            document.getElementById('crocotime-modal').style.display = 'block';
+            
+            // Скрываем секцию со статистикой
+            document.getElementById('crocotime-stats-section').style.display = 'none';
+            
+            // Показываем кнопки выбора периода
+            document.getElementById('crocotime-periods').style.display = 'grid';
+        }
+        
+        function closeCrocotimeModal() {
+            document.getElementById('crocotime-modal').style.display = 'none';
+            showMainApp();
+        }
+        
+        async function loadCrocotimeStats(period) {
+            try {
+                // Показываем индикатор загрузки
+                const statsSection = document.getElementById('crocotime-stats-section');
+                const statsContent = document.getElementById('crocotime-stats-content');
+                const statsTitle = document.getElementById('crocotime-stats-title');
+                
+                // Скрываем кнопки выбора периода
+                document.getElementById('crocotime-periods').style.display = 'none';
+                
+                // Показываем секцию статистики с загрузкой
+                statsSection.style.display = 'grid';
+                statsContent.innerHTML = '<div class="text-center p-5"><div class="text-2xl mb-2">⏳</div><div>Загружаю статистику...</div></div>';
+                
+                // Определяем название периода
+                let periodName = '';
+                if (period === 'today') periodName = 'сегодняшний день';
+                else if (period === 'week') periodName = 'текущую неделю';
+                else if (period === 'month') periodName = 'текущий месяц';
+                
+                statsTitle.textContent = `📊 Статистика за ${periodName}`;
+                
+                // Запрашиваем статистику
+                const response = await fetch('http://localhost:5000/api/crocotime/stats', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        initData: tg.initData,
+                        period: period
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (!response.ok || !result.success) {
+                    if (result.error === 'not_found') {
+                        statsContent.innerHTML = `
+                            <div class="text-center p-4">
+                                <div class="text-3xl mb-3">❌</div>
+                                <div class="font-bold mb-2">Профиль в CrocoTime не найден</div>
+                                <div class="text-xs text-slate-300 leading-relaxed">
+                                    Возможные причины:<br/>
+                                    • Твой профиль не синхронизирован с CrocoTime<br/>
+                                    • Имя или фамилия в боте не совпадают с данными в CrocoTime<br/>
+                                    • Профиль не активен в CrocoTime<br/><br/>
+                                    Обратись к администратору для решения проблемы.
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        statsContent.innerHTML = `
+                            <div class="text-center p-4">
+                                <div class="text-3xl mb-3">⚠️</div>
+                                <div class="font-bold mb-2">Ошибка загрузки</div>
+                                <div class="text-xs text-slate-300">${result.message || 'Попробуй позже или обратись к администратору'}</div>
+                            </div>
+                        `;
+                    }
+                    return;
+                }
+                
+                if (!result.has_data) {
+                    statsContent.innerHTML = `
+                        <div class="text-center p-4">
+                            <div class="text-3xl mb-3">📭</div>
+                            <div class="font-bold mb-2">Нет данных</div>
+                            <div class="text-xs text-slate-300">
+                                Нет данных за ${periodName}.<br/>
+                                Возможно, ты не работал(а) в этот период или данные еще не обновились в CrocoTime.
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Отображаем статистику
+                const stats = result.stats;
+                let html = `
+                    <div class="space-y-3">
+                        <div class="bg-gradient-to-r from-blue-600 to-blue-700 p-3 rounded-lg">
+                            <div class="text-xs text-blue-100 mb-1">⏱️ Всего отработано:</div>
+                            <div class="text-2xl font-bold">${stats.total_time || '0:00'}</div>
+                        </div>
+                        
+                        <div class="bg-gradient-to-r from-green-600 to-green-700 p-3 rounded-lg">
+                            <div class="text-xs text-green-100 mb-1">📅 Дней работы:</div>
+                            <div class="text-2xl font-bold">${stats.days_worked || 0}</div>
+                        </div>
+                `;
+                
+                // Детальная статистика по дням
+                if (stats.days && stats.days.length > 0) {
+                    html += `
+                        <div class="mt-4 pt-4 border-t border-slate-600">
+                            <div class="text-xs font-bold text-slate-300 mb-3">📊 Детально по дням:</div>
+                            <div class="space-y-2">
+                    `;
+                    
+                    stats.days.forEach(day => {
+                        html += `
+                            <div class="bg-slate-700 p-2 rounded">
+                                <div class="flex justify-between items-center">
+                                    <div class="text-xs font-semibold">${day.date || 'Дата неизвестна'}</div>
+                                    <div class="text-sm font-bold text-blue-300">${day.time || '0:00'}</div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                html += `
+                    </div>
+                `;
+                
+                statsContent.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Ошибка загрузки статистики Crocotime:', error);
+                document.getElementById('crocotime-stats-content').innerHTML = `
+                    <div class="text-center p-4">
+                        <div class="text-3xl mb-3">❌</div>
+                        <div class="font-bold mb-2">Произошла ошибка</div>
+                        <div class="text-xs text-slate-300">Попробуй позже</div>
+                    </div>
+                `;
+            }
+        }
+        
+        function hideCrocotimeStats() {
+            // Скрываем секцию со статистикой
+            document.getElementById('crocotime-stats-section').style.display = 'none';
+            
+            // Показываем кнопки выбора периода
+            document.getElementById('crocotime-periods').style.display = 'grid';
+        }
+        
+        // ==================== END CROCOTIME FUNCTIONS ====================
         
         async function showAbsenceModal() {
             try {
@@ -5020,7 +5247,7 @@
                         
                         <div style="font-size: 13px; color: rgba(255,255,255,0.95); margin-bottom: 12px; line-height: 1.5; background: rgba(0,0,0,0.15); padding: 10px; border-radius: 8px;">
                             ${issue.description}
-                        </div>
+                    </div>
                         
                         <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: rgba(255,255,255,0.7);">
                             <div>
@@ -5030,16 +5257,16 @@
                                 <div style="color: rgba(255,255,255,0.9); font-weight: bold;">
                                     💬 ${issue.admin_response_count} ${issue.admin_response_count === 1 ? 'ответ' : 'ответов'}
                                     ${issue.unread_admin_responses > 0 ? `<span style="color: #ff6b6b;"> • ${issue.unread_admin_responses} новых</span>` : ''}
-                            </div>
+                    </div>
                             ` : `
                                 <div style="color: rgba(255,255,255,0.5); font-style: italic;">
                                     Нет ответов
-                                </div>
-                            `}
-                        </div>
                     </div>
-                `;
-            });
+                            `}
+                            </div>
+                        </div>
+                    `;
+                });
             
             container.innerHTML = html;
         }
