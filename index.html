@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v2.3.0-20251010">
-    <meta name="version" content="maria-bot-v2.3.0-chat-alignment-fix">
+    <meta name="cache-bust" content="maria-bot-v2.3.3-20251010">
+    <meta name="version" content="maria-bot-v2.3.3-sos-spacing-fix">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -141,7 +141,7 @@
 <body class="m-0 bg-nb-bg text-nb-ink min-h-screen font-sans">
     <!-- Индикатор версии для проверки -->
     <div class="fixed top-2.5 right-2.5 bg-nb-accent text-white px-2 py-1 rounded-lg text-[10px] z-[9999]">
-        Maria Bot v2.3.0-chat-alignment-fix
+        Maria Bot v2.3.3-sos-spacing-fix
     </div>
     
      
@@ -411,7 +411,7 @@
                     </div>
                 </div>
 
-                <div id="sos-anonymity-options" class="grid gap-5 justify-items-center mt-8" style="display: none;">
+                <div id="sos-anonymity-options" class="grid gap-10 justify-items-center mt-8" style="display: none;">
                     <!-- Опции анонимности будут загружены динамически -->
                 </div>
 
@@ -4206,66 +4206,60 @@
                 return;
             }
             
-            // Используем setTimeout для гарантии, что DOM обновился
-            setTimeout(() => {
-                const behavior = instant ? 'auto' : 'smooth';
+            // Функция для принудительной прокрутки ВСЕХ контейнеров
+            const forceScrollToBottom = () => {
+                const behavior = instant ? 'auto' : 'auto'; // Всегда instant для надежности
+                
+                console.log('🔽 Начинаем прокрутку вниз для', isUserDialog ? 'пользовательского' : 'админского', 'чата');
                 
                 // Прокручиваем основной скроллируемый контейнер
                 if (!isUserDialog) {
-                    // Админский диалог - ищем все возможные скроллируемые контейнеры
+                    // Админский диалог - прокручиваем ВСЕ возможные контейнеры
                     const scrollableCard = document.querySelector('#issue-dialog-modal .card');
                     const modalContent = document.querySelector('#issue-dialog-modal .wrap');
                     const dialogModal = document.getElementById('issue-dialog-modal');
                     
-                    [scrollableCard, modalContent, dialogModal].forEach(element => {
-                        if (element && element.scrollHeight > element.clientHeight) {
-                            console.log('📜 Прокручиваем админский контейнер:', element.id || element.className);
-                            element.scrollTo({
-                                top: element.scrollHeight + 1000,
-                                behavior: behavior
-                            });
+                    [scrollableCard, modalContent, dialogModal, container].forEach(element => {
+                        if (element) {
+                            const maxScroll = element.scrollHeight + 5000; // Огромный запас!
+                            console.log('📜 Прокручиваем админский контейнер:', element.id || element.className, 'до', maxScroll);
+                            element.scrollTop = maxScroll;
                         }
                     });
                 } else {
-                    // Пользовательский диалог - ищем все возможные скроллируемые контейнеры
+                    // Пользовательский диалог - прокручиваем ВСЕ возможные контейнеры
                     const scrollableContainer = document.getElementById('my-issue-dialog-scroll');
                     const modalContent = document.querySelector('#my-issue-dialog-modal .wrap');
                     const dialogModal = document.getElementById('my-issue-dialog-modal');
                     
-                    [scrollableContainer, modalContent, dialogModal].forEach(element => {
-                        if (element && element.scrollHeight > element.clientHeight) {
-                            console.log('📜 Прокручиваем пользовательский контейнер:', element.id || element.className);
-                            element.scrollTo({
-                                top: element.scrollHeight + 1000,
-                                behavior: behavior
-                            });
+                    [scrollableContainer, modalContent, dialogModal, container].forEach(element => {
+                        if (element) {
+                            const maxScroll = element.scrollHeight + 5000; // Огромный запас!
+                            console.log('📜 Прокручиваем пользовательский контейнер:', element.id || element.className, 'до', maxScroll);
+                            element.scrollTop = maxScroll;
                         }
                     });
                 }
                 
                 // Прокручиваем контейнер с сообщениями
                 const messagesContainer = container.querySelector('.dialog-messages') || container;
-                if (messagesContainer && messagesContainer.scrollHeight > messagesContainer.clientHeight) {
-                    console.log('📜 Прокручиваем контейнер сообщений');
-                    messagesContainer.scrollTo({
-                        top: messagesContainer.scrollHeight + 1000,
-                        behavior: behavior
-                    });
+                if (messagesContainer) {
+                    const maxScroll = messagesContainer.scrollHeight + 5000; // Огромный запас!
+                    console.log('📜 Прокручиваем контейнер сообщений до', maxScroll);
+                    messagesContainer.scrollTop = maxScroll;
                 }
                 
-                // Дополнительная прокрутка через 50ms для гарантии
-                if (instant) {
-                    setTimeout(() => {
-                        [container, messagesContainer].forEach(el => {
-                            if (el) {
-                                el.scrollTop = el.scrollHeight + 1000;
-                            }
-                        });
-                    }, 50);
-                }
-                
-                console.log('✅ Прокрутка завершена');
-            }, 150);
+            };
+            
+            // Вызываем прокрутку немедленно
+            forceScrollToBottom();
+            
+            // И еще 3 раза с задержками для абсолютной уверенности
+            setTimeout(forceScrollToBottom, 100);
+            setTimeout(forceScrollToBottom, 300);
+            setTimeout(forceScrollToBottom, 500);
+            
+            console.log('✅ Прокрутка запланирована в 4 этапа');
         }
         
         async function openMyIssueDialog(issueId) {
