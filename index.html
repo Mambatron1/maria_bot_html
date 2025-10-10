@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v2.2.9-20251010">
-    <meta name="version" content="maria-bot-v2.2.9-spacing-final-fix">
+    <meta name="cache-bust" content="maria-bot-v2.3.0-20251010">
+    <meta name="version" content="maria-bot-v2.3.0-chat-alignment-fix">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -141,7 +141,7 @@
 <body class="m-0 bg-nb-bg text-nb-ink min-h-screen font-sans">
     <!-- Индикатор версии для проверки -->
     <div class="fixed top-2.5 right-2.5 bg-nb-accent text-white px-2 py-1 rounded-lg text-[10px] z-[9999]">
-        Maria Bot v2.2.9-spacing-final-fix
+        Maria Bot v2.3.0-chat-alignment-fix
     </div>
     
      
@@ -1920,15 +1920,16 @@
                 html += '<h3 style="font-size: 16px; line-height: 1.4; margin-bottom: 15px;">💬 История диалога</h3>';
                 
                 responses.forEach(response => {
-                    const isAdmin = response.responder_phone === 'admin';
-                    const messageStyle = isAdmin 
+                    const isAdminMessage = response.responder_phone === 'admin';
+                    // Админ смотрит чат: его сообщения (от админа) - справа, сообщения сотрудника - слева
+                    const messageStyle = isAdminMessage 
                         ? 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-left: auto; text-align: right; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);'
-                        : 'background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; margin-right: auto; box-shadow: 0 2px 8px rgba(56, 239, 125, 0.3);';
+                        : 'background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; margin-right: auto; text-align: left; box-shadow: 0 2px 8px rgba(56, 239, 125, 0.3);';
                     
                     html += '<div style="margin: 10px 0; padding: 12px 15px; border-radius: 12px; max-width: 80%; word-wrap: break-word; ' + messageStyle + '">';
                     html += '<div style="font-size: 14px; margin-bottom: 6px; line-height: 1.4;">' + response.response_text + '</div>';
                     html += '<div style="font-size: 11px; opacity: 0.8;">';
-                    html += (isAdmin ? '👨‍💼 Администратор' : '👤 Сотрудник') + ' • ' + new Date(response.created_at).toLocaleString('ru-RU');
+                    html += (isAdminMessage ? '👨‍💼 Администратор' : '👤 Сотрудник') + ' • ' + new Date(response.created_at).toLocaleString('ru-RU');
                     html += '</div>';
                     html += '</div>';
                 });
@@ -4140,7 +4141,7 @@
             const currentTime = new Date().toLocaleString('ru-RU');
             
             if (isUserDialog) {
-                // Пользовательский диалог
+                // Пользовательский диалог: свои сообщения справа, от админа - слева
                 const bgColor = isFromCurrentUser 
                     ? 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)' 
                     : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
@@ -4148,7 +4149,7 @@
                     ? '0 2px 8px rgba(56, 239, 125, 0.3)' 
                     : '0 2px 8px rgba(102, 126, 234, 0.3)';
                 const textColor = 'white';
-                const align = isFromCurrentUser ? 'margin-left: auto; margin-right: 0;' : 'margin-right: auto; margin-left: 0;';
+                const align = isFromCurrentUser ? 'margin-left: auto; margin-right: 0; text-align: right;' : 'margin-right: auto; margin-left: 0; text-align: left;';
                 const senderText = isFromCurrentUser ? '👤 Вы' : '👨‍💼 Администратор';
                 
                 messageDiv.style.cssText = `background: ${bgColor}; color: ${textColor}; padding: 12px 15px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; word-wrap: break-word; ${align} box-shadow: ${boxShadow};`;
@@ -4159,7 +4160,7 @@
                     </div>
                 `;
             } else {
-                // Админский диалог
+                // Админский диалог: сообщения админа справа, от сотрудника - слева
                 const bgColor = isFromCurrentUser 
                     ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' 
                     : 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)';
@@ -4167,7 +4168,7 @@
                     ? '0 2px 8px rgba(102, 126, 234, 0.3)' 
                     : '0 2px 8px rgba(56, 239, 125, 0.3)';
                 const textColor = 'white';
-                const align = isFromCurrentUser ? 'margin-left: auto; margin-right: 0;' : 'margin-right: auto; margin-left: 0;';
+                const align = isFromCurrentUser ? 'margin-left: auto; margin-right: 0; text-align: right;' : 'margin-right: auto; margin-left: 0; text-align: left;';
                 const senderText = isFromCurrentUser ? '👨‍💼 Администратор' : '👤 Сотрудник';
                 
                 messageDiv.style.cssText = `background: ${bgColor}; color: ${textColor}; padding: 12px 15px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; word-wrap: break-word; ${align} box-shadow: ${boxShadow};`;
@@ -4393,15 +4394,16 @@
                 html += '<h3 style="font-size: 16px; line-height: 1.4; margin-bottom: 15px;">💬 История диалога</h3>';
                 
                 responses.forEach(response => {
-                    const isAdmin = response.responder_phone === 'admin';
-                    const messageStyle = isAdmin 
-                        ? 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-left: auto; text-align: right; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);'
-                        : 'background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; margin-right: auto; box-shadow: 0 2px 8px rgba(56, 239, 125, 0.3);';
+                    const isAdminMessage = response.responder_phone === 'admin';
+                    // Сотрудник смотрит чат: сообщения от админа - слева (входящие), свои сообщения - справа (исходящие)
+                    const messageStyle = isAdminMessage 
+                        ? 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-right: auto; text-align: left; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);'
+                        : 'background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; margin-left: auto; text-align: right; box-shadow: 0 2px 8px rgba(56, 239, 125, 0.3);';
                     
                     html += '<div style="margin: 10px 0; padding: 12px 15px; border-radius: 12px; max-width: 80%; word-wrap: break-word; ' + messageStyle + '">';
                     html += '<div style="font-size: 14px; margin-bottom: 6px; line-height: 1.4;">' + response.response_text + '</div>';
                     html += '<div style="font-size: 11px; opacity: 0.8;">';
-                    html += (isAdmin ? '👨‍💼 Администратор' : '👤 Вы') + ' • ' + new Date(response.created_at).toLocaleString('ru-RU');
+                    html += (isAdminMessage ? '👨‍💼 Администратор' : '👤 Вы') + ' • ' + new Date(response.created_at).toLocaleString('ru-RU');
                     html += '</div>';
                     html += '</div>';
                 });
