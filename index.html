@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v2.0.5-20251009">
-    <meta name="version" content="maria-bot-v2.0.5-colors-status-fix">
+    <meta name="cache-bust" content="maria-bot-v2.2.2-20251010">
+    <meta name="version" content="maria-bot-v2.2.2-daily-facts">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -92,7 +92,7 @@
             height: 8px; 
             border-radius: 50%;
         }
-        
+
         .dot-holiday { background: #f59e0b; }
         .dot-mode { background: #10b981; }
         .dot-absence { background: #ef4444; }
@@ -111,6 +111,20 @@
             background: #1e293b !important;
         }
 
+        /* Стили для иконок календаря и часов */
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(1) brightness(1.5);
+            cursor: pointer;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+        
+        input[type="date"]::-webkit-calendar-picker-indicator:hover,
+        input[type="time"]::-webkit-calendar-picker-indicator:hover {
+            opacity: 1;
+        }
+
         /* Главное приложение - фиксированное позиционирование */
         #app {
             background: #eff6ff;
@@ -127,7 +141,7 @@
 <body class="m-0 bg-nb-bg text-nb-ink min-h-screen font-sans">
     <!-- Индикатор версии для проверки -->
     <div class="fixed top-2.5 right-2.5 bg-nb-accent text-white px-2 py-1 rounded-lg text-[10px] z-[9999]">
-        Maria Bot v2.0.5-colors-status-fix
+        Maria Bot v2.2.2-daily-facts
     </div>
     
      
@@ -155,7 +169,7 @@
             <div class="grid gap-2.5 my-2 mb-4">
                 <div class="bg-emerald-800 text-slate-50 rounded-nb p-3 shadow-nb">
                     <h3 class="text-sm font-extrabold tracking-wide mb-1">Сегодня</h3>
-                    <p id="today-status" class="text-[13px] text-slate-200">Удалённая работа</p>
+                    <p id="today-status" class="text-[13px] text-slate-200">🏢 Офисная работа</p>
                 </div>
                 <div class="bg-orange-600 text-slate-50 rounded-nb p-3 shadow-nb">
                     <h3 class="text-sm font-extrabold tracking-wide mb-1">Следующий отпуск</h3>
@@ -165,7 +179,7 @@
                     <h3 class="text-sm font-extrabold tracking-wide mb-1">В этот день</h3>
                     <p id="today-message" class="text-[13px] text-slate-200">Добро пожаловать в Maria Bot!</p>
                 </div>
-            </div>
+                </div>
 
             <!-- Action Buttons -->
             <div class="grid gap-3 justify-items-center">
@@ -197,7 +211,7 @@
                     <span class="dot" style="background: #3b82f6;"></span>
                     <span>Меню администратора</span>
                 </button>
-            </div>
+                    </div>
             <div class="footer">@NBtender_bot</div>
         </div>
 
@@ -209,7 +223,7 @@
                     <button onclick="showMainApp()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
                     <div class="flex-1 text-center">
                         <div class="font-bold text-[17px] m-0">Режим работы</div>
-                    </div>
+            </div>
                     <div class="w-10"></div>
                 </header>
 
@@ -224,7 +238,7 @@
                     <!-- Режимы работы будут загружены динамически -->
                 </div>
 
-                <div id="period-section" class="grid gap-2.5" style="display: none;">
+                <div id="period-section" class="grid gap-2.5 mt-8" style="display: none;">
                     <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
                         <h3 class="text-sm font-extrabold tracking-wide mb-1">Выбери период</h3>
                         <p class="text-[13px] text-slate-200">Укажи период действия режима</p>
@@ -256,16 +270,16 @@
                     <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb mb-5">
                         <h3 class="text-sm font-extrabold tracking-wide mb-1">Подтверждение</h3>
                         <p id="confirmation-text" class="text-base leading-relaxed text-slate-200"><!-- Текст подтверждения --></p>
-                    </div>
+                        </div>
                     <div class="grid gap-3 justify-items-center">
                         <button onclick="confirmWorkMode()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-teal-600 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #10b981;"></span>
                             <span>Подтвердить</span>
-                        </button>
+                            </button>
                         <button onclick="showMainApp()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-red-900 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:opacity-90">
                             <span class="dot" style="background: #ef4444;"></span>
                             <span>Отменить</span>
-                        </button>
+                            </button>
                     </div>
                 </div>
             </div>
@@ -289,8 +303,8 @@
                         <p class="text-[13px]"><strong>СНАЧАЛА СОГЛАСУЙ С РУКОВОДИТЕЛЕМ, ЧТОБЫ ОН ЗНАЛ, ЧТО ТЫ ОТСУТСТВУЕШЬ!</strong></p>
                 </div>
                     <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb" id="absence-date-section">
-                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Выберите дату</h3>
-                        <p class="text-[13px] text-slate-200">Укажите дату вашего отсутствия</p>
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Выбери дату</h3>
+                        <p class="text-[13px] text-slate-200">Укажи дату твоего отсутствия</p>
                     </div>
                 </div>
 
@@ -298,10 +312,10 @@
                     <!-- Даты будут загружены динамически -->
                 </div>
 
-                <div id="absence-time-section" class="grid gap-2.5" style="display: none;">
+                <div id="absence-time-section" class="grid gap-2.5 mt-8" style="display: none;">
                     <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
-                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Выберите время</h3>
-                        <p class="text-[13px] text-slate-200">Укажите время вашего отсутствия</p>
+                        <h3 class="text-sm font-extrabold tracking-wide mb-1">Выбери время</h3>
+                        <p class="text-[13px] text-slate-200">Укажи время твоего отсутствия</p>
                     </div>
                 </div>
 
@@ -397,7 +411,7 @@
                     </div>
                 </div>
 
-                <div id="sos-anonymity-options" class="grid gap-6 justify-items-center mt-5" style="display: none;">
+                <div id="sos-anonymity-options" class="grid gap-8 justify-items-center mt-5" style="display: none;">
                     <!-- Опции анонимности будут загружены динамически -->
                 </div>
 
@@ -551,9 +565,9 @@
                 <div class="grid gap-2.5 mb-5">
                     <!-- Информация о разделе -->
                     <div class="bg-emerald-800 text-white rounded-nb p-3 shadow-nb mb-5">
-                        <h3 class="text-base leading-relaxed font-bold">📋 Ваши обращения</h3>
+                        <h3 class="text-base leading-relaxed font-bold">📋 Твои обращения</h3>
                         <p class="m-0 text-white/80 text-sm">
-                        Здесь вы можете продолжить диалоги или создать новое обращение
+                        Здесь ты можешь продолжить диалоги или создать новое обращение
                         </p>
                 </div>
 
@@ -662,8 +676,8 @@
                         <div id="search-results-count" class="text-xs text-white/60 mt-2">
                             <!-- Счетчик результатов поиска -->
                         </div>
+                        </div>
                     </div>
-                </div>
 
                 <div class="grid gap-2.5">
                     <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb">
@@ -714,7 +728,21 @@
                         <div class="mb-4">
                             <label class="block mb-2 text-slate-300 text-[15px] font-bold">Фамилия:</label>
                             <input type="text" id="add-last-name" placeholder="Введите фамилию" 
-                                   class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-5 text-[15px] font-bold">
+                                   class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 text-[15px] font-bold">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Город работы:</label>
+                            <input type="text" id="add-city" placeholder="Введите город" 
+                                   class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 text-[15px] font-bold">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Режим работы:</label>
+                            <select id="add-work-mode" class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-5 text-[15px] font-bold">
+                                <option value="office">Офисный</option>
+                                <option value="remote_only">Удаленный</option>
+                            </select>
                         </div>
 
                         <div class="mb-5">
@@ -770,7 +798,21 @@
                         <div class="mb-4">
                             <label class="block mb-2 text-slate-300 text-[15px] font-bold">Фамилия:</label>
                             <input type="text" id="edit-last-name" placeholder="Введите фамилию" 
-                                   class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-5 text-[15px] font-bold">
+                                   class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 text-[15px] font-bold">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Город работы:</label>
+                            <input type="text" id="edit-city" placeholder="Введите город" 
+                                   class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-4 text-[15px] font-bold">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Режим работы:</label>
+                            <select id="edit-work-mode" class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white mb-5 text-[15px] font-bold">
+                                <option value="office">Офисный</option>
+                                <option value="remote_only">Удаленный</option>
+                            </select>
                         </div>
 
                         <div class="mb-5">
@@ -854,20 +896,20 @@
                     <button onclick="closeIssueDialog()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
                     <div class="flex-1 text-center">
                         <div class="font-bold text-[17px] m-0">💬 Диалог с обращением</div>
-                    </div>
+            </div>
                     <div class="w-10"></div>
                 </header>
 
                 <div class="grid gap-2.5 mb-20">
                     <div class="bg-nb-graphite text-slate-50 rounded-nb p-3 shadow-nb min-h-[60vh] max-h-[70vh] overflow-y-auto">
-                        <div id="issue-dialog-content">
+                <div id="issue-dialog-content">
                             <div class="text-center text-white/70 p-5">
                                 <div class="text-base">📈 Загрузка диалога...</div>
                                 <div class="text-xs mt-2">Получение данных из базы</div>
                             </div>
-                        </div>
                     </div>
                 </div>
+            </div>
             
                 <div class="fixed bottom-0 left-0 right-0 bg-nb-bg p-4 border-t border-white/10">
                     <div class="flex gap-2.5 max-w-full mx-auto">
@@ -1303,66 +1345,110 @@
             
             container.innerHTML = '';
             employees.forEach(emp => {
+                // Определяем градиент и стиль в зависимости от статуса
+                let bgGradient, statusIcon, statusText, statusBadgeColor;
+                
+                if (emp.is_blocked) {
+                    bgGradient = 'linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(248, 113, 113, 0.15) 100%)';
+                    statusIcon = '🔴';
+                    statusText = 'Заблокирован';
+                    statusBadgeColor = 'background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);';
+                } else {
+                    bgGradient = 'linear-gradient(135deg, rgba(17, 153, 142, 0.15) 0%, rgba(56, 239, 125, 0.15) 100%)';
+                    statusIcon = '🟢';
+                    statusText = 'Активен';
+                    statusBadgeColor = 'background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);';
+                }
+                
+                // Бейдж администратора
+                const adminBadge = emp.is_admin ? 
+                    '<span style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); color: white; padding: 3px 10px; border-radius: 12px; font-size: 10px; margin-left: 8px; font-weight: bold; box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);">⭐ АДМИН</span>' : '';
+                
+                // Статус бота
+                const botStatus = emp.chat_id ? '✅ Авторизован' : '⚠️ Не в боте';
+                const botStatusColor = emp.chat_id ? '#10b981' : '#f59e0b';
+                const botBadgeGradient = emp.chat_id ? 
+                    'background: linear-gradient(135deg, #10b981 0%, #34d399 100%);' : 
+                    'background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);';
+                
+                // Информация о городе и режиме работы
+                const city = emp.city || 'Не указан';
+                const workMode = emp.default_work_mode || 'office';
+                const workModeText = workMode === 'office' ? '🏢 Офисный' : workMode === 'remote_only' ? '🏡 Удаленный' : '💼 Смешанный';
+                
                 const empDiv = document.createElement('div');
                 empDiv.style.cssText = `
-                    background: rgba(255,255,255,0.1);
-                    border: 1px solid rgba(255,255,255,0.2);
-                    border-radius: var(--radius);
-                    padding: 12px;
+                    background: ${bgGradient};
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 12px;
+                    padding: 16px;
                     margin-bottom: 12px;
                     transition: all 0.2s ease;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                    cursor: pointer;
                     width: 100%;
                     box-sizing: border-box;
-                    max-width: 100%;
-                    overflow: hidden;
                 `;
                 
-                const statusIcon = emp.is_blocked ? '🔴' : '🟢';
-                const statusText = emp.is_blocked ? 'Заблокирован' : 'Активен';
-                const statusColor = emp.is_blocked ? '#ef4444' : '#10b981';
-                const adminBadge = emp.is_admin ? '<span style="background: var(--accent); color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px; margin-left: 8px; font-weight: 600;">АДМИН</span>' : '';
-                const botStatus = emp.chat_id ? '✅ В боте' : '⚠️ Не авторизован';
-                const botStatusColor = emp.chat_id ? '#10b981' : '#f59e0b';
-                
                 empDiv.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; width: 100%; overflow: hidden;">
-                        <div style="flex: 1; min-width: 0; margin-right: 8px; overflow: hidden;">
-                            <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1.3;">
-                                👤 ${emp.first_name} ${emp.last_name}${adminBadge}
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0;">
+                            <span style="font-size: 28px; flex-shrink: 0;">👤</span>
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-weight: bold; font-size: 15px; color: white; line-height: 1.3; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
+                                    <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${emp.first_name} ${emp.last_name}</span>
+                                    ${adminBadge}
+                                </div>
+                                <div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 3px;">
+                                    📞 ${emp.phone}
+                                </div>
                             </div>
-                            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.8); margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">📞 ${emp.phone}</div>
-                            <div style="font-size: 11px; color: ${botStatusColor}; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${botStatus}</div>
                         </div>
-                        <div style="text-align: right; flex-shrink: 0; max-width: 100px;">
-                            <div style="font-size: 10px; color: ${statusColor}; font-weight: 600; padding: 3px 6px; background: rgba(255,255,255,0.1); border-radius: var(--radius); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${statusIcon} ${statusText}</div>
+                        <div style="${statusBadgeColor} padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; color: white; box-shadow: 0 2px 6px rgba(0,0,0,0.2); white-space: nowrap; flex-shrink: 0;">
+                            ${statusIcon} ${statusText}
                         </div>
                     </div>
-                    <div style="display: flex; gap: 6px; width: 100%;">
+                    
+                    <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                        <div style="padding: 6px 12px; background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%); border-radius: 8px; display: inline-flex; align-items: center; box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);">
+                            <span style="font-size: 11px; color: white; font-weight: bold;">🏙️ ${city}</span>
+                        </div>
+                        <div style="padding: 6px 12px; ${botBadgeGradient} border-radius: 8px; display: inline-flex; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
+                            <span style="font-size: 11px; color: white; font-weight: bold;">${botStatus}</span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 12px; padding: 8px 12px; background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%); border-radius: 8px; display: inline-block; box-shadow: 0 2px 4px rgba(139, 92, 246, 0.3);">
+                        <span style="font-size: 12px; color: white; font-weight: bold;">${workModeText}</span>
+                    </div>
+                    
+                    <div style="display: flex; gap: 8px; width: 100%; margin-top: 12px;">
                         <button onclick="toggleEmployeeBlock('${emp.phone}', ${!emp.is_blocked})" 
-                                class="px-2 py-1.5 border-none rounded-nb text-white text-[11px] cursor-pointer transition-all duration-200 flex-1 font-semibold min-w-0 overflow-hidden text-ellipsis whitespace-nowrap ${emp.is_blocked ? 'bg-green-600' : 'bg-red-600'}">
-                            ${emp.is_blocked ? '✅' : '🔒'}
+                                style="padding: 8px 12px; border: none; border-radius: 10px; color: white; font-size: 12px; cursor: pointer; font-weight: bold; flex: 1; transition: all 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.2); ${emp.is_blocked ? 'background: linear-gradient(135deg, #10b981 0%, #34d399 100%);' : 'background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);'}">
+                            ${emp.is_blocked ? '✅ Разблокировать' : '🔒 Заблокировать'}
                         </button>
-                        <button onclick="editEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}', ${emp.is_admin})" 
-                                class="px-2 py-1.5 bg-orange-600 border-none rounded-nb text-white text-[11px] cursor-pointer transition-all duration-200 flex-1 font-semibold min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
-                            ✏️
+                    </div>
+                    
+                    <div style="display: flex; gap: 8px; width: 100%; margin-top: 8px;">
+                        <button onclick="editEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}', ${emp.is_admin}, '${city}', '${workMode}')" 
+                                style="padding: 8px 12px; background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); border: none; border-radius: 10px; color: white; font-size: 12px; cursor: pointer; font-weight: bold; flex: 1; transition: all 0.2s; box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3);">
+                            ✏️ Редактировать
                         </button>
                         <button onclick="deleteEmployee('${emp.phone}', '${emp.first_name}', '${emp.last_name}')" 
-                                class="px-2 py-1.5 bg-red-600 border-none rounded-nb text-white text-[11px] cursor-pointer transition-all duration-200 flex-1 font-semibold min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
-                            🗑️
+                                style="padding: 8px 12px; background: linear-gradient(135deg, #ef4444 0%, #f87171 100%); border: none; border-radius: 10px; color: white; font-size: 12px; cursor: pointer; font-weight: bold; flex: 1; transition: all 0.2s; box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);">
+                            🗑️ Удалить
                         </button>
                     </div>
                 `;
                 
                 // Добавляем hover эффект
                 empDiv.addEventListener('mouseenter', () => {
-                    empDiv.style.borderColor = 'rgba(255,255,255,0.4)';
-                    empDiv.style.transform = 'translateY(-1px)';
-                    empDiv.style.background = 'rgba(255,255,255,0.15)';
+                    empDiv.style.transform = 'translateY(-2px)';
+                    empDiv.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
                 });
                 empDiv.addEventListener('mouseleave', () => {
-                    empDiv.style.borderColor = 'rgba(255,255,255,0.2)';
                     empDiv.style.transform = 'translateY(0)';
-                    empDiv.style.background = 'rgba(255,255,255,0.1)';
+                    empDiv.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
                 });
                 
                 container.appendChild(empDiv);
@@ -1605,42 +1691,33 @@
 
             container.innerHTML = '';
             issues.forEach(issue => {
-                const issueDiv = document.createElement('div');
-                issueDiv.style.cssText = `
-                    background: #8b5cf6;
-                    border: 1px solid #7c3aed;
-                    border-radius: var(--radius);
-                    padding: 16px;
-                    margin-bottom: 12px;
-                    transition: all 0.2s ease;
-                    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
-                `;
+                // Определяем градиент и стиль в зависимости от статуса
+                let bgGradient, statusIcon, statusText, statusBadgeColor;
                 
-                let statusIcon = '🟢';
-                let statusText = 'Активно';
-                let statusColor = '#10b981';
-                
-                if (issue.status === 'closed') {
-                    statusIcon = '🔴';
-                    statusText = 'Закрыто';
-                    statusColor = '#ef4444';
-                } else if (issue.status === 'in_progress') {
-                    statusIcon = '🟠';
-                    statusText = 'В работе';
-                    statusColor = '#f97316';
-                } else if (issue.status === 'resolved') {
-                    statusIcon = '🟢';
-                    statusText = 'Решено';
-                    statusColor = '#10b981';
-                } else if (issue.status === 'active') {
+                if (issue.status === 'active') {
+                    bgGradient = 'linear-gradient(135deg, rgba(17, 153, 142, 0.15) 0%, rgba(56, 239, 125, 0.15) 100%)';
                     statusIcon = '🟢';
                     statusText = 'Активно';
-                    statusColor = '#10b981';
+                    statusBadgeColor = 'background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);';
+                } else if (issue.status === 'in_progress') {
+                    bgGradient = 'linear-gradient(135deg, rgba(255, 165, 2, 0.15) 0%, rgba(255, 193, 7, 0.15) 100%)';
+                    statusIcon = '🟠';
+                    statusText = 'В работе';
+                    statusBadgeColor = 'background: linear-gradient(135deg, #ffa502 0%, #ffc107 100%);';
+                } else if (issue.status === 'resolved') {
+                    bgGradient = 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(74, 222, 128, 0.15) 100%)';
+                    statusIcon = '✅';
+                    statusText = 'Решено';
+                    statusBadgeColor = 'background: linear-gradient(135deg, #22c55e 0%, #4ade80 100%);';
+                } else {
+                    bgGradient = 'linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%)';
+                    statusIcon = '🔴';
+                    statusText = 'Закрыто';
+                    statusBadgeColor = 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
                 }
                 
-                const typeIcon = issue.type === 'personal' ? '💔' : '🖥';
+                const typeIcon = issue.type === 'personal' ? '💔' : '🖥️';
                 const typeText = issue.type === 'personal' ? 'Личная проблема' : 'Техническая проблема';
-                const typeColor = issue.type === 'personal' ? '#8b5cf6' : '#3b82f6';
                 const anonymityText = issue.is_anonymous ? ` (${issue.pseudonym || 'Анонимно'})` : '';
                 
                 // Определяем кнопки в зависимости от статуса
@@ -1648,61 +1725,88 @@
                 if (issue.status === 'closed') {
                     buttonsHtml = `
                         <button onclick="openIssueDialog(${issue.id})" 
-                                style="padding: 6px 12px; background: #6366f1; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: opacity 0.2s;">
+                                style="padding: 8px 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 10px; color: white; font-size: 13px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3); transition: all 0.2s;">
                             👁️ Просмотр
                         </button>
                     `;
                 } else {
                     buttonsHtml = `
                         <button onclick="openIssueDialog(${issue.id})" 
-                                style="padding: 6px 12px; background: #10b981; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; margin-right: 8px; transition: opacity 0.2s;">
+                                style="padding: 8px 16px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); border: none; border-radius: 10px; color: white; font-size: 13px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 6px rgba(56, 239, 125, 0.3); margin-right: 8px; transition: all 0.2s;">
                             💬 Ответить
                         </button>
                         <button onclick="closeIssue(${issue.id})" 
-                                style="padding: 6px 12px; background: #ef4444; border: none; border-radius: 6px; color: white; font-size: 12px; cursor: pointer; transition: opacity 0.2s;">
+                                style="padding: 8px 16px; background: linear-gradient(135deg, #ef4444 0%, #f87171 100%); border: none; border-radius: 10px; color: white; font-size: 13px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3); transition: all 0.2s;">
                             ✅ Закрыть
                         </button>
                     `;
                 }
 
+                const issueDiv = document.createElement('div');
+                issueDiv.style.cssText = `
+                    background: ${bgGradient};
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 12px;
+                    padding: 16px;
+                    margin-bottom: 12px;
+                    transition: all 0.2s ease;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                    cursor: pointer;
+                `;
+
                 issueDiv.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 20px;">${typeIcon}</span>
                         <div>
-                            <div style="font-size: 16px; font-weight: 600; color: white; margin-bottom: 4px;">
-                                ${typeIcon} Обращение #${issue.id}${anonymityText}
+                                <div style="font-weight: bold; font-size: 14px; color: white;">
+                                    ${typeText}${anonymityText}
                             </div>
-                            <div style="font-size: 12px; color: ${typeColor === '#8b5cf6' ? '#e9d5ff' : '#bfdbfe'}; margin-bottom: 8px;">${typeText}</div>
-                            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px; line-height: 1.4;">${issue.description}</div>
-                            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.7);">
-                                👤 ${issue.employee_name} • 📅 ${new Date(issue.created_at).toLocaleString('ru-RU')}
-                                ${issue.response_count > 0 ? ` • 💬 ${issue.response_count} ответов` : ''}
+                                <div style="font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px;">
+                                    Обращение #${issue.id}
                             </div>
-                            ${issue.last_response_preview ? `
-                                <div style="margin-top: 8px; padding: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 6px; border-left: 3px solid rgba(255, 255, 255, 0.3);">
-                                    <div style="font-size: 11px; color: rgba(255, 255, 255, 0.6); margin-bottom: 2px;">Последний ответ:</div>
-                                    <div style="font-size: 12px; color: rgba(255, 255, 255, 0.9);">${issue.last_response_preview}</div>
                                 </div>
-                            ` : ''}
                         </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 12px; color: ${statusColor === '#10b981' ? '#a7f3d0' : statusColor === '#ef4444' ? '#fca5a5' : '#fed7aa'}; font-weight: 500; margin-bottom: 8px;">${statusIcon} ${statusText}</div>
+                        <div style="${statusBadgeColor} padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; color: white; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+                            ${statusIcon} ${statusText}
                         </div>
                     </div>
+                    
+                    <div style="font-size: 13px; color: rgba(255,255,255,0.95); margin-bottom: 12px; line-height: 1.5; background: rgba(0,0,0,0.15); padding: 10px; border-radius: 8px;">
+                        ${issue.description}
+                    </div>
+                    
+                    <div style="font-size: 11px; color: rgba(255,255,255,0.7); margin-bottom: 12px;">
+                        👤 ${issue.employee_name} • 🕐 ${new Date(issue.created_at).toLocaleString('ru-RU', { 
+                            day: '2-digit', 
+                            month: '2-digit', 
+                            year: 'numeric', 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                        })}
+                        ${issue.response_count > 0 ? ` • 💬 ${issue.response_count} ${issue.response_count === 1 ? 'ответ' : 'ответов'}` : ''}
+                    </div>
+                    
+                    ${issue.last_response_preview ? `
+                        <div style="margin-bottom: 12px; padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; border-left: 3px solid rgba(255, 255, 255, 0.4);">
+                            <div style="font-size: 10px; color: rgba(255, 255, 255, 0.6); margin-bottom: 4px; font-weight: bold;">ПОСЛЕДНИЙ ОТВЕТ:</div>
+                            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.95); line-height: 1.4;">${issue.last_response_preview}</div>
+                        </div>
+                    ` : ''}
+                    
                     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                        ${buttonsHtml.replace(/background: #10b981/g, 'background: rgba(16, 185, 129, 0.8)').replace(/background: #ef4444/g, 'background: rgba(239, 68, 68, 0.8)').replace(/background: #6366f1/g, 'background: rgba(99, 102, 241, 0.8)')}
+                        ${buttonsHtml}
                     </div>
                 `;
                 
                 // Добавляем hover эффект
                 issueDiv.addEventListener('mouseenter', () => {
-                    issueDiv.style.borderColor = '#a855f7';
-                    issueDiv.style.transform = 'translateY(-1px)';
-                    issueDiv.style.boxShadow = '0 4px 12px rgba(139, 92, 246, 0.3)';
+                    issueDiv.style.transform = 'translateY(-2px)';
+                    issueDiv.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
                 });
                 issueDiv.addEventListener('mouseleave', () => {
-                    issueDiv.style.borderColor = '#7c3aed';
                     issueDiv.style.transform = 'translateY(0)';
-                    issueDiv.style.boxShadow = '0 2px 8px rgba(139, 92, 246, 0.2)';
+                    issueDiv.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
                 });
                 
                 container.appendChild(issueDiv);
@@ -1920,10 +2024,8 @@
                 // Добавляем сообщение в диалог локально
                 addMessageToDialog(responseText, true, false);
                 
-                // Прокручиваем к низу диалога
-                setTimeout(() => {
-                    scrollToBottom(false); // false = админский диалог
-                }, 150);
+                // Прокручиваем к низу диалога МГНОВЕННО
+                scrollToBottom(false, true);
                 
                 // Очищаем поле ввода
                 input.value = '';
@@ -2472,6 +2574,8 @@
             document.getElementById('add-phone').value = '';
             document.getElementById('add-first-name').value = '';
             document.getElementById('add-last-name').value = '';
+            document.getElementById('add-city').value = '';
+            document.getElementById('add-work-mode').value = 'office';
             document.getElementById('add-is-admin').checked = false;
         }
         
@@ -2480,6 +2584,8 @@
                 const phoneNumber = document.getElementById('add-phone').value.trim();
                 const firstName = document.getElementById('add-first-name').value.trim();
                 const lastName = document.getElementById('add-last-name').value.trim();
+                const city = document.getElementById('add-city').value.trim() || 'Не указан';
+                const defaultWorkMode = document.getElementById('add-work-mode').value;
                 const isAdmin = document.getElementById('add-is-admin').checked;
                 
                 if (!phoneNumber || !firstName || !lastName) {
@@ -2497,6 +2603,8 @@
                         phone_number: phoneNumber,
                         first_name: firstName,
                         last_name: lastName,
+                        city: city,
+                        default_work_mode: defaultWorkMode,
                         is_admin: isAdmin
                     })
                 });
@@ -2516,7 +2624,7 @@
             }
         }
         
-        function editEmployee(phone, firstName, lastName, isAdmin) {
+        function editEmployee(phone, firstName, lastName, isAdmin, city, defaultWorkMode) {
             // Скрываем все модальные окна
             document.getElementById('employees-management-modal').style.display = 'none';
             document.getElementById('add-employee-modal').style.display = 'none';
@@ -2529,6 +2637,8 @@
             document.getElementById('edit-phone').value = phone;
             document.getElementById('edit-first-name').value = firstName;
             document.getElementById('edit-last-name').value = lastName;
+            document.getElementById('edit-city').value = city || 'Не указан';
+            document.getElementById('edit-work-mode').value = defaultWorkMode || 'office';
             document.getElementById('edit-is-admin').checked = isAdmin;
         }
         
@@ -2537,6 +2647,8 @@
                 const phoneNumber = document.getElementById('edit-phone').value.trim();
                 const firstName = document.getElementById('edit-first-name').value.trim();
                 const lastName = document.getElementById('edit-last-name').value.trim();
+                const city = document.getElementById('edit-city').value.trim() || 'Не указан';
+                const defaultWorkMode = document.getElementById('edit-work-mode').value;
                 const isAdmin = document.getElementById('edit-is-admin').checked;
                 
                 if (!firstName || !lastName) {
@@ -2554,6 +2666,8 @@
                         phone_number: phoneNumber,
                         first_name: firstName,
                         last_name: lastName,
+                        city: city,
+                        default_work_mode: defaultWorkMode,
                         is_admin: isAdmin
                     })
                 });
@@ -2744,15 +2858,29 @@
                 // Загружаем аватарку пользователя (или показываем инициалы)
                 loadUserAvatar();
                 
-                // Для демо-режима показываем базовую информацию
-                const workStatusEl = document.getElementById('work-status');
-                if (workStatusEl) workStatusEl.textContent = 'Удаленная работа';
+                // Обновляем карточку "Сегодня" с реальными данными из БД
+                const todayStatusEl = document.getElementById('today-status');
+                if (todayStatusEl && data.status && data.status.work_mode) {
+                    todayStatusEl.textContent = data.status.work_mode;
+                }
                 
-                const vacationInfoEl = document.getElementById('vacation-info');
-                if (vacationInfoEl) vacationInfoEl.textContent = 'Отпуск не запланирован';
+                // Обновляем информацию о следующем отпуске
+                const nextVacationEl = document.getElementById('next-vacation');
+                if (nextVacationEl && data.vacation) {
+                    if (data.vacation.days_until) {
+                        nextVacationEl.textContent = `${data.vacation.start_date} - ${data.vacation.end_date} (через ${data.vacation.days_until} дн.)`;
+                    } else {
+                        nextVacationEl.textContent = 'Отпуск не запланирован';
+                    }
+                } else if (nextVacationEl) {
+                    nextVacationEl.textContent = 'Отпуск не запланирован';
+                }
                 
-                const dailyFactEl = document.getElementById('daily-fact');
-                if (dailyFactEl) dailyFactEl.textContent = 'Добро пожаловать в Maria Bot!';
+                // Обновляем интересный факт дня
+                const todayMessageEl = document.getElementById('today-message');
+                if (todayMessageEl && data.daily_fact) {
+                    todayMessageEl.textContent = data.daily_fact;
+                }
                 
                 // Показываем админское меню, если пользователь администратор
                 if (data.user.is_admin) {
@@ -3968,6 +4096,9 @@
                     adminLastDialogData = data;
                 }
                 
+                // Прокручиваем к новым сообщениям МГНОВЕННО
+                scrollToBottom(isUserDialog, true);
+                
                 // Восстанавливаем фокус и значение поля ввода
                 if (wasInputFocused) {
                     setTimeout(() => {
@@ -3979,8 +4110,8 @@
                     }, 50);
                 }
                 
-                // Прокручиваем к новым сообщениям
-                setTimeout(() => scrollToBottom(isUserDialog), 100);
+                // Дополнительная прокрутка после восстановления фокуса
+                setTimeout(() => scrollToBottom(isUserDialog, true), 250);
                 
             } catch (error) {
                 console.error('❌ Ошибка умного обновления диалога:', error);
@@ -4064,7 +4195,7 @@
 
         
         // Плавная прокрутка к низу диалога
-        function scrollToBottom(isUserDialog) {
+        function scrollToBottom(isUserDialog, instant = false) {
             
             const containerId = isUserDialog ? 'my-issue-dialog-content' : 'issue-dialog-content';
             const container = document.getElementById(containerId);
@@ -4076,6 +4207,8 @@
             
             // Используем setTimeout для гарантии, что DOM обновился
             setTimeout(() => {
+                const behavior = instant ? 'auto' : 'smooth';
+                
                 // Прокручиваем основной скроллируемый контейнер
                 if (!isUserDialog) {
                     // Админский диалог - ищем все возможные скроллируемые контейнеры
@@ -4087,8 +4220,8 @@
                         if (element && element.scrollHeight > element.clientHeight) {
                             console.log('📜 Прокручиваем админский контейнер:', element.id || element.className);
                             element.scrollTo({
-                                top: element.scrollHeight,
-                                behavior: 'smooth'
+                                top: element.scrollHeight + 1000,
+                                behavior: behavior
                             });
                         }
                     });
@@ -4102,8 +4235,8 @@
                         if (element && element.scrollHeight > element.clientHeight) {
                             console.log('📜 Прокручиваем пользовательский контейнер:', element.id || element.className);
                             element.scrollTo({
-                                top: element.scrollHeight,
-                                behavior: 'smooth'
+                                top: element.scrollHeight + 1000,
+                                behavior: behavior
                             });
                         }
                     });
@@ -4114,13 +4247,24 @@
                 if (messagesContainer && messagesContainer.scrollHeight > messagesContainer.clientHeight) {
                     console.log('📜 Прокручиваем контейнер сообщений');
                     messagesContainer.scrollTo({
-                        top: messagesContainer.scrollHeight,
-                        behavior: 'smooth'
+                        top: messagesContainer.scrollHeight + 1000,
+                        behavior: behavior
                     });
                 }
                 
+                // Дополнительная прокрутка через 50ms для гарантии
+                if (instant) {
+                    setTimeout(() => {
+                        [container, messagesContainer].forEach(el => {
+                            if (el) {
+                                el.scrollTop = el.scrollHeight + 1000;
+                            }
+                        });
+                    }, 50);
+                }
+                
                 console.log('✅ Прокрутка завершена');
-            }, 100);
+            }, 150);
         }
         
         async function openMyIssueDialog(issueId) {
@@ -4203,44 +4347,108 @@
             const issue = data.issue;
             const responses = data.responses || [];
             
-            let html = '<div style="margin-bottom: 20px;">';
-            
-            // Информация об обращении
-            const typeIcon = issue.type === 'personal' ? '💔' : '🖥';
-            const typeText = issue.type === 'personal' ? 'Личная проблема' : 'Техническая проблема';
+            // Информация об обращении (КОПИЯ АДМИНСКОГО ЧАТА)
+            const typeIcon = issue.issue_type === 'personal' ? '💔' : '🖥';
+            const typeText = issue.issue_type === 'personal' ? 'Личная проблема' : 'Техническая проблема';
             const anonymityText = issue.is_anonymous ? ` (${issue.pseudonym || 'Анонимно'})` : '';
             
-            html += '<div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px;">';
-            html += '<div style="font-weight: bold; margin-bottom: 10px;">' + typeIcon + ' Обращение #' + issue.id + anonymityText + '</div>';
-            html += '<div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 5px;">' + typeText + '</div>';
-            html += '<div style="font-size: 14px; margin-bottom: 8px;">' + issue.description + '</div>';
-            html += '<div style="font-size: 12px; color: rgba(255,255,255,0.6);">Создано: ' + new Date(issue.created_at).toLocaleString('ru-RU') + '</div>';
+            // Определяем статус (КОПИЯ АДМИНСКОГО ЧАТА)
+            let statusIcon = '🟡';
+            let statusText = 'Активно';
+            let statusColor = '#ffa500';
+            if (issue.status === 'closed') {
+                statusIcon = '🔴';
+                statusText = 'Закрыто';
+                statusColor = '#ff4757';
+            } else if (issue.status === 'resolved') {
+                statusIcon = '🟢';
+                statusText = 'Решено';
+                statusColor = '#2ed573';
+            }
+            
+            let html = '';
+            
+            // Информационная карточка об обращении (КОПИЯ АДМИНСКОГО ЧАТА)
+            html += '<div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: var(--radius); margin-bottom: 15px;">';
+            html += '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">';
+            html += '<h3 style="margin: 0; font-size: 16px; line-height: 1.4;">' + typeIcon + ' Обращение #' + issue.id + anonymityText + '</h3>';
+            html += '<div style="font-size: 12px; color: ' + statusColor + '; font-weight: 600;">' + statusIcon + ' ' + statusText + '</div>';
+            html += '</div>';
+            html += '<div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 8px;">' + typeText + '</div>';
+            html += '<div style="font-size: 14px; margin-bottom: 12px; line-height: 1.4;">' + issue.description + '</div>';
+            html += '<div style="font-size: 12px; color: rgba(255,255,255,0.6);">🕐 Создано: ' + new Date(issue.created_at).toLocaleString('ru-RU') + '</div>';
+            
+            // Если обращение закрыто, показываем предупреждение (КОПИЯ АДМИНСКОГО ЧАТА)
+            if (issue.status === 'closed') {
+                html += '<div style="margin-top: 12px; padding: 10px; background: rgba(255, 71, 87, 0.2); border-radius: var(--radius); font-size: 12px; color: rgba(255,255,255,0.9);">';
+                html += '🔒 Это обращение закрыто. Вы не можете добавлять новые сообщения.';
+                html += '</div>';
+            }
+            
             html += '</div>';
             
-            // История ответов
+            // История ответов (КОПИЯ АДМИНСКОГО ЧАТА с правильным выравниванием)
             if (responses.length > 0) {
-                html += '<div class="dialog-messages" style="margin-bottom: 20px; max-height: 300px; overflow-y: auto;">';
-                html += '<div style="font-weight: bold; margin-bottom: 15px;">История диалога:</div>';
+                html += '<div class="dialog-messages" style="margin-bottom: 15px;">';
+                html += '<h3 style="font-size: 16px; line-height: 1.4; margin-bottom: 15px;">💬 История диалога</h3>';
                 
                 responses.forEach(response => {
                     const isAdmin = response.responder_phone === 'admin';
                     const messageStyle = isAdmin 
-                        ? 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-left: 20px; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);'
-                        : 'background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; margin-right: 20px; box-shadow: 0 2px 8px rgba(56, 239, 125, 0.3);';
+                        ? 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-left: auto; text-align: right; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);'
+                        : 'background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; margin-right: auto; box-shadow: 0 2px 8px rgba(56, 239, 125, 0.3);';
                     
-                    html += '<div style="' + messageStyle + ' padding: 12px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; word-wrap: break-word;">';
-                    html += '<div style="font-size: 14px; margin-bottom: 5px; line-height: 1.4;">' + response.response_text + '</div>';
-                    html += '<div style="font-size: 11px; opacity: 0.8; text-align: right;">';
+                    html += '<div style="margin: 10px 0; padding: 12px 15px; border-radius: 12px; max-width: 80%; word-wrap: break-word; ' + messageStyle + '">';
+                    html += '<div style="font-size: 14px; margin-bottom: 6px; line-height: 1.4;">' + response.response_text + '</div>';
+                    html += '<div style="font-size: 11px; opacity: 0.8;">';
                     html += (isAdmin ? '👨‍💼 Администратор' : '👤 Вы') + ' • ' + new Date(response.created_at).toLocaleString('ru-RU');
                     html += '</div>';
                     html += '</div>';
                 });
                 
                 html += '</div>';
+            } else {
+                html += '<div style="text-align: center; color: rgba(255,255,255,0.6); padding: 20px; font-style: italic;">';
+                html += '💭 Пока нет ответов. Ожидайте ответа от администратора!';
+                html += '</div>';
             }
             
-            html += '</div>';
             container.innerHTML = html;
+            
+            // Управляем видимостью поля ввода в зависимости от статуса обращения (КОПИЯ АДМИНСКОГО ЧАТА)
+            const inputContainer = document.querySelector('#my-issue-dialog-modal div[style*="position: fixed"]');
+            if (inputContainer) {
+                const input = document.getElementById('my-response-input');
+                const button = inputContainer.querySelector('button');
+                
+                if (issue.status === 'closed') {
+                    // Для закрытых обращений делаем поле ввода полупрозрачным
+                    inputContainer.style.opacity = '0.6';
+                    if (input) {
+                        input.placeholder = 'Обращение закрыто - ответы запрещены';
+                        input.style.background = 'rgba(255, 71, 87, 0.2)';
+                        input.disabled = true;
+                    }
+                    if (button) {
+                        button.style.background = '#ff4757';
+                        button.innerHTML = '🔒 Закрыто';
+                        button.disabled = true;
+                    }
+                } else {
+                    // Для активных обращений возвращаем обычный вид
+                    inputContainer.style.opacity = '1';
+                    if (input) {
+                        input.placeholder = 'Введите ответ...';
+                        input.style.background = 'rgba(255,255,255,0.1)';
+                        input.disabled = false;
+                    }
+                    if (button) {
+                        button.style.background = 'var(--accent)';
+                        button.innerHTML = 'Отправить';
+                        button.disabled = false;
+                    }
+                }
+            }
             
             // Прокручиваем вниз к последним сообщениям
             setTimeout(() => {
@@ -4754,10 +4962,10 @@
                 container.innerHTML = `
                     <div style="text-align: center; color: var(--muted); padding: 30px;">
                         <div style="font-size: 48px; margin-bottom: 15px;">📝</div>
-                        <div style="font-size: 16px; margin-bottom: 8px;">У вас пока нет обращений</div>
-                        <div style="font-size: 12px; color: rgba(255,255,255,0.6);">Создайте новое обращение через меню "Нужна помощь"</div>
+                        <div style="font-size: 16px; margin-bottom: 8px;">У тебя пока нет обращений</div>
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.6);">Создай новое обращение через меню "Нужна помощь"</div>
                         <div style="margin-top: 20px;">
-                            <button onclick="showSosModal()" style="background: #2ed573; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">
+                            <button onclick="showSosModal()" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; box-shadow: 0 2px 8px rgba(56, 239, 125, 0.3); font-weight: bold;">
                                 Создать обращение
                             </button>
                         </div>
@@ -4768,51 +4976,82 @@
             
             let html = '';
             issues.forEach(issue => {
-                const statusColor = issue.status === 'active' ? '#2ed573' : 
-                                  issue.status === 'in_progress' ? '#ffa502' : '#ff6b6b';
-                const statusText = issue.status === 'active' ? 'Активно' : 
-                                 issue.status === 'in_progress' ? 'В работе' : 'Закрыто';
+                // Определяем градиент и стиль в зависимости от статуса
+                let bgGradient, statusIcon, statusText, statusBadgeColor;
+                
+                if (issue.status === 'active') {
+                    bgGradient = 'linear-gradient(135deg, rgba(17, 153, 142, 0.15) 0%, rgba(56, 239, 125, 0.15) 100%)';
+                    statusIcon = '🟢';
+                    statusText = 'Активно';
+                    statusBadgeColor = 'background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);';
+                } else if (issue.status === 'in_progress') {
+                    bgGradient = 'linear-gradient(135deg, rgba(255, 165, 2, 0.15) 0%, rgba(255, 193, 7, 0.15) 100%)';
+                    statusIcon = '🟠';
+                    statusText = 'В работе';
+                    statusBadgeColor = 'background: linear-gradient(135deg, #ffa502 0%, #ffc107 100%);';
+                } else {
+                    bgGradient = 'linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%)';
+                    statusIcon = '🔴';
+                    statusText = 'Закрыто';
+                    statusBadgeColor = 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
+                }
+                
+                const typeIcon = issue.type === 'technical' ? '🖥️' : '💔';
+                const typeText = issue.type === 'technical' ? 'Техническая проблема' : 'Личная проблема';
                 
                 const hasNewResponses = issue.has_new_responses;
                 const newResponsesBadge = hasNewResponses ? 
-                    `<span style="background: #ff6b6b; color: white; padding: 2px 6px; border-radius: 10px; font-size: 10px; margin-left: 8px;">НОВОЕ</span>` : '';
+                    `<span style="background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%); color: white; padding: 3px 8px; border-radius: 10px; font-size: 10px; margin-left: 8px; box-shadow: 0 2px 4px rgba(255,107,107,0.3);">НОВОЕ</span>` : '';
                 
                 html += `
                     <div onclick="openMyIssueDialog(${issue.id})" style="
-                        background: rgba(255,255,255,0.1); 
-                        padding: 15px; 
-                        border-radius: 8px; 
-                        margin-bottom: 10px; 
+                        background: ${bgGradient};
+                        border: 1px solid rgba(255,255,255,0.1);
+                        padding: 16px; 
+                        border-radius: 12px; 
+                        margin-bottom: 12px; 
                         cursor: pointer;
-                        border-left: 4px solid ${statusColor};
                         transition: all 0.2s ease;
-                    " onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <div style="font-weight: bold; font-size: 14px;">
-                                ${issue.type === 'technical' ? '🖥️ Техническая проблема' : '💔 Личная проблема'}
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+                    " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.15)'">
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 20px;">${typeIcon}</span>
+                                <div>
+                                    <div style="font-weight: bold; font-size: 14px; color: white;">
+                                        ${typeText}
                                 ${newResponsesBadge}
                             </div>
-                            <div style="font-size: 11px; color: rgba(255,255,255,0.6);">
-                                #${issue.id}
+                                    <div style="font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px;">
+                                        Обращение #${issue.id}
                             </div>
                         </div>
-                        <div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 8px; line-height: 1.4;">
+                        </div>
+                            <div style="${statusBadgeColor} padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; color: white; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+                                ${statusIcon} ${statusText}
+                            </div>
+                            </div>
+                        
+                        <div style="font-size: 13px; color: rgba(255,255,255,0.95); margin-bottom: 12px; line-height: 1.5; background: rgba(0,0,0,0.15); padding: 10px; border-radius: 8px;">
                             ${issue.description}
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
-                            <div style="color: ${statusColor}; font-weight: bold;">
-                                ● ${statusText}
-                            </div>
-                            <div style="color: rgba(255,255,255,0.6);">
-                                ${new Date(issue.created_at).toLocaleDateString('ru-RU')}
-                            </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: rgba(255,255,255,0.7);">
+                            <div>
+                                🕐 ${new Date(issue.created_at).toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })}
                         </div>
                         ${issue.admin_response_count > 0 ? `
-                            <div style="margin-top: 8px; padding: 8px; background: rgba(46, 213, 115, 0.2); border-radius: 4px; font-size: 12px;">
-                                💬 Ответов администратора: ${issue.admin_response_count}
-                                ${issue.unread_admin_responses > 0 ? `<span style="color: #ff6b6b; font-weight: bold;"> (новых: ${issue.unread_admin_responses})</span>` : ''}
+                                <div style="color: rgba(255,255,255,0.9); font-weight: bold;">
+                                    💬 ${issue.admin_response_count} ${issue.admin_response_count === 1 ? 'ответ' : 'ответов'}
+                                    ${issue.unread_admin_responses > 0 ? `<span style="color: #ff6b6b;"> • ${issue.unread_admin_responses} новых</span>` : ''}
                             </div>
-                        ` : ''}
+                            ` : `
+                                <div style="color: rgba(255,255,255,0.5); font-style: italic;">
+                                    Нет ответов
+                                </div>
+                            `}
+                        </div>
                     </div>
                 `;
             });
@@ -4964,10 +5203,8 @@
                 // Только после успешной отправки добавляем сообщение локально
                 addMessageToDialog(responseText, true, true);
                 
-                // Прокручиваем к низу диалога
-                setTimeout(() => {
-                    scrollToBottom(true); // true = пользовательский диалог
-                }, 150);
+                // Прокручиваем к низу диалога МГНОВЕННО
+                scrollToBottom(true, true);
                 
                 // Очищаем поле ввода
                 input.value = '';
@@ -5033,7 +5270,7 @@
             document.head.appendChild(style);
             
             messagesContainer.appendChild(messageDiv);
-            scrollToBottom(true);
+            scrollToBottom(true, true);
         }
         
         // Удаляет временное сообщение
@@ -5160,7 +5397,7 @@
                     indicator.style.transform = 'translateY(0)';
                 }, 10);
                 
-                scrollToBottom(true);
+                scrollToBottom(true, true);
                 
             } else if (!show && indicator) {
                 // Скрываем индикатор
@@ -5252,7 +5489,7 @@
                     indicator.style.transform = 'translateY(0)';
                 }, 10);
                 
-                scrollToBottom(true);
+                scrollToBottom(true, true);
                 
             } else if (!show && indicator) {
                 // Скрываем индикатор
