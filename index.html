@@ -2944,14 +2944,27 @@
                     })
                 });
 
+                // Логируем статус ответа
+                console.log(`📡 API Response Status: ${response.status}`);
+                
                 // Проверяем, нужна ли авторизация
                 if (response.status === 401) {
-                    const errorData = await response.json();
-                    showAuthScreen(errorData.first_name || 'Пользователь');
-                    return;
+                    console.log('🔐 Требуется авторизация');
+                    try {
+                        const errorData = await response.json();
+                        console.log('📄 Error data:', errorData);
+                        showAuthScreen(errorData.first_name || 'Пользователь');
+                        return;
+                    } catch (jsonError) {
+                        console.error('❌ Ошибка парсинга JSON для 401:', jsonError);
+                        // Показываем экран авторизации с дефолтным именем
+                        showAuthScreen('Пользователь');
+                        return;
+                    }
                 }
 
                 if (!response.ok) {
+                    console.error(`❌ Response not OK: ${response.status}`);
                     throw new Error('Ошибка загрузки данных');
                 }
 
@@ -3006,8 +3019,17 @@
                 document.getElementById('app').style.display = 'block';
                 
             } catch (error) {
-                console.error('Ошибка:', error);
+                console.error('Ошибка загрузки данных:', error);
+                
+                // Скрываем индикатор загрузки
                 document.getElementById('loading').style.display = 'none';
+                
+                // Если ошибка сети - проверяем, может быть проблема с авторизацией
+                if (error.message && error.message.includes('Failed to fetch')) {
+                    console.warn('⚠️ Не удалось подключиться к backend. Проверьте, запущен ли сервер на localhost:5000');
+                }
+                
+                // Показываем экран ошибки
                 document.getElementById('error').style.display = 'block';
             }
         }
@@ -5101,8 +5123,16 @@
         // Удалено второе дублирующееся определение showSosMenuModal()
         
         function showAuthScreen(firstName) {
-            // Скрываем основное приложение
-            document.getElementById('main-app').style.display = 'none';
+            console.log(`🔐 showAuthScreen вызван для пользователя: ${firstName}`);
+            
+            // Скрываем loading и error
+            const loadingEl = document.getElementById('loading');
+            const errorEl = document.getElementById('error');
+            const appEl = document.getElementById('app');
+            
+            if (loadingEl) loadingEl.style.display = 'none';
+            if (errorEl) errorEl.style.display = 'none';
+            if (appEl) appEl.style.display = 'none';
             
             // Показываем экран авторизации
             document.body.innerHTML = `
