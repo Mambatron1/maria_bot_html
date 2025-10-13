@@ -5125,6 +5125,9 @@
         function showAuthScreen(firstName) {
             console.log(`🔐 showAuthScreen вызван для пользователя: ${firstName}`);
             
+            // Сохраняем ссылку на Telegram WebApp ПЕРЕД заменой body
+            window._telegramWebApp = window.Telegram?.WebApp;
+            
             // Скрываем loading и error
             const loadingEl = document.getElementById('loading');
             const errorEl = document.getElementById('error');
@@ -5176,8 +5179,18 @@
         }
         
         function openBot() {
-            // Открываем бота в Telegram
-            window.Telegram.WebApp.close();
+            console.log('🤖 Попытка открыть бота...');
+            
+            // Используем сохраненную ссылку на Telegram WebApp
+            const tgApp = window._telegramWebApp || window.Telegram?.WebApp;
+            
+            if (tgApp) {
+                console.log('✅ Telegram WebApp найден, закрываем Mini App');
+                tgApp.close();
+            } else {
+                console.error('❌ Telegram WebApp не найден!');
+                alert('Не удалось открыть бота. Пожалуйста, закройте приложение вручную и откройте бота.');
+            }
         }
         
         function showMainApp() {
