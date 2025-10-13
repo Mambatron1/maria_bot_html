@@ -7,8 +7,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v2.5.9-20251013">
-    <meta name="version" content="maria-bot-v2.5.9-remove-footer">
+    <meta name="cache-bust" content="maria-bot-v2.6.0-20251013">
+    <meta name="version" content="maria-bot-v2.6.0-auth-fix">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
     <title>NBtender — Mini App</title>
@@ -2943,6 +2943,13 @@
                     })
                 });
 
+                // Проверяем, нужна ли авторизация
+                if (response.status === 401) {
+                    const errorData = await response.json();
+                    showAuthScreen(errorData.first_name || 'Пользователь');
+                    return;
+                }
+
                 if (!response.ok) {
                     throw new Error('Ошибка загрузки данных');
                 }
@@ -5091,6 +5098,56 @@
         }
 
         // Удалено второе дублирующееся определение showSosMenuModal()
+        
+        function showAuthScreen(firstName) {
+            // Скрываем основное приложение
+            document.getElementById('main-app').style.display = 'none';
+            
+            // Показываем экран авторизации
+            document.body.innerHTML = `
+                <div class="fixed inset-0 bg-nb-bg flex items-center justify-center p-6">
+                    <div class="max-w-md w-full text-center">
+                        <!-- Иконка -->
+                        <div class="mb-6">
+                            <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-nb-accent to-nb-accent-dark flex items-center justify-center text-5xl shadow-nb">
+                                🔐
+                            </div>
+                        </div>
+                        
+                        <!-- Приветствие -->
+                        <h1 class="text-2xl font-bold text-nb-ink mb-3">
+                            Привет, ${firstName}! 👋
+                        </h1>
+                        
+                        <!-- Описание -->
+                        <p class="text-nb-ink/70 text-[15px] leading-relaxed mb-8">
+                            Для использования приложения необходимо пройти авторизацию в боте.
+                            <br><br>
+                            Нажми на кнопку ниже, чтобы начать работу! 🚀
+                        </p>
+                        
+                        <!-- Кнопка авторизации -->
+                        <button 
+                            onclick="openBot()"
+                            class="w-full h-[52px] flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-accent text-white text-[16px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:bg-nb-accent-dark shadow-nb mb-4"
+                        >
+                            <span>📱</span>
+                            <span>Авторизоваться в боте</span>
+                        </button>
+                        
+                        <!-- Дополнительная информация -->
+                        <p class="text-nb-ink/50 text-[13px]">
+                            После авторизации просто вернись сюда 💖
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function openBot() {
+            // Открываем бота в Telegram
+            window.Telegram.WebApp.close();
+        }
         
         function showMainApp() {
             // Останавливаем автообновление диалога
