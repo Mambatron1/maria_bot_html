@@ -7,11 +7,11 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v2.6.0-20251013-1820">
-    <meta name="version" content="maria-bot-v2.6.0-auth-fix">
+    <meta name="cache-bust" content="maria-bot-v2.6.1-20251013-1928">
+    <meta name="version" content="maria-bot-v2.6.1-splash-screen">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
-    <meta name="telegram-cache-version" content="v2.6.0-1820">
+    <meta name="telegram-cache-version" content="v2.6.1-1928">
     <title>NBtender — Mini App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
@@ -137,12 +137,73 @@
             bottom: 0;
             overflow-y: auto;
         }
+
+        /* 🎨 SPLASH SCREEN - Заставка при загрузке */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #eff6ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+
+        #splash-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #splash-logo {
+            width: 180px;
+            height: 180px;
+            animation: splash-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes splash-pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.9;
+            }
+        }
+
+        #splash-text {
+            margin-top: 24px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f172a;
+            animation: splash-fade 1.5s ease-in-out infinite;
+        }
+
+        @keyframes splash-fade {
+            0%, 100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body class="m-0 bg-nb-bg text-nb-ink min-h-screen font-sans">
+    <!-- 🎨 SPLASH SCREEN - Заставка при загрузке -->
+    <div id="splash-screen">
+        <img id="splash-logo" src="logo.svg" alt="Maria Bot">
+        <div id="splash-text">Загружаемся...</div>
+    </div>
+
     <!-- Индикатор версии для проверки -->
     <div class="fixed top-2.5 right-2.5 bg-nb-accent text-white px-2 py-1 rounded-lg text-[10px] z-[9999]">
-        Maria Bot v2.6.0-auth-fix
+        Maria Bot v2.6.1-splash-screen
     </div>
     
      
@@ -2931,6 +2992,18 @@
             }
         }
         
+        // 🎨 Функция для скрытия заставки с плавной анимацией
+        function hideSplashScreen() {
+            const splashScreen = document.getElementById('splash-screen');
+            if (splashScreen) {
+                splashScreen.classList.add('hidden');
+                // Удаляем элемент из DOM через 500ms (после завершения анимации)
+                setTimeout(() => {
+                    splashScreen.remove();
+                }, 500);
+            }
+        }
+        
         async function loadUserData() {
             try {
                 // Возвращаем API вызов для получения данных пользователя
@@ -3014,12 +3087,18 @@
                 // Обновляем счетчик непрочитанных сообщений
                 updateUnreadBadge();
                 
+                // Скрываем заставку с плавной анимацией
+                hideSplashScreen();
+                
                 // Показываем приложение
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('app').style.display = 'block';
                 
             } catch (error) {
                 console.error('Ошибка загрузки данных:', error);
+                
+                // Скрываем заставку с плавной анимацией
+                hideSplashScreen();
                 
                 // Скрываем индикатор загрузки
                 document.getElementById('loading').style.display = 'none';
@@ -5124,6 +5203,9 @@
         
         function showAuthScreen(firstName) {
             console.log(`🔐 showAuthScreen вызван для пользователя: ${firstName}`);
+            
+            // Скрываем заставку с плавной анимацией
+            hideSplashScreen();
             
             // Сохраняем ссылку на Telegram WebApp ПЕРЕД заменой body
             window._telegramWebApp = window.Telegram?.WebApp;
