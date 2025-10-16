@@ -7,11 +7,11 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v2.6.1-20251013-1928">
-    <meta name="version" content="maria-bot-v2.6.1-splash-screen">
+    <meta name="cache-bust" content="maria-bot-v2.7.0-20251013-2045">
+    <meta name="version" content="maria-bot-v2.7.0-hr-mode-fixed">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
-    <meta name="telegram-cache-version" content="v2.6.1-1928">
+    <meta name="telegram-cache-version" content="v2.7.0-2045">
     <title>NBtender — Mini App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
@@ -203,7 +203,7 @@
 
     <!-- Индикатор версии для проверки -->
     <div class="fixed top-2.5 right-2.5 bg-nb-accent text-white px-2 py-1 rounded-lg text-[10px] z-[9999]">
-        Maria Bot v2.6.1-splash-screen
+        Maria Bot v2.7.0-hr-mode-fixed
     </div>
     
      
@@ -269,6 +269,10 @@
                     <span class="dot dot-absence"></span>
                     <span>Нужна помощь</span>
                     <span id="sos-unread-badge" class="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1" style="display: none;"></span>
+                </button>
+                <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-gradient-to-r from-purple-600 to-pink-600 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:from-purple-700 hover:to-pink-700 shadow-nb" id="hr-btn" onclick="handleAction('hr')" style="display: none;">
+                    <span>📊</span>
+                    <span>HR-режим</span>
                 </button>
                 <button class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-nb-navy-700 text-white text-[15px] font-semibold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:bg-nb-navy-600 shadow-nb" id="admin-btn" onclick="handleAction('admin')" style="display: none;">
                     <span class="dot" style="background: #3b82f6;"></span>
@@ -1294,6 +1298,106 @@
                 </div>
             </div>
         </div>
+
+        <!-- HR Menu Modal -->
+        <div id="hr-menu-modal" class="fixed inset-0 bg-nb-bg z-[1000] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="showMainApp()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">📊 HR-режим</div>
+                    </div>
+                    <div class="w-10"></div>
+                </header>
+
+                <div class="grid gap-2.5 mb-5">
+                    <!-- Информация о разделе -->
+                    <div class="bg-gradient-to-br from-purple-600 to-pink-600 text-white rounded-nb p-4 shadow-nb-strong">
+                        <h3 class="text-base leading-relaxed font-bold mb-2">📈 Аналитика и отчеты</h3>
+                        <p class="m-0 text-white/90 text-sm leading-relaxed">
+                            Выберите тип отчета для выгрузки статистики в формате Excel
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Кнопки выбора отчета -->
+                <div class="grid gap-3 justify-items-center">
+                    <button onclick="showHrPeriodModal('absences')" class="h-[60px] w-full flex flex-col items-start justify-center gap-1 px-5 border-none rounded-nb bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-left cursor-pointer transition-all duration-200 active:scale-[0.97] hover:from-emerald-700 hover:to-teal-700 shadow-nb">
+                        <div class="flex items-center gap-2 w-full">
+                            <span class="text-xl">🏖️</span>
+                            <span class="text-[16px] font-bold">Статистика отсутствий</span>
+                        </div>
+                        <span class="text-[12px] text-white/80 ml-7">Отпуска и отсутствия по датам</span>
+                    </button>
+                    
+                    <button onclick="showHrPeriodModal('crocotime')" class="h-[60px] w-full flex flex-col items-start justify-center gap-1 px-5 border-none rounded-nb bg-gradient-to-r from-amber-600 to-orange-600 text-white text-left cursor-pointer transition-all duration-200 active:scale-[0.97] hover:from-amber-700 hover:to-orange-700 shadow-nb">
+                        <div class="flex items-center gap-2 w-full">
+                            <span class="text-xl">⏱️</span>
+                            <span class="text-[16px] font-bold">Статистика Crocotime</span>
+                        </div>
+                        <span class="text-[12px] text-white/80 ml-7">Учет рабочего времени сотрудников</span>
+                    </button>
+                    
+                    <button onclick="showHrPeriodModal('sick_leaves')" class="h-[60px] w-full flex flex-col items-start justify-center gap-1 px-5 border-none rounded-nb bg-gradient-to-r from-purple-600 to-violet-600 text-white text-left cursor-pointer transition-all duration-200 active:scale-[0.97] hover:from-purple-700 hover:to-violet-700 shadow-nb">
+                        <div class="flex items-center gap-2 w-full">
+                            <span class="text-xl">🏥</span>
+                            <span class="text-[16px] font-bold">Статистика ЭЛН</span>
+                        </div>
+                        <span class="text-[12px] text-white/80 ml-7">Электронные листки нетрудоспособности</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- HR Period Selection Modal -->
+        <div id="hr-period-modal" class="fixed inset-0 bg-nb-bg z-[1001] overflow-y-auto" style="display: none;">
+            <div class="max-w-[440px] mx-auto px-nb-pad py-nb-pad box-border min-h-screen">
+                <!-- Header -->
+                <header class="flex items-center mb-5">
+                    <button onclick="closeHrPeriodModal()" class="bg-transparent border-none text-nb-ink text-2xl p-2 cursor-pointer rounded-nb transition-all duration-200 flex items-center justify-center w-10 h-10 hover:bg-black/5 active:bg-black/10 active:scale-95">←</button>
+                    <div class="flex-1 text-center">
+                        <div class="font-bold text-[17px] m-0">📅 Выбор периода</div>
+                    </div>
+                    <div class="w-10"></div>
+                </header>
+
+                <div class="grid gap-2.5 mb-5">
+                    <!-- Информация -->
+                    <div class="bg-gradient-to-br from-indigo-600 to-blue-600 text-white rounded-nb p-4 shadow-nb">
+                        <h3 class="text-base leading-relaxed font-bold mb-2">📊 <span id="hr-report-title">Отчет</span></h3>
+                        <p class="m-0 text-white/90 text-sm">
+                            Выберите период для выгрузки статистики
+                        </p>
+                    </div>
+
+                    <!-- Форма выбора периода -->
+                    <div class="bg-nb-graphite text-slate-50 rounded-nb p-4 shadow-nb">
+                        <h3 class="text-sm font-extrabold tracking-wide mb-3">Период выгрузки</h3>
+                        
+                        <div class="mb-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Дата начала:</label>
+                            <input type="date" id="hr-date-from" 
+                                   class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white text-[15px] font-bold">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block mb-2 text-slate-300 text-[15px] font-bold">Дата окончания:</label>
+                            <input type="date" id="hr-date-to" 
+                                   class="w-full p-3 rounded-nb border border-stone-400 bg-stone-400 text-white text-[15px] font-bold">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Кнопка получения отчета -->
+                <div class="grid gap-3 justify-items-center">
+                    <button onclick="generateHrReport()" class="h-[52px] w-full flex items-center justify-center gap-2 px-6 border-none rounded-nb bg-gradient-to-r from-green-600 to-emerald-600 text-white text-[16px] font-bold cursor-pointer transition-all duration-200 active:scale-[0.97] hover:from-green-700 hover:to-emerald-700 shadow-nb-strong">
+                        <span>📥</span>
+                        <span>Получить статистику</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1318,6 +1422,8 @@
                 document.getElementById('send-employee-message-modal').style.display = 'none';
                 document.getElementById('add-employee-modal').style.display = 'none';
                 document.getElementById('edit-employee-modal').style.display = 'none';
+                document.getElementById('hr-menu-modal').style.display = 'none';
+                document.getElementById('hr-period-modal').style.display = 'none';
                 
                 // Показываем админ-меню
                 document.getElementById('admin-menu-modal').style.display = 'block';
@@ -1328,6 +1434,106 @@
             } catch (error) {
                 console.error('Ошибка:', error);
                 tg.showAlert('Ошибка загрузки админ-меню');
+            }
+        }
+        
+        // 📊 HR-РЕЖИМ: Функции для работы с HR-модальными окнами
+        let currentHrReportType = null;
+        
+        async function showHrMenuModal() {
+            try {
+                // Скрываем все модальные окна
+                document.getElementById('app').style.display = 'none';
+                document.getElementById('hr-period-modal').style.display = 'none';
+                
+                // Показываем HR-меню
+                document.getElementById('hr-menu-modal').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Ошибка:', error);
+                tg.showAlert('Ошибка загрузки HR-меню');
+            }
+        }
+        
+        function showHrPeriodModal(reportType) {
+            // Сохраняем тип отчета
+            currentHrReportType = reportType;
+            
+            // Обновляем заголовок
+            const titleEl = document.getElementById('hr-report-title');
+            const titles = {
+                'absences': 'Статистика отсутствий',
+                'crocotime': 'Статистика Crocotime',
+                'sick_leaves': 'Статистика ЭЛН'
+            };
+            if (titleEl) {
+                titleEl.textContent = titles[reportType] || 'Отчет';
+            }
+            
+            // Устанавливаем текущую дату как "До"
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('hr-date-to').value = today;
+            
+            // Устанавливаем месяц назад как "От"
+            const monthAgo = new Date();
+            monthAgo.setMonth(monthAgo.getMonth() - 1);
+            document.getElementById('hr-date-from').value = monthAgo.toISOString().split('T')[0];
+            
+            // Скрываем HR-меню и показываем модальное окно выбора периода
+            document.getElementById('hr-menu-modal').style.display = 'none';
+            document.getElementById('hr-period-modal').style.display = 'block';
+        }
+        
+        function closeHrPeriodModal() {
+            // Возвращаемся в HR-меню
+            document.getElementById('hr-period-modal').style.display = 'none';
+            document.getElementById('hr-menu-modal').style.display = 'block';
+        }
+        
+        async function generateHrReport() {
+            try {
+                const dateFrom = document.getElementById('hr-date-from').value;
+                const dateTo = document.getElementById('hr-date-to').value;
+                
+                if (!dateFrom || !dateTo) {
+                    tg.showAlert('⚠️ Пожалуйста, выберите период');
+                    return;
+                }
+                
+                if (dateFrom > dateTo) {
+                    tg.showAlert('⚠️ Дата начала не может быть позже даты окончания');
+                    return;
+                }
+                
+                // Показываем индикатор загрузки
+                tg.showAlert('📊 Генерируем отчет и отправляем в Telegram...');
+                
+                // Отправляем запрос на backend
+                const response = await fetch(`http://localhost:5000/api/hr/${currentHrReportType}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        initData: tg.initData,
+                        date_from: dateFrom,
+                        date_to: dateTo
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    tg.showAlert('✅ ' + result.message);
+                    // Возвращаемся в главное меню
+                    showMainApp();
+                } else {
+                    tg.showAlert('❌ Ошибка: ' + result.error);
+                }
+                
+            } catch (error) {
+                console.error('Ошибка генерации отчета:', error);
+                tg.showAlert('❌ Ошибка генерации отчета');
             }
         }
         
@@ -3084,6 +3290,14 @@
                     if (adminBtnEl) adminBtnEl.style.display = 'inline-flex';
                 }
                 
+                // Показываем HR-режим для админов и Елены Пермитиной
+                const isHrUser = data.user.is_admin || 
+                                (data.user.first_name === 'Елена' && data.user.last_name === 'Пермитина');
+                if (isHrUser) {
+                    const hrBtnEl = document.getElementById('hr-btn');
+                    if (hrBtnEl) hrBtnEl.style.display = 'inline-flex';
+                }
+                
                 // Обновляем счетчик непрочитанных сообщений
                 updateUnreadBadge();
                 
@@ -3191,6 +3405,11 @@
                 
                 if (action === 'sos_menu') {
                     await showSosMenuModal();
+                    return;
+                }
+                
+                if (action === 'hr') {
+                    await showHrMenuModal();
                     return;
                 }
                 
@@ -4872,6 +5091,8 @@
                 document.getElementById('sos-modal').style.display = 'none';
                 document.getElementById('sos-menu-modal').style.display = 'none';
                 document.getElementById('sick-leave-modal').style.display = 'none';
+                document.getElementById('hr-menu-modal').style.display = 'none';
+                document.getElementById('hr-period-modal').style.display = 'none';
                 document.getElementById('issue-chat-modal').style.display = 'block';
                 
                 // Заполняем информацию об обращении
@@ -5368,7 +5589,8 @@
             // Добавляем анимацию исчезновения для модальных окон
             const modals = [
                 'work-mode-modal', 'absence-modal', 'sos-modal', 'sos-menu-modal',
-                'sick-leave-modal', 'issue-chat-modal', 'admin-menu-modal'
+                'sick-leave-modal', 'issue-chat-modal', 'admin-menu-modal',
+                'hr-menu-modal', 'hr-period-modal'
             ];
             
             modals.forEach(modalId => {
