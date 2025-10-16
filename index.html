@@ -7,11 +7,11 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="cache-control" content="no-cache">
-    <meta name="cache-bust" content="maria-bot-v2.7.3-20251013-2100">
-    <meta name="version" content="maria-bot-v2.7.3-hr-eventloop-fix">
+    <meta name="cache-bust" content="maria-bot-v2.7.6-20251013-2115">
+    <meta name="version" content="maria-bot-v2.7.6-fullscreen-splash">
     <meta http-equiv="Last-Modified" content="0">
     <meta http-equiv="If-Modified-Since" content="0">
-    <meta name="telegram-cache-version" content="v2.7.3-2100">
+    <meta name="telegram-cache-version" content="v2.7.6-2115">
     <title>NBtender — Mini App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
@@ -138,20 +138,21 @@
             overflow-y: auto;
         }
 
-        /* 🎨 SPLASH SCREEN - Заставка при загрузке */
+        /* 🎨 SPLASH SCREEN - Заставка при загрузке (ПОЛНОЭКРАННАЯ) */
         #splash-screen {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: #eff6ff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 99999;
             transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+            padding: 20px;
         }
 
         #splash-screen.hidden {
@@ -160,9 +161,12 @@
         }
 
         #splash-logo {
-            width: 180px;
-            height: 180px;
+            width: min(80vw, 450px);
+            height: min(80vw, 450px);
+            max-width: 450px;
+            max-height: 450px;
             animation: splash-pulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.2));
         }
 
         @keyframes splash-pulse {
@@ -171,22 +175,24 @@
                 opacity: 1;
             }
             50% {
-                transform: scale(1.05);
-                opacity: 0.9;
+                transform: scale(1.08);
+                opacity: 0.95;
             }
         }
 
         #splash-text {
-            margin-top: 24px;
-            font-size: 16px;
-            font-weight: 600;
-            color: #0f172a;
+            margin-top: 32px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             animation: splash-fade 1.5s ease-in-out infinite;
+            letter-spacing: 0.5px;
         }
 
         @keyframes splash-fade {
             0%, 100% {
-                opacity: 0.5;
+                opacity: 0.6;
             }
             50% {
                 opacity: 1;
@@ -203,7 +209,7 @@
 
     <!-- Индикатор версии для проверки -->
     <div class="fixed top-2.5 right-2.5 bg-nb-accent text-white px-2 py-1 rounded-lg text-[10px] z-[9999]">
-        Maria Bot v2.7.3-hr-eventloop-fix
+        Maria Bot v2.7.6-fullscreen-splash
     </div>
     
      
